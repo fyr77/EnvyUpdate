@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.108
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvyUpdate", "EnvyUpdate\EnvyUpdate.csproj", "{1BF2468D-9579-462D-9153-4836E9C8721F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1BF2468D-9579-462D-9153-4836E9C8721F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BF2468D-9579-462D-9153-4836E9C8721F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BF2468D-9579-462D-9153-4836E9C8721F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BF2468D-9579-462D-9153-4836E9C8721F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {420FF0E8-D617-4002-AE19-8D9C50016CC7}
+	EndGlobalSection
+EndGlobal
