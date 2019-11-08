@@ -18,7 +18,6 @@ namespace EnvyUpdate
         string onlineDriv = null;
         readonly string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\envyupdate\\";
         readonly string startup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
-        readonly string startmenu = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
         string gpuURL = null;
         readonly string exeloc = System.Reflection.Assembly.GetEntryAssembly().Location;
         bool isAtStartup = false;
@@ -213,14 +212,12 @@ namespace EnvyUpdate
         {
             File.Copy(exeloc, appdata + "EnvyUpdateInstalled.exe", true);
             Util.CreateShortcut("EnvyUpdate", startup, appdata + "EnvyUpdateInstalled.exe", "Nvidia Updater Application.");
-            Util.CreateShortcut("EnvyUpdate", startmenu, appdata + "EnvyUpdateInstalled.exe", "Nvidia Updater Application.");
         }
 
         private void chkAutostart_Unchecked(object sender, RoutedEventArgs e)
         {
             File.Delete(appdata + "EnvyUpdateInstalled.exe");
             File.Delete(startup + "\\EnvyUpdate.lnk");
-            File.Delete(startmenu + "\\EnvyUpdate.lnk");
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
