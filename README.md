@@ -11,3 +11,9 @@
  6. Drag this .txt file into the corresponding space inside EnvyUpdate.
  7. If everything works correctly, the online driver version should be displayed in the application window. 
  8. When not in portable mode, you may activate Autostart. This will make the application start everytime Windows boots. This will also install the application itself in your APPDATA folder.
+
+## Licenses
+
+This project: [MIT](https://github.com/fyr77/EnvyUpdate/blob/master/LICENSE)
+Fody (for embedding DLLs into the main executable): [MIT](https://github.com/Fody/Fody/blob/master/License.txt)
+wpf-notifyicon (for showing an icon in the system tray): [CPOL](https://github.com/hardcodet/wpf-notifyicon/blob/master/LICENSE)
