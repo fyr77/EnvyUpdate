@@ -121,12 +121,11 @@ namespace EnvyUpdate
             else
             {
                 textblockOnline.Foreground = Brushes.Green;
-                //if (System.Reflection.Assembly.GetExecutingAssembly().CodeBase == appdata)
-                //{
-                    //WindowState = WindowState.Minimized;
-                    //System.Threading.Thread.Sleep(100);
-                    //Hide();
-                //}
+                if (exepath == appdata)
+                {
+                    WindowState = WindowState.Minimized;
+                    Hide();
+                }
             }
         }
         private void Load(string[] files)
