@@ -14,6 +14,6 @@
 
 ## Licenses
 
-This project: [MIT](https://github.com/fyr77/EnvyUpdate/blob/master/LICENSE)
-Fody (for embedding DLLs into the main executable): [MIT](https://github.com/Fody/Fody/blob/master/License.txt)
-wpf-notifyicon (for showing an icon in the system tray): [CPOL](https://github.com/hardcodet/wpf-notifyicon/blob/master/LICENSE)
+* This project: [MIT](https://github.com/fyr77/EnvyUpdate/blob/master/LICENSE)
+* Fody (for embedding DLLs into the main executable): [MIT](https://github.com/Fody/Fody/blob/master/License.txt)
+* wpf-notifyicon (for showing an icon in the system tray): [CPOL](https://github.com/hardcodet/wpf-notifyicon/blob/master/LICENSE)
