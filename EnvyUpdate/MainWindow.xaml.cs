@@ -20,7 +20,8 @@ namespace EnvyUpdate
         readonly string startup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
         string gpuURL = null;
         readonly string exeloc = System.Reflection.Assembly.GetEntryAssembly().Location;
-        bool isAtStartup = false;
+        readonly string exepath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\";
+        readonly string startmenu = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
 
         public MainWindow()
         {
@@ -28,14 +29,6 @@ namespace EnvyUpdate
             if (!Directory.Exists(appdata))
             {
                 Directory.CreateDirectory(appdata);
-            }
-
-            // A bit of a hacky way to know if running the autostarted version or the regular one.
-            if (System.AppDomain.CurrentDomain.FriendlyName == "EnvyUpdateInstalled.exe")
-            {
-                WindowState = WindowState.Minimized;
-                Hide();
-                isAtStartup = true;
             }
 
             if (Util.GetLocDriv() != null)
@@ -112,10 +105,11 @@ namespace EnvyUpdate
             WebClient c = new WebClient();
             gpuURL = c.DownloadString(gpuURL);
             string pContent = c.DownloadString(gpuURL);
-            var pattern = @"\d{3}\.\d{2}";
+            var pattern = @"\d{3}\.\d{2}&nbsp";
             Regex rgx = new Regex(pattern);
             var matches = rgx.Matches(pContent);
             onlineDriv = Convert.ToString(matches[0]);
+            onlineDriv = onlineDriv.Remove(onlineDriv.Length - 5);
             textblockOnline.Text = onlineDriv;
             c.Dispose();
 
@@ -123,14 +117,17 @@ namespace EnvyUpdate
             {
                 textblockOnline.Foreground = Brushes.Red;
                 buttonDL.Visibility = Visibility.Visible;
-                if (isAtStartup)
-                {
-                    Show();
-                    WindowState = WindowState.Normal;
-                }
             }
             else
+            {
                 textblockOnline.Foreground = Brushes.Green;
+                //if (System.Reflection.Assembly.GetExecutingAssembly().CodeBase == appdata)
+                //{
+                    //WindowState = WindowState.Minimized;
+                    //System.Threading.Thread.Sleep(100);
+                    //Hide();
+                //}
+            }
         }
         private void Load(string[] files)
         {
@@ -157,10 +154,11 @@ namespace EnvyUpdate
             WebClient c = new WebClient();
             gpuURL = c.DownloadString(gpuURL);
             string pContent = c.DownloadString(gpuURL);
-            var pattern = @"\d{3}\.\d{2}";
+            var pattern = @"\d{3}\.\d{2}&nbsp";
             Regex rgx = new Regex(pattern);
             var matches = rgx.Matches(pContent);
             onlineDriv = Convert.ToString(matches[0]);
+            onlineDriv = onlineDriv.Remove(onlineDriv.Length - 5);
             textblockOnline.Text = onlineDriv;
             c.Dispose();
 
@@ -210,14 +208,23 @@ namespace EnvyUpdate
 
         private void chkAutostart_Checked(object sender, RoutedEventArgs e)
         {
-            File.Copy(exeloc, appdata + "EnvyUpdateInstalled.exe", true);
-            Util.CreateShortcut("EnvyUpdate", startup, appdata + "EnvyUpdateInstalled.exe", "Nvidia Updater Application.");
+            if (exepath != appdata)
+            {
+                File.Copy(exeloc, appdata + "EnvyUpdate.exe", true);
+                Util.CreateShortcut("EnvyUpdate", startup, appdata + "EnvyUpdate.exe", "Nvidia Updater Application.");
+                Util.CreateShortcut("EnvyUpdate", startmenu, appdata + "EnvyUpdate.exe", "Nvidia Updater Application.");
+            }
+            else
+            {
+                chkAutostart.IsEnabled = false;
+            }
         }
 
         private void chkAutostart_Unchecked(object sender, RoutedEventArgs e)
         {
-            File.Delete(appdata + "EnvyUpdateInstalled.exe");
+            File.Delete(appdata + "EnvyUpdate.exe");
             File.Delete(startup + "\\EnvyUpdate.lnk");
+            File.Delete(startmenu + "\\EnvyUpdate.lnk");
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
