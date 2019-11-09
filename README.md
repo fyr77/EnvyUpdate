@@ -3,7 +3,7 @@
  
  ## How to use
  
- 1. Download the [latest release](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.exe) (or as a [.zip](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.zip)) and run it. Windows SmartScreen Messages can be safely ignored. They only happen because this project is not digitally signed.
+ 1. Download the latest release from the [releases page](https://github.com/fyr77/EnvyUpdate/releases) and run it. Windows SmartScreen Messages can be safely ignored. They only happen because this project is not digitally signed.
  2. If you want to use the application without saving any settings to your drive, keep the "Portable mode" checkbox checked. Otherwise uncheck it to automatically save your configuration.
  3. Install the cookie-txt addon for [Firefox](https://addons.mozilla.org/en-US/firefox/addon/cookies-txt-one-click/) or [Chrome](https://chrome.google.com/webstore/detail/cookiestxt/njabckikapfpffapmjgojcnbfjonfjfg).
  4. Go to the [Nvidia driver download page](https://www.nvidia.com/Download/index.aspx), enter your graphics card model, operating system, etc. and click "Search".
