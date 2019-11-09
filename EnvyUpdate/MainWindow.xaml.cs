@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Shapes;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -26,6 +25,11 @@ namespace EnvyUpdate
         public MainWindow()
         {
             InitializeComponent();
+            if (Util.IsProcessOpen("EnvyUpdate"))
+            {
+                MessageBox.Show("Application is already running.");
+                System.Environment.Exit(1);
+            }
             if (!Directory.Exists(appdata))
             {
                 Directory.CreateDirectory(appdata);
@@ -39,7 +43,7 @@ namespace EnvyUpdate
             else
             {
                 MessageBox.Show("No NVIDIA GPU found. Application will exit.");
-                System.Windows.Application.Current.Shutdown();
+                System.Environment.Exit(255);
             }
             if (File.Exists(appdata + "nvidia-update.txt"))
             {
