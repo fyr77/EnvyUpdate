@@ -16,6 +16,15 @@
 
 Simply download the latest release from the [releases page](https://github.com/fyr77/EnvyUpdate/releases), run it and untick "Autostart". This will remove EnvyUpdate from your system.
 
+## Compatibility
+
+The application is compatible with all Nvidia GPUs that have their drivers available on the nvidia.com download page.
+
+## Branches
+
+* The main `master` branch requires Windows 10 because of the way it sends notifications. 
+* The `compat` branch does not use notifications, opening the main window instead. This is compatible with Windows 7 and up.
+
 ## Licenses
 
 * This project: [MIT](https://github.com/fyr77/EnvyUpdate/blob/master/LICENSE)
