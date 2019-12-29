@@ -25,10 +25,10 @@ namespace EnvyUpdate
         public MainWindow()
         {
             InitializeComponent();
-            if (Util.IsProcessOpen("EnvyUpdate"))
+            if (Util.IsInstanceOpen("EnvyUpdate"))
             {
                 MessageBox.Show("Application is already running.");
-                System.Environment.Exit(1);
+                Application.Current.Shutdown(1);
             }
             if (!Directory.Exists(appdata))
             {
@@ -43,7 +43,7 @@ namespace EnvyUpdate
             else
             {
                 MessageBox.Show("No NVIDIA GPU found. Application will exit.");
-                System.Environment.Exit(255);
+                Application.Current.Shutdown(255);
             }
             if (File.Exists(appdata + "nvidia-update.txt"))
             {
@@ -63,11 +63,6 @@ namespace EnvyUpdate
         private void Dt_Tick(object sender, EventArgs e)
         {
             Load();
-            if (textblockOnline.Foreground == Brushes.Red)
-            {
-                Show();
-                WindowState = WindowState.Normal;
-            }
         }
 
         private void buttonHelp_Click(object sender, RoutedEventArgs e)
@@ -121,15 +116,14 @@ namespace EnvyUpdate
             {
                 textblockOnline.Foreground = Brushes.Red;
                 buttonDL.Visibility = Visibility.Visible;
+                Notify.ShowUpdatePopup();
             }
             else
-            {
                 textblockOnline.Foreground = Brushes.Green;
-                if (exepath == appdata)
-                {
-                    WindowState = WindowState.Minimized;
-                    Hide();
-                }
+            if (exepath == appdata)
+            {
+                WindowState = WindowState.Minimized;
+                Hide();
             }
         }
         private void Load(string[] files)
@@ -180,8 +174,7 @@ namespace EnvyUpdate
 
         private void TaskbarIcon_TrayLeftMouseDown(object sender, RoutedEventArgs e)
         {
-            Show();
-            WindowState = WindowState.Normal;
+            Util.ShowMain();
         }
 
         private void Window_StateChanged(object sender, EventArgs e)
@@ -234,6 +227,7 @@ namespace EnvyUpdate
         {
             var window = MessageBox.Show("Exit EnvyUpdate?", "", MessageBoxButton.YesNo);
             e.Cancel = (window == MessageBoxResult.No);
+            Application.Current.Shutdown();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Management;
 using System.IO;
 using IWshRuntimeLibrary;
 using System.Diagnostics;
+using System.Windows;
 
 namespace EnvyUpdate
 {
@@ -83,17 +84,26 @@ namespace EnvyUpdate
             shortcut.TargetPath = targetFileLocation;
             shortcut.Save();
         }
-        public static bool IsProcessOpen(string name)
+        public static bool IsInstanceOpen(string name)
         {
+            int count = 0;
             foreach (Process clsProcess in Process.GetProcesses())
             {
                 if (clsProcess.ProcessName.Contains(name))
                 {
-                    return true;
+                    count++;
                 }
             }
 
-            return false;
+            if (count > 1)
+                return true;
+            else
+                return false;
+        }
+        public static void ShowMain()
+        {
+            Application.Current.MainWindow.Show();
+            Application.Current.MainWindow.WindowState = WindowState.Normal;
         }
     }
 }

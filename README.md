@@ -18,15 +18,11 @@ Simply download the latest release from the [releases page](https://github.com/f
 
 ## Compatibility
 
-The application is compatible with all Nvidia GPUs that have their drivers available on the nvidia.com download page.
-
-## Branches
-
-* The main `master` branch requires Windows 10 because of the way it sends notifications. 
-* The `compat` branch does not use notifications, opening the main window instead. This is compatible with Windows 7 and up.
+The application is compatible with all Nvidia GPUs that have their drivers available on the nvidia.com download page and runs on Windows 7 and up.
 
 ## Licenses
 
 * This project: [MIT](https://github.com/fyr77/EnvyUpdate/blob/master/LICENSE)
 * Fody (for embedding DLLs into the main executable): [MIT](https://github.com/Fody/Fody/blob/master/License.txt)
 * wpf-notifyicon (for showing an icon in the system tray): [CPOL](https://github.com/hardcodet/wpf-notifyicon/blob/master/LICENSE)
+* Notifications.Wpf [MIT](https://github.com/Federerer/Notifications.Wpf/blob/master/LICENSE)
