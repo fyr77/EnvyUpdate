@@ -4,7 +4,7 @@ namespace EnvyUpdate
 {
     class Notify
     {
-        public static void ShowUpdatePopup()
+        public static void ShowDrivUpdatePopup()
         {
             var notificationManager = new NotificationManager();
 

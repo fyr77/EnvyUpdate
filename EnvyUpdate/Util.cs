@@ -5,6 +5,7 @@ using System.IO;
 using IWshRuntimeLibrary;
 using System.Diagnostics;
 using System.Windows;
+using System.Net;
 
 namespace EnvyUpdate
 {
@@ -104,6 +105,43 @@ namespace EnvyUpdate
         {
             Application.Current.MainWindow.Show();
             Application.Current.MainWindow.WindowState = WindowState.Normal;
+        }
+        public static string GetNewVer()
+        {
+            string updPath = "https://raw.githubusercontent.com/fyr77/EnvyUpdate/master/res/version.txt";
+
+            System.Net.WebClient wc = new System.Net.WebClient();
+            string webData = wc.DownloadString(updPath);
+
+            return webData;
+        }
+        /// <summary>
+        /// Updates the application by downloading the new version from Github and replacing the old file using a seperate CMD instance.
+        /// </summary>
+        public static void UpdateApp()
+        {
+            string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\envyupdate\\";
+
+            using (var client = new WebClient())
+            {
+                client.DownloadFile("https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.exe", appdata + "EnvyUpdated.exe");
+            }
+
+            MessageBox.Show("New version of EnvyUpdate found. Application will restart.\nThis will probably take a few seconds.");
+
+            // Replace exe with new one
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                WindowStyle = ProcessWindowStyle.Hidden,
+                WorkingDirectory = appdata,
+                FileName = "cmd.exe",
+                Arguments = "/C timeout 5 && del EnvyUpdate.exe && ren EnvyUpdated.exe EnvyUpdate.exe && EnvyUpdate.exe"
+            };
+            process.StartInfo = startInfo;
+            process.Start();
+
+            Environment.Exit(2);
         }
     }
 }

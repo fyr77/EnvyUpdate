@@ -19,20 +19,34 @@ namespace EnvyUpdate
         readonly string startup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
         string gpuURL = null;
         readonly string exeloc = System.Reflection.Assembly.GetEntryAssembly().Location;
-        readonly string exepath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\";
+        readonly string exepath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\";
         readonly string startmenu = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
+        readonly string version = "1.0";
 
         public MainWindow()
         {
             InitializeComponent();
+            Title += " " + version;
             if (Util.IsInstanceOpen("EnvyUpdate"))
             {
                 MessageBox.Show("Application is already running.");
-                Application.Current.Shutdown(1);
+                Environment.Exit(1);
             }
             if (!Directory.Exists(appdata))
             {
                 Directory.CreateDirectory(appdata);
+            }
+
+            try
+            {
+                if (Util.GetNewVer() != version && exepath == appdata)
+                {
+                    Util.UpdateApp();
+                }
+            }
+            catch (WebException)
+            {
+                //Silently fail.
             }
 
             if (Util.GetLocDriv() != null)
@@ -43,7 +57,7 @@ namespace EnvyUpdate
             else
             {
                 MessageBox.Show("No NVIDIA GPU found. Application will exit.");
-                Application.Current.Shutdown(255);
+                Environment.Exit(255);
             }
             if (File.Exists(appdata + "nvidia-update.txt"))
             {
@@ -116,7 +130,7 @@ namespace EnvyUpdate
             {
                 textblockOnline.Foreground = Brushes.Red;
                 buttonDL.Visibility = Visibility.Visible;
-                Notify.ShowUpdatePopup();
+                Notify.ShowDrivUpdatePopup();
             }
             else
                 textblockOnline.Foreground = Brushes.Green;
