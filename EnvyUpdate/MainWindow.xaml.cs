@@ -37,16 +37,19 @@ namespace EnvyUpdate
                 Directory.CreateDirectory(appdata);
             }
 
-            try
+            if (exepath == appdata)
             {
-                if (Util.GetNewVer() != version && exepath == appdata)
+                try
                 {
-                    Util.UpdateApp();
+                    if (Util.GetNewVer() != version)
+                    {
+                        Util.UpdateApp();
+                    }
                 }
-            }
-            catch (WebException)
-            {
-                //Silently fail.
+                catch (WebException)
+                {
+                    //Silently fail.
+                }
             }
 
             if (Util.GetLocDriv() != null)
