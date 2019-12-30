@@ -111,7 +111,7 @@ namespace EnvyUpdate
             string updPath = "https://raw.githubusercontent.com/fyr77/EnvyUpdate/master/res/version.txt";
 
             System.Net.WebClient wc = new System.Net.WebClient();
-            string webData = wc.DownloadString(updPath);
+            string webData = wc.DownloadString(updPath).Truncate(3);
 
             return webData;
         }
