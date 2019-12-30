@@ -21,7 +21,7 @@ namespace EnvyUpdate
         readonly string exeloc = System.Reflection.Assembly.GetEntryAssembly().Location;
         readonly string exepath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\";
         readonly string startmenu = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
-        readonly string version = "1.0";
+        readonly string version = "1.1";
 
         public MainWindow()
         {
