@@ -2,7 +2,7 @@
 
 namespace EnvyUpdate
 {
-    class Notify
+    internal class Notify
     {
         public static void ShowDrivUpdatePopup()
         {

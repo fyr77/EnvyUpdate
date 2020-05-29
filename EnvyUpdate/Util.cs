@@ -1,15 +1,15 @@
-﻿using System;
+﻿using IWshRuntimeLibrary;
+using System;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Management;
-using System.IO;
-using IWshRuntimeLibrary;
-using System.Diagnostics;
-using System.Windows;
 using System.Net;
+using System.Windows;
 
 namespace EnvyUpdate
 {
-    class Util
+    internal class Util
     {
         /// <summary>
         /// Parses GPU info from a cookie file
@@ -35,6 +35,7 @@ namespace EnvyUpdate
             int lastno = Convert.ToInt32(found.Split().Last());
             return lastno;
         }
+
         /// <summary>
         /// Gets local driver version.
         /// </summary>
@@ -68,6 +69,7 @@ namespace EnvyUpdate
                 return null;
             }
         }
+
         /// <summary>
         /// Creates a standard Windows shortcut.
         /// </summary>
@@ -85,6 +87,7 @@ namespace EnvyUpdate
             shortcut.TargetPath = targetFileLocation;
             shortcut.Save();
         }
+
         public static bool IsInstanceOpen(string name)
         {
             int count = 0;
@@ -101,20 +104,23 @@ namespace EnvyUpdate
             else
                 return false;
         }
+
         public static void ShowMain()
         {
             Application.Current.MainWindow.Show();
             Application.Current.MainWindow.WindowState = WindowState.Normal;
         }
+
         public static string GetNewVer()
         {
             string updPath = "https://raw.githubusercontent.com/fyr77/EnvyUpdate/master/res/version.txt";
 
-            System.Net.WebClient wc = new System.Net.WebClient();
+            WebClient wc = new WebClient();
             string webData = wc.DownloadString(updPath).Truncate(3);
 
             return webData;
         }
+
         /// <summary>
         /// Updates the application by downloading the new version from Github and replacing the old file using a seperate CMD instance.
         /// </summary>

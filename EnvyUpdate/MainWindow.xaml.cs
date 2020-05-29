@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Windows;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
 
@@ -13,20 +13,22 @@ namespace EnvyUpdate
     /// </summary>
     public partial class MainWindow : Window
     {
-        string localDriv = null;
-        string onlineDriv = null;
-        readonly string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\envyupdate\\";
-        readonly string startup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
-        string gpuURL = null;
-        readonly string exeloc = System.Reflection.Assembly.GetEntryAssembly().Location;
-        readonly string exepath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\";
-        readonly string startmenu = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
-        readonly string version = "1.1";
+        private string localDriv = null;
+        private string onlineDriv = null;
+        private readonly string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\envyupdate\\";
+        private readonly string startup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+        private string gpuURL = null;
+        private readonly string exeloc = System.Reflection.Assembly.GetEntryAssembly().Location;
+        private readonly string exepath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\";
+        private readonly string startmenu = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
+        private readonly string version = "1.1";
 
         public MainWindow()
         {
             InitializeComponent();
             Title += " " + version;
+
+            // Check if EnvyUpdate is already running
             if (Util.IsInstanceOpen("EnvyUpdate"))
             {
                 MessageBox.Show("Application is already running.");
@@ -37,6 +39,7 @@ namespace EnvyUpdate
                 Directory.CreateDirectory(appdata);
             }
 
+            // Check if application is in Autorun mode and update
             if (exepath == appdata)
             {
                 try
@@ -102,6 +105,7 @@ namespace EnvyUpdate
                 }
             }
         }
+
         private void Load()
         {
             FileInfo f = new FileInfo(appdata + "nvidia-update.txt");
@@ -143,6 +147,7 @@ namespace EnvyUpdate
                 Hide();
             }
         }
+
         private void Load(string[] files)
         {
             FileInfo f = new FileInfo(files[0]);
@@ -184,6 +189,7 @@ namespace EnvyUpdate
             else
                 textblockOnline.Foreground = Brushes.Green;
         }
+
         private void buttonDL_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start(gpuURL);
