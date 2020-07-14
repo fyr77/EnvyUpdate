@@ -1,6 +1,10 @@
 # EnvyUpdate
  A small update checker application for Nvidia GPUs
  
+ ![License](https://img.shields.io/github/license/fyr77/envyupdate?style=for-the-badge)
+ ![Issues](https://img.shields.io/github/issues/fyr77/envyupdate?style=for-the-badge)
+ ![Version](https://img.shields.io/github/v/release/fyr77/envyupdate?style=for-the-badge)
+ 
  ## How to use
  
  1. Download the [latest release](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.exe) (or as a [.zip](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.zip)) and run it. Windows SmartScreen Messages can be safely ignored. They only happen because this project is not digitally signed.
