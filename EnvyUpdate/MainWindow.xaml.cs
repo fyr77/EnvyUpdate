@@ -21,8 +21,7 @@ namespace EnvyUpdate
         private readonly string exeloc = System.Reflection.Assembly.GetEntryAssembly().Location;
         private readonly string exepath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\";
         private readonly string startmenu = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
-        private readonly string version = "1.2";
-        private readonly string argument = Environment.GetCommandLineArgs()[1];
+        private readonly string version = "1.3";
 
         public MainWindow()
         {
@@ -55,25 +54,28 @@ namespace EnvyUpdate
                     //Silently fail.
                 }
             }
-
-            if (argument == "--ignore-gpu")
+            try
             {
-                MessageBox.Show("Skipping GPU check!");
-                textblockGPU.Text = "Check skipped.";
-            }
-            else
-            {
-                if (Util.GetLocDriv() != null)
+                if (Environment.GetCommandLineArgs()[1] == "--ignore-gpu")
                 {
-                    localDriv = Util.GetLocDriv();
-                    textblockGPU.Text = localDriv;
+                    MessageBox.Show("Skipping GPU check!");
+                    textblockGPU.Text = "Check skipped.";
                 }
                 else
                 {
-                    MessageBox.Show("No NVIDIA GPU found. Application will exit.");
-                    Environment.Exit(255);
+                    if (Util.GetLocDriv() != null)
+                    {
+                        localDriv = Util.GetLocDriv();
+                        textblockGPU.Text = localDriv;
+                    }
+                    else
+                    {
+                        MessageBox.Show("No NVIDIA GPU found. Application will exit.");
+                        Environment.Exit(255);
+                    }
                 }
             }
+            catch (IndexOutOfRangeException) { }
             
             if (File.Exists(appdata + "nvidia-update.txt"))
             {

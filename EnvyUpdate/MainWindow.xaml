@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:EnvyUpdate"
         xmlns:tb="http://www.hardcodet.net/taskbar" 
         mc:Ignorable="d"
-        Title="EnvyUpdate" Height="170.864" Width="463.435" Icon="icon.ico" ResizeMode="CanMinimize" StateChanged="Window_StateChanged" Closing="Window_Closing">
+        Title="EnvyUpdate" Height="170" Width="463" Icon="icon.ico" ResizeMode="CanMinimize" StateChanged="Window_StateChanged" Closing="Window_Closing">
     <Grid Margin="0,0,0,6">
         <tb:TaskbarIcon IconSource="/icon.ico" ToolTipText="EnvyUpdate" TrayLeftMouseDown="TaskbarIcon_TrayLeftMouseDown" />
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" Width="151"><Run Text="Local d"/><Run Text="river "/><Run Text="v"/><Run Text="ersion:"/></TextBlock>
