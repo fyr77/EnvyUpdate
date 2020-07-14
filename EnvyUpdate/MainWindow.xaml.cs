@@ -21,7 +21,8 @@ namespace EnvyUpdate
         private readonly string exeloc = System.Reflection.Assembly.GetEntryAssembly().Location;
         private readonly string exepath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\";
         private readonly string startmenu = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
-        private readonly string version = "1.1";
+        private readonly string version = "1.2";
+        private readonly string argument = Environment.GetCommandLineArgs()[1];
 
         public MainWindow()
         {
@@ -55,16 +56,25 @@ namespace EnvyUpdate
                 }
             }
 
-            if (Util.GetLocDriv() != null)
+            if (argument == "--ignore-gpu")
             {
-                localDriv = Util.GetLocDriv();
-                textblockGPU.Text = localDriv;
+                MessageBox.Show("Skipping GPU check!");
+                textblockGPU.Text = "Check skipped.";
             }
             else
             {
-                MessageBox.Show("No NVIDIA GPU found. Application will exit.");
-                Environment.Exit(255);
+                if (Util.GetLocDriv() != null)
+                {
+                    localDriv = Util.GetLocDriv();
+                    textblockGPU.Text = localDriv;
+                }
+                else
+                {
+                    MessageBox.Show("No NVIDIA GPU found. Application will exit.");
+                    Environment.Exit(255);
+                }
             }
+            
             if (File.Exists(appdata + "nvidia-update.txt"))
             {
                 chkPortable.IsChecked = false;
@@ -87,7 +97,9 @@ namespace EnvyUpdate
 
         private void buttonHelp_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/fyr77/EnvyUpdate/");
+            InfoWindow infoWin = new InfoWindow();
+            infoWin.ShowDialog();
+            //System.Diagnostics.Process.Start("https://github.com/fyr77/EnvyUpdate/");
         }
 
         private void Grid_Drop(object sender, DragEventArgs e)
