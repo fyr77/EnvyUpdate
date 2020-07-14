@@ -26,10 +26,6 @@ Simply download the latest release from the [releases page](https://github.com/f
 
 The application is compatible with all Nvidia GPUs that have their drivers available on the nvidia.com download page and runs on Windows 7 and up.
 
-## Planned features
-
-* Translation support
-
 ## Licenses
 
 * This project: [MIT](https://github.com/fyr77/EnvyUpdate/blob/master/LICENSE)
