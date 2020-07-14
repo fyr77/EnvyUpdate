@@ -21,7 +21,8 @@ namespace EnvyUpdate
         private readonly string exeloc = System.Reflection.Assembly.GetEntryAssembly().Location;
         private readonly string exepath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\";
         private readonly string startmenu = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
-        private readonly string version = "1.3";
+        private readonly string version = "1.4";
+        readonly string over = Util.GetNewVer();
 
         public MainWindow()
         {
@@ -38,7 +39,7 @@ namespace EnvyUpdate
             {
                 Directory.CreateDirectory(appdata);
             }
-
+            MessageBox.Show(over);
             // Check if application is in Autorun mode and update
             if (exepath == appdata)
             {
@@ -54,28 +55,23 @@ namespace EnvyUpdate
                     //Silently fail.
                 }
             }
-            try
+            /*
+            if (Environment.GetCommandLineArgs()[1] == "--ignore-gpu")
             {
-                if (Environment.GetCommandLineArgs()[1] == "--ignore-gpu")
-                {
-                    MessageBox.Show("Skipping GPU check!");
-                    textblockGPU.Text = "Check skipped.";
-                }
-                else
-                {
-                    if (Util.GetLocDriv() != null)
-                    {
-                        localDriv = Util.GetLocDriv();
-                        textblockGPU.Text = localDriv;
-                    }
-                    else
-                    {
-                        MessageBox.Show("No NVIDIA GPU found. Application will exit.");
-                        Environment.Exit(255);
-                    }
-                }
+                MessageBox.Show("Skipping GPU check!");
+                textblockGPU.Text = "Check skipped.";
             }
-            catch (IndexOutOfRangeException) { }
+            */
+            if (Util.GetLocDriv() != null)
+            {
+                localDriv = Util.GetLocDriv();
+                textblockGPU.Text = localDriv;
+            }
+            else
+            {
+                MessageBox.Show("No NVIDIA GPU found. Application will exit.");
+                Environment.Exit(255);
+            }
             
             if (File.Exists(appdata + "nvidia-update.txt"))
             {
