@@ -22,7 +22,6 @@ namespace EnvyUpdate
         private readonly string exepath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\";
         private readonly string startmenu = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
         private readonly string version = "1.4";
-        readonly string over = Util.GetNewVer();
 
         public MainWindow()
         {
@@ -39,7 +38,6 @@ namespace EnvyUpdate
             {
                 Directory.CreateDirectory(appdata);
             }
-            MessageBox.Show(over);
             // Check if application is in Autorun mode and update
             if (exepath == appdata)
             {
