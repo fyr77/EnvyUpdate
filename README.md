@@ -1,6 +1,8 @@
 # EnvyUpdate
  A small update checker application for Nvidia GPUs
  
+ ![Logo](https://github.com/fyr77/envyupdate/blob/master/res/banner.png?raw=true)
+ 
  ![License](https://img.shields.io/github/license/fyr77/envyupdate?style=for-the-badge)
  ![Issues](https://img.shields.io/github/issues/fyr77/envyupdate?style=for-the-badge)
  ![Version](https://img.shields.io/github/v/release/fyr77/envyupdate?style=for-the-badge)
