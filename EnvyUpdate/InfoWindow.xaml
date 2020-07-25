@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EnvyUpdate"
         mc:Ignorable="d"
-        Title="InfoWindow" Height="224.547" Width="285.714">
+        Title="InfoWindow" Height="238.853" Width="285.714">
     <Grid>
         <Button Content="How to use this application?" Margin="10,10,10,0" VerticalAlignment="Top" Height="45" Click="Button_Click"/>
         <Label Content="Licenses:" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
@@ -13,7 +13,8 @@
         <TextBlock x:Name="textFody" Margin="10,109,10,0" TextWrapping="Wrap" Text="Fody: MIT" Height="18" VerticalAlignment="Top" MouseEnter="text_MouseEnter" MouseLeave="text_MouseLeave" MouseDown="textFody_MouseDown"/>
         <TextBlock x:Name="textNotifyIcon" Margin="10,127,10,0" TextWrapping="Wrap" Text="wpf-notifyicon: CPOL" Height="18" VerticalAlignment="Top" MouseEnter="text_MouseEnter" MouseLeave="text_MouseLeave" MouseDown="textNotifyIcon_MouseDown"/>
         <TextBlock x:Name="textNotifications" Margin="10,145,10,0" TextWrapping="Wrap" Text="Notifications.Wpf: MIT" Height="18" VerticalAlignment="Top" MouseEnter="text_MouseEnter" MouseLeave="text_MouseLeave" MouseDown="textNotifications_MouseDown"/>
-        <TextBlock Margin="10,163,10,0" TextWrapping="Wrap" Text="Icon made by Freepik from www.flaticon.com" Height="18" VerticalAlignment="Top"/>
+        <TextBlock Margin="10,181,10,0" TextWrapping="Wrap" Text="Icon made by Freepik from www.flaticon.com" Height="18" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textNewtonsoft" Margin="10,163,10,0" TextWrapping="Wrap" Height="18" VerticalAlignment="Top" MouseEnter="text_MouseEnter" MouseLeave="text_MouseLeave" MouseDown="textNewtonsoft_MouseDown"><Run Text="Newtonsoft.Json"/><Run Text=": MIT"/></TextBlock>
 
     </Grid>
 </Window>

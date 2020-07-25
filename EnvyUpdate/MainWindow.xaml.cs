@@ -22,11 +22,24 @@ namespace EnvyUpdate
         private readonly string exepath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\";
         private readonly string startmenu = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
         private readonly string version = "1.4";
+        private string argument = null;
 
         public MainWindow()
         {
             InitializeComponent();
             Title += " " + version;
+
+            // Try to get command line arguments
+            try
+            {
+                argument = Environment.GetCommandLineArgs()[1];
+                Console.WriteLine("Starting in debug mode.");
+            }
+            catch (IndexOutOfRangeException)
+            {
+                // This is necessary, since .NET throws an exception if you check for a non-existant arg.
+                Console.WriteLine("Starting in release mode.");
+            }
 
             // Check if EnvyUpdate is already running
             if (Util.IsInstanceOpen("EnvyUpdate"))
@@ -50,16 +63,9 @@ namespace EnvyUpdate
                 }
                 catch (WebException)
                 {
-                    //Silently fail.
+                    // Silently fail.
                 }
             }
-            /*
-            if (Environment.GetCommandLineArgs()[1] == "--ignore-gpu")
-            {
-                MessageBox.Show("Skipping GPU check!");
-                textblockGPU.Text = "Check skipped.";
-            }
-            */
             if (Util.GetLocDriv() != null)
             {
                 localDriv = Util.GetLocDriv();
@@ -67,8 +73,16 @@ namespace EnvyUpdate
             }
             else
             {
-                MessageBox.Show("No NVIDIA GPU found. Application will exit.");
-                Environment.Exit(255);
+                switch (argument)
+                {
+                    case "/ignoregpu":
+                        MessageBox.Show("Debug: GPU ignored.");
+                        break;
+                    default:
+                        MessageBox.Show("No NVIDIA GPU found. Application will exit.");
+                        Environment.Exit(255);
+                        break;
+                }
             }
             
             if (File.Exists(appdata + "nvidia-update.txt"))
@@ -129,7 +143,7 @@ namespace EnvyUpdate
             pfid = Util.GetData(f.FullName, "ProductType");
             osid = Util.GetData(f.FullName, "OperatingSystem");
             langid = Util.GetData(f.FullName, "Language");
-            gpuURL = "http://www.nvidia.com/Download/processDriver.aspx?psid=" + psid.ToString() + "&pfid=" + pfid.ToString() + "&rpf=1&osid=" + osid.ToString() + "&lid=" + langid.ToString() + "&ctk=0";
+            gpuURL = "http://www.nvidia.com/Download/processDriver.aspx?psid=" + psid.ToString() + "&pfid=" + pfid.ToString() + "&osid=" + osid.ToString() + "&lid=" + langid.ToString();
             WebClient c = new WebClient();
             gpuURL = c.DownloadString(gpuURL);
             string pContent = c.DownloadString(gpuURL);
@@ -178,16 +192,18 @@ namespace EnvyUpdate
             osid = Util.GetData(f.FullName, "OperatingSystem");
             langid = Util.GetData(f.FullName, "Language");
             gpuURL = "http://www.nvidia.com/Download/processDriver.aspx?psid=" + psid.ToString() + "&pfid=" + pfid.ToString() + "&rpf=1&osid=" + osid.ToString() + "&lid=" + langid.ToString() + "&ctk=0";
-            WebClient c = new WebClient();
-            gpuURL = c.DownloadString(gpuURL);
-            string pContent = c.DownloadString(gpuURL);
+            string pContent = null;
+            using (WebClient c = new WebClient())
+            {
+                gpuURL = c.DownloadString(gpuURL);
+                pContent = c.DownloadString(gpuURL);
+            }
             var pattern = @"\d{3}\.\d{2}&nbsp";
             Regex rgx = new Regex(pattern);
             var matches = rgx.Matches(pContent);
             onlineDriv = Convert.ToString(matches[0]);
             onlineDriv = onlineDriv.Remove(onlineDriv.Length - 5);
             textblockOnline.Text = onlineDriv;
-            c.Dispose();
 
             if (localDriv != onlineDriv)
             {

@@ -47,5 +47,9 @@ namespace EnvyUpdate
         {
             System.Diagnostics.Process.Start("https://github.com/Federerer/Notifications.Wpf/blob/master/LICENSE");
         }
+        private void textNewtonsoft_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md");
+        }
     }
 }
