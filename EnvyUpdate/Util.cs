@@ -262,14 +262,14 @@ namespace EnvyUpdate
             string GPUName = null;
             foreach (ManagementObject obj in new ManagementObjectSearcher("SELECT * FROM Win32_VideoController").Get())
             {
-                if (obj["Description"].ToString().ToLower().Contains("radeon"))
-                {
+                //if (obj["Description"].ToString().ToLower().Contains("radeon"))
+                //{
                     // If it's an AMD card, use the "Name" field, because they use chip code numbers in "VideoProcessor", which we do not need.
                     // Todo for 3.0: Find a way to ignore mobile Radeon GPUs in Laptops.
-                    // For now: Since we only care about Nvidia GPUs, don't break even if an AMD card is found.
-                    GPUName = obj["Name"].ToString().ToLower();
+                    // For now: Since we only care about Nvidia GPUs, this is commented out.
+                    //GPUName = obj["Name"].ToString().ToLower();
                     //break;
-                }
+                //}
                 if (obj["Description"].ToString().ToLower().Contains("nvidia"))
                 {
                     // If it's an Nvidia GPU, use VideoProcessor so we don't have to truncate the resulting string.
