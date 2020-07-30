@@ -196,22 +196,38 @@ namespace EnvyUpdate
                 }
             }
             XDocument xDoc = XDocument.Parse(xmlcontent);
+            string gpuName = GetGPUName();
 
-            if (IDtype == "pfid")
+            switch (IDtype)
             {
-                string gpuName = GetGPUName();
-                id = GetValueFromName(xDoc, gpuName); 
+                case "psid":
+                    id = GetValueFromName(xDoc, gpuName, false);
+                    break;
+                case "pfid":
+                    id = GetValueFromName(xDoc, gpuName, true);
+                    break;
+                case "osid":
+                    id = GetOSID();
+                    break;
+                case "langid":
+                    // Currently unsupported, because Nvidia has a weird way of naming languages in their native OR english version.
+                    // https://www.nvidia.com/Download/API/lookupValueSearch.aspx?TypeID=5
+                    break;
+                default:
+                    break;
             }
 
             return id;
         }
         /// <summary>
         /// Gets Value from Nvidias XML docs by searching for the name. Can be used for OS, Lang and GPU.
+        /// This will produce problems when run on Linux. Good thing Linux has nice package managers to take care of driver updating.
         /// </summary>
         /// <param name="xDoc"></param>
         /// <param name="query"></param>
+        /// <param name="psid"></param>
         /// <returns></returns>
-        private static int GetValueFromName (XDocument xDoc, string query)
+        private static int GetValueFromName (XDocument xDoc, string query, bool psid)
         {
             int value = 0;
 
@@ -224,12 +240,20 @@ namespace EnvyUpdate
                 {
                     int value1 = 0;
                     int value2 = 0;
+                    string cleanResult = null;
 
-                    string result = name.Parent.Value;
-                    int index = result.IndexOf(sName);
-                    string cleanResult = (index < 0)
-                        ? result
-                        : result.Remove(index, sName.Length);
+                    if (psid)
+                    {
+                        cleanResult = name.Parent.FirstAttribute.Value;
+                    }
+                    else
+                    {
+                        string result = name.Parent.Value;
+                        int index = result.IndexOf(sName);
+                        cleanResult = (index < 0)
+                            ? result
+                            : result.Remove(index, sName.Length);
+                    }
 
                     if (i == 0)
                     {
@@ -250,6 +274,42 @@ namespace EnvyUpdate
                     i++;
                 }
             }
+
+            return value;
+        }
+        /// <summary>
+        /// Returns hardcoded values for the supported operating systems.
+        /// </summary>
+        /// <param name="xDoc"></param>
+        /// <returns></returns>
+        private static int GetOSID()
+        {
+            // This is faster than making a whole web request and searching through XML. This application only supports 8 possible IDs, so they are hardcoded.
+            int value = 0;
+            string OS = Environment.OSVersion.Version.Major.ToString() + "." + Environment.OSVersion.Version.Minor.ToString();
+
+            // Here the 32bit values are used. Later, if the OS is 64bit, we'll add 1, since that is how Nvidia does their IDs.
+            switch (OS)
+            {
+                case "10.0":
+                    value = 56;
+                    break;
+                case "6.1":
+                    value = 18;
+                    break;
+                case "6.2":
+                    value = 27;
+                    break;
+                case "6.3":
+                    value = 40;
+                    break;
+                default:
+                    break;
+            }
+
+            //Simply increment the ID by 1 if OS is 64bit.
+            if (Environment.Is64BitOperatingSystem)
+                value++;
 
             return value;
         }

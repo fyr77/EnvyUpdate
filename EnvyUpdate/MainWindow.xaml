@@ -6,16 +6,15 @@
         xmlns:local="clr-namespace:EnvyUpdate"
         xmlns:tb="http://www.hardcodet.net/taskbar" 
         mc:Ignorable="d"
-        Title="EnvyUpdate" Height="170" Width="463" Icon="icon.ico" ResizeMode="CanMinimize" StateChanged="Window_StateChanged" Closing="Window_Closing">
+        Title="EnvyUpdate" Height="132.5" Width="463" Icon="icon.ico" ResizeMode="CanMinimize" StateChanged="Window_StateChanged" Closing="Window_Closing">
     <Grid Margin="0,0,0,6">
         <tb:TaskbarIcon IconSource="/icon.ico" ToolTipText="EnvyUpdate" TrayLeftMouseDown="TaskbarIcon_TrayLeftMouseDown" />
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" Width="151"><Run Text="Local d"/><Run Text="river "/><Run Text="v"/><Run Text="ersion:"/></TextBlock>
         <TextBlock x:Name="textblockGPU" HorizontalAlignment="Left" Margin="166,10,0,0" TextWrapping="Wrap" Text="&lt;none&gt;" VerticalAlignment="Top" RenderTransformOrigin="-0.346,0.564"/>
-        <Label x:Name="labelDrag" Content="Drag nvidia.com-cookies.txt here..." Margin="10,98,12,10" HorizontalAlignment="Center" VerticalAlignment="Center" AllowDrop="True" Drop="Grid_Drop" Height="28" Width="435"/>
         <Button x:Name="buttonHelp" Content="?" HorizontalAlignment="Left" Margin="425,11,0,0" VerticalAlignment="Top" Width="20" Click="buttonHelp_Click"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" Width="151"><Run Text="Online "/><Run Text="d"/><Run Text="river "/><Run Text="v"/><Run Text="ersion:"/></TextBlock>
         <TextBlock x:Name="textblockOnline" HorizontalAlignment="Left" Margin="166,31,0,0" TextWrapping="Wrap" Text="&lt;none&gt;" VerticalAlignment="Top" RenderTransformOrigin="-0.346,0.564"/>
-        <CheckBox x:Name="chkPortable" Content="Portable mode" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" IsChecked="True" Unchecked="chkPortable_Unchecked" Checked="chkPortable_Checked"/>
+        <CheckBox x:Name="chkInstall" Content="Install?" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" IsChecked="False" Unchecked="chkInstall_Unchecked" Checked="chkInstall_Checked"/>
         <Button x:Name="buttonDL" Content="⟱" HorizontalAlignment="Left" Margin="250,10,0,0" VerticalAlignment="Top" Width="37" FontSize="20" Height="37" Click="buttonDL_Click" Foreground="White" Background="#FF3CDA00" Visibility="Hidden"/>
         <CheckBox x:Name="chkAutostart" Content="Autostart" HorizontalAlignment="Left" Margin="10,58,0,0" VerticalAlignment="Top" IsEnabled="False" Checked="chkAutostart_Checked" Unchecked="chkAutostart_Unchecked"/>
     </Grid>
