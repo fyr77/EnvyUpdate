@@ -24,6 +24,7 @@ namespace EnvyUpdate
         private readonly string startmenu = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
         private readonly string version = "2.0";
         private string argument = null;
+        private bool isDebug = false;
 
         public MainWindow()
         {
@@ -48,6 +49,11 @@ namespace EnvyUpdate
                 MessageBox.Show("Application is already running.");
                 Environment.Exit(1);
             }
+            // Set correct ticks
+            if (File.Exists(startup + "\\EnvyUpdate.lnk"))
+                chkAutostart.IsChecked = true;
+            if (File.Exists(appdata + "EnvyUpdate.exe"))
+                chkInstall.IsChecked = true;
             // Check if application is installed and update
             if (exepath == appdata)
             {
@@ -64,8 +70,6 @@ namespace EnvyUpdate
                 }
                 // Also set correct ticks.
                 chkInstall.IsChecked = true;
-                if (File.Exists(startup + "\\EnvyUpdate.lnk"))
-                    chkAutostart.IsChecked = true;
             }
             if (Util.GetLocDriv() != null)
             {
@@ -78,6 +82,7 @@ namespace EnvyUpdate
                 {
                     case "/ignoregpu":
                         MessageBox.Show("Debug: GPU ignored.");
+                        isDebug = true;
                         break;
                     default:
                         MessageBox.Show("No NVIDIA GPU found. Application will exit.");
@@ -112,29 +117,34 @@ namespace EnvyUpdate
             int osid;
             //int langid;
 
-            psid = Util.GetIDs("psid");
-            pfid = Util.GetIDs("pfid");
-            osid = Util.GetIDs("osid");
-            gpuURL = "http://www.nvidia.com/Download/processDriver.aspx?psid=" + psid.ToString() + "&pfid=" + pfid.ToString() + "&osid=" + osid.ToString(); // + "&lid=" + langid.ToString();
-            WebClient c = new WebClient();
-            gpuURL = c.DownloadString(gpuURL);
-            string pContent = c.DownloadString(gpuURL);
-            var pattern = @"\d{3}\.\d{2}&nbsp";
-            Regex rgx = new Regex(pattern);
-            var matches = rgx.Matches(pContent);
-            onlineDriv = Convert.ToString(matches[0]);
-            onlineDriv = onlineDriv.Remove(onlineDriv.Length - 5);
-            textblockOnline.Text = onlineDriv;
-            c.Dispose();
-
-            if (localDriv != onlineDriv)
+            // This little bool check is necessary for debug mode on systems without an Nvidia GPU. 
+            if (!isDebug)
             {
-                textblockOnline.Foreground = Brushes.Red;
-                buttonDL.Visibility = Visibility.Visible;
-                Notify.ShowDrivUpdatePopup();
+                psid = Util.GetIDs("psid");
+                pfid = Util.GetIDs("pfid");
+                osid = Util.GetIDs("osid");
+                gpuURL = "http://www.nvidia.com/Download/processDriver.aspx?psid=" + psid.ToString() + "&pfid=" + pfid.ToString() + "&osid=" + osid.ToString(); // + "&lid=" + langid.ToString();
+                WebClient c = new WebClient();
+                gpuURL = c.DownloadString(gpuURL);
+                string pContent = c.DownloadString(gpuURL);
+                var pattern = @"\d{3}\.\d{2}&nbsp";
+                Regex rgx = new Regex(pattern);
+                var matches = rgx.Matches(pContent);
+                onlineDriv = Convert.ToString(matches[0]);
+                onlineDriv = onlineDriv.Remove(onlineDriv.Length - 5);
+                textblockOnline.Text = onlineDriv;
+                c.Dispose();
+
+                if (localDriv != onlineDriv)
+                {
+                    textblockOnline.Foreground = Brushes.Red;
+                    buttonDL.Visibility = Visibility.Visible;
+                    Notify.ShowDrivUpdatePopup();
+                }
+                else
+                    textblockOnline.Foreground = Brushes.Green;
             }
-            else
-                textblockOnline.Foreground = Brushes.Green;
+
             if (exepath == appdata)
             {
                 WindowState = WindowState.Minimized;
