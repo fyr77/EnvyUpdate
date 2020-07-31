@@ -38,6 +38,11 @@ namespace EnvyUpdate
             System.Diagnostics.Process.Start("https://github.com/Fody/Fody/blob/master/License.txt");
         }
 
+        private void textCostura_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/Fody/Costura/blob/master/license.txt");
+        }
+
         private void textNotifyIcon_MouseDown(object sender, MouseButtonEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/hardcodet/wpf-notifyicon/blob/master/LICENSE");
