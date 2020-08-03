@@ -4,18 +4,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EnvyUpdate"
+        xmlns:p="clr-namespace:EnvyUpdate.Properties"
         xmlns:tb="http://www.hardcodet.net/taskbar" 
         mc:Ignorable="d"
-        Title="EnvyUpdate" Height="140" Width="463" Icon="icon.ico" ResizeMode="CanMinimize" StateChanged="Window_StateChanged" Closing="Window_Closing">
-    <Grid Margin="0,0,0,6">
-        <tb:TaskbarIcon IconSource="/icon.ico" ToolTipText="EnvyUpdate" TrayLeftMouseDown="TaskbarIcon_TrayLeftMouseDown" />
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" Width="151"><Run Text="Local d"/><Run Text="river "/><Run Text="v"/><Run Text="ersion:"/></TextBlock>
-        <TextBlock x:Name="textblockGPU" HorizontalAlignment="Left" Margin="166,10,0,0" TextWrapping="Wrap" Text="&lt;none&gt;" VerticalAlignment="Top" RenderTransformOrigin="-0.346,0.564"/>
-        <Button x:Name="buttonHelp" Content="?" HorizontalAlignment="Left" Margin="425,11,0,0" VerticalAlignment="Top" Width="20" Click="buttonHelp_Click"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" Width="151"><Run Text="Online "/><Run Text="d"/><Run Text="river "/><Run Text="v"/><Run Text="ersion:"/></TextBlock>
-        <TextBlock x:Name="textblockOnline" HorizontalAlignment="Left" Margin="166,31,0,0" TextWrapping="Wrap" Text="&lt;none&gt;" VerticalAlignment="Top" RenderTransformOrigin="-0.346,0.564"/>
-        <CheckBox x:Name="chkInstall" Content="Install" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" IsChecked="False" Unchecked="chkInstall_Unchecked" Checked="chkInstall_Checked"/>
-        <Button x:Name="buttonDL" Content="⟱" HorizontalAlignment="Left" Margin="250,10,0,0" VerticalAlignment="Top" Width="37" FontSize="20" Height="37" Click="buttonDL_Click" Foreground="White" Background="#FF3CDA00" Visibility="Hidden"/>
-        <CheckBox x:Name="chkAutostart" Content="Autostart" HorizontalAlignment="Left" Margin="10,58,0,0" VerticalAlignment="Top" IsEnabled="False" Checked="chkAutostart_Checked" Unchecked="chkAutostart_Unchecked"/>
+        Title="EnvyUpdate" Height="159" Width="290.5" Icon="icon.ico" StateChanged="Window_StateChanged" Closing="Window_Closing" ResizeMode="CanMinimize">
+    <Grid Margin="0,0,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="17*"/>
+            <RowDefinition Height="86*"/>
+        </Grid.RowDefinitions>
+        <tb:TaskbarIcon IconSource="/icon.ico" ToolTipText="EnvyUpdate" TrayLeftMouseDown="TaskbarIcon_TrayLeftMouseDown" Grid.RowSpan="3" />
+        <TextBlock HorizontalAlignment="Left" Margin="10,19,0,0" TextWrapping="Wrap" FontWeight="Bold" Width="151" Height="16" VerticalAlignment="Top" Grid.Row="1"><Run Text="{x:Static p:Resources.ui_localdriver}"/></TextBlock>
+        <TextBlock x:Name="textblockGPU" HorizontalAlignment="Right" Margin="0,19,10,0" TextWrapping="Wrap" Text="&lt;none&gt;" Width="106" Height="16" VerticalAlignment="Top" TextAlignment="Right" Grid.Row="1"/>
+        <Button x:Name="buttonHelp" Content="..." Margin="0,12,10,0" Click="buttonHelp_Click" HorizontalAlignment="Right" Width="20" Height="20" VerticalAlignment="Top" Grid.RowSpan="2"/>
+        <TextBlock Margin="10,40,0,0" TextWrapping="Wrap" FontWeight="Bold" Grid.Row="1" HorizontalAlignment="Left" Width="151" Height="16" VerticalAlignment="Top"><Run Text="{x:Static p:Resources.ui_onlinedriver}"/></TextBlock>
+        <TextBlock x:Name="textblockOnline" HorizontalAlignment="Right" Margin="0,40,10,0" TextWrapping="Wrap" Text="&lt;none&gt;" Width="106" Grid.Row="1" Height="16" VerticalAlignment="Top" TextAlignment="Right"/>
+        <CheckBox x:Name="chkInstall" Content="{x:Static p:Resources.ui_install}" HorizontalAlignment="Left" Margin="10,83,0,0" IsChecked="False" Unchecked="chkInstall_Unchecked" Checked="chkInstall_Checked" Width="51" Grid.Row="1" Height="16" VerticalAlignment="Top"/>
+        <Button x:Name="buttonDL" Content="⟱" Margin="0,0,10,10" FontSize="20" Click="buttonDL_Click" Foreground="White" Background="#FF3CDA00" Visibility="Hidden" Grid.Row="1" HorizontalAlignment="Right" Width="30" Height="30" VerticalAlignment="Bottom"/>
+        <CheckBox x:Name="chkAutostart" Content="{x:Static p:Resources.ui_autostart}" HorizontalAlignment="Left" Margin="10,62,0,0" IsEnabled="False" Checked="chkAutostart_Checked" Unchecked="chkAutostart_Unchecked" Width="69" Grid.Row="1" Height="16" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textblockGPUName" Margin="10,14,35,0" TextWrapping="Wrap" Text="GPU..." Height="16" VerticalAlignment="Top" TextAlignment="Center" Grid.RowSpan="2" FontWeight="Bold"/>
     </Grid>
 </Window>

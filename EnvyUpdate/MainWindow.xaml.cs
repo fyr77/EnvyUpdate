@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -16,50 +15,43 @@ namespace EnvyUpdate
     {
         private string localDriv = null;
         private string onlineDriv = null;
-        private readonly string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\envyupdate\\";
-        private readonly string startup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
         private string gpuURL = null;
-        private readonly string exeloc = System.Reflection.Assembly.GetEntryAssembly().Location;
-        private readonly string exepath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\";
-        private readonly string startmenu = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
-        private readonly string version = "2.0";
         private string argument = null;
         private bool isDebug = false;
 
         public MainWindow()
         {
             InitializeComponent();
-            Title += " " + version;
+            Title += " " + GlobalVars.version;
 
             // Try to get command line arguments
             try
             {
                 argument = Environment.GetCommandLineArgs()[1];
-                Console.WriteLine("Starting in debug mode.");
             }
             catch (IndexOutOfRangeException)
             {
                 // This is necessary, since .NET throws an exception if you check for a non-existant arg.
-                Console.WriteLine("Starting in release mode.");
             }
 
             // Check if EnvyUpdate is already running
             if (Util.IsInstanceOpen("EnvyUpdate"))
             {
-                MessageBox.Show("Application is already running.");
+                MessageBox.Show(Properties.Resources.instance_already_running);
                 Environment.Exit(1);
             }
             // Set correct ticks
-            if (File.Exists(startup + "\\EnvyUpdate.lnk"))
+            if (File.Exists(GlobalVars.startup + "\\EnvyUpdate.lnk"))
                 chkAutostart.IsChecked = true;
-            if (File.Exists(appdata + "EnvyUpdate.exe"))
+            if (File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
                 chkInstall.IsChecked = true;
+
             // Check if application is installed and update
-            if (exepath == appdata)
+            if (GlobalVars.exepath == GlobalVars.appdata)
             {
                 try
                 {
-                    if (Util.GetNewVer() != version)
+                    if ((Util.GetNewVer() != GlobalVars.version) && (isDebug = false))
                     {
                         Util.UpdateApp();
                     }
@@ -71,10 +63,25 @@ namespace EnvyUpdate
                 // Also set correct ticks.
                 chkInstall.IsChecked = true;
             }
-            if (Util.GetLocDriv() != null)
+
+            // Check for overrides
+            if (File.Exists(GlobalVars.desktopOverride))
+                GlobalVars.isMobile = false;
+            else if (File.Exists(GlobalVars.mobileOverride))
+                GlobalVars.isMobile = true;
+            // Check if mobile, if no override is present
+            else
+                GlobalVars.isMobile = Util.IsMobile();
+
+            string locDriv = Util.GetLocDriv();
+            if (locDriv != null)
             {
-                localDriv = Util.GetLocDriv();
-                textblockGPU.Text = localDriv;
+                localDriv = locDriv;
+                textblockGPU.Text = locDriv;
+                if (GlobalVars.isMobile)
+                    textblockGPUName.Text = Util.GetGPUName(false) + " (mobile)";
+                else
+                    textblockGPUName.Text = Util.GetGPUName(false);
             }
             else
             {
@@ -85,14 +92,15 @@ namespace EnvyUpdate
                         isDebug = true;
                         break;
                     default:
-                        MessageBox.Show("No NVIDIA GPU found. Application will exit.");
+                        MessageBox.Show(Properties.Resources.no_compatible_gpu);
                         Environment.Exit(255);
                         break;
                 }
             }
-            
+
             DispatcherTimer Dt = new DispatcherTimer();
             Dt.Tick += new EventHandler(Dt_Tick);
+            // Check for new updates every 5 hours.
             Dt.Interval = new TimeSpan(5, 0, 0);
             Dt.Start();
             Load();
@@ -107,7 +115,6 @@ namespace EnvyUpdate
         {
             InfoWindow infoWin = new InfoWindow();
             infoWin.ShowDialog();
-            //System.Diagnostics.Process.Start("https://github.com/fyr77/EnvyUpdate/");
         }
 
         private void Load()
@@ -145,7 +152,7 @@ namespace EnvyUpdate
                     textblockOnline.Foreground = Brushes.Green;
             }
 
-            if (exepath == appdata)
+            if (GlobalVars.exepath == GlobalVars.appdata)
             {
                 WindowState = WindowState.Minimized;
                 Hide();
@@ -176,47 +183,64 @@ namespace EnvyUpdate
             {
                 chkAutostart.IsEnabled = true;
             }
-            if (exepath != appdata)
+            if (GlobalVars.exepath != GlobalVars.appdata)
             {
-                if (!Directory.Exists(appdata))
+                if (!Directory.Exists(GlobalVars.appdata))
                 {
-                    Directory.CreateDirectory(appdata);
+                    Directory.CreateDirectory(GlobalVars.appdata);
                 }
-                File.Copy(exeloc, appdata + "EnvyUpdate.exe", true);
-                Util.CreateShortcut("EnvyUpdate", startmenu, appdata + "EnvyUpdate.exe", "Nvidia Updater Application.");
+                File.Copy(GlobalVars.exeloc, GlobalVars.appdata + "EnvyUpdate.exe", true);
+
+                if (File.Exists(GlobalVars.mobileOverride))
+                    File.Copy(GlobalVars.mobileOverride, GlobalVars.appdata + "mobile.envy", true);
+                if (File.Exists(GlobalVars.desktopOverride))
+                    File.Copy(GlobalVars.desktopOverride, GlobalVars.appdata + "desktop.envy", true);
+
+                Util.CreateShortcut("EnvyUpdate", GlobalVars.startmenu, GlobalVars.appdata + "EnvyUpdate.exe", Properties.Resources.app_description);
             }
         }
 
         private void chkInstall_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (chkAutostart != null)
+            // Only uninstall if user confirms. Prevents accidental uninstalls.
+            if (MessageBox.Show(Properties.Resources.uninstall_confirm, Properties.Resources.uninstall_heading, MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                chkAutostart.IsEnabled = false;
-                chkAutostart.IsChecked = false;
+                if (chkAutostart != null)
+                {
+                    chkAutostart.IsEnabled = false;
+                    chkAutostart.IsChecked = false;
+                }
+                if ((GlobalVars.exepath == GlobalVars.appdata) && File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
+                    Util.SelfDelete();
+                else if (File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
+                    File.Delete(GlobalVars.appdata + "EnvyUpdate.exe");
+
+                File.Delete(GlobalVars.appdata + "desktop.envy");
+                File.Delete(GlobalVars.appdata + "mobile.envy");
+
+                File.Delete(GlobalVars.startup + "\\EnvyUpdate.lnk");
+                File.Delete(GlobalVars.startmenu + "\\EnvyUpdate.lnk");
             }
-            if (Directory.Exists(appdata))
-            {
-                File.Delete(appdata + "EnvyUpdate.exe");
-                File.Delete(startup + "\\EnvyUpdate.lnk");
-                File.Delete(startmenu + "\\EnvyUpdate.lnk");
-            }
+            else
+                chkInstall.IsChecked = true;
         }
 
         private void chkAutostart_Checked(object sender, RoutedEventArgs e)
         {
-            Util.CreateShortcut("EnvyUpdate", startup, appdata + "EnvyUpdate.exe", "Nvidia Updater Application.");
+            Util.CreateShortcut("EnvyUpdate", GlobalVars.startup, GlobalVars.appdata + "EnvyUpdate.exe", Properties.Resources.app_description);
         }
 
         private void chkAutostart_Unchecked(object sender, RoutedEventArgs e)
         {
-            File.Delete(startup + "\\EnvyUpdate.lnk");
+            File.Delete(GlobalVars.startup + "\\EnvyUpdate.lnk");
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var window = MessageBox.Show("Exit EnvyUpdate?", "", MessageBoxButton.YesNo);
-            e.Cancel = (window == MessageBoxResult.No);
-            Application.Current.Shutdown();
+            if (MessageBox.Show(Properties.Resources.exit_confirm, "", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                Application.Current.Shutdown();
+            else
+                e.Cancel = true;
         }
     }
 }

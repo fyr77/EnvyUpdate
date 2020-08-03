@@ -118,51 +118,51 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="app_description" xml:space="preserve">
-    <value>NVIDIA Updater Application.</value>
+    <value>NVIDIA Aktualisierungsanwendung.</value>
   </data>
   <data name="exit_confirm" xml:space="preserve">
-    <value>Exit EnvyUpdate?</value>
+    <value>EnvyUpdate schließen?</value>
   </data>
   <data name="info_reset_caption" xml:space="preserve">
-    <value>Preference reset.</value>
+    <value>Einstellung zurückgesetzt.</value>
   </data>
   <data name="info_reset_message" xml:space="preserve">
-    <value>Preference reset.\nEnvyUpdate will ask for computer form factor the next time it is started.</value>
+    <value>Einstellung zurückgesetzt.\nBeim nächsten Start wird EnvyUpdate erneut nach dem Computerformfaktor fragen.</value>
   </data>
   <data name="instance_already_running" xml:space="preserve">
-    <value>Application is already running.</value>
+    <value>Anwendung läuft bereits.</value>
   </data>
   <data name="message_new_version" xml:space="preserve">
-    <value>New version of EnvyUpdate found. Application will restart.\nThis will probably take a few seconds.</value>
+    <value>Neue Version von EnvyUpdate gefunden. Die Anwendung wird neu starten.\nDies wird wahrscheinlich einige Sekunden dauern.</value>
   </data>
   <data name="no_compatible_gpu" xml:space="preserve">
-    <value>No NVIDIA GPU found. Application will exit.</value>
+    <value>Keine NVIDIA GPU gefunden. EnvyUpdate wird sich nun schließen.</value>
   </data>
   <data name="ui_autostart" xml:space="preserve">
     <value>Autostart</value>
   </data>
   <data name="ui_info_mobile" xml:space="preserve">
-    <value>Mobile GPU (Laptop, etc)?</value>
+    <value>Mobile Grafikkarte (Laptop, etc)?</value>
   </data>
   <data name="ui_info_website" xml:space="preserve">
-    <value>EnvyUpdate website</value>
+    <value>EnvyUpdate Webseite</value>
   </data>
   <data name="ui_install" xml:space="preserve">
-    <value>Install</value>
+    <value>Installieren</value>
   </data>
   <data name="ui_localdriver" xml:space="preserve">
-    <value>Local driver version:</value>
+    <value>Lokale Treiberversion:</value>
   </data>
   <data name="ui_onlinedriver" xml:space="preserve">
-    <value>Online driver version:</value>
+    <value>Online Treiberversion:</value>
   </data>
   <data name="uninstall_confirm" xml:space="preserve">
-    <value>Are you sure you want to uninstall EnvyUpdate?</value>
+    <value>Sind Sie sich sicher, dass Sie EnvyUpdate deinstallieren wollen?</value>
   </data>
   <data name="uninstall_heading" xml:space="preserve">
-    <value>Uninstall?</value>
+    <value>Deinstallieren?</value>
   </data>
   <data name="update_popup_message" xml:space="preserve">
-    <value>A new driver update is available for your graphics card. Click for more info.</value>
+    <value>Eine neue Treiberversion ist verfügbar. Hier klicken für mehr Info.</value>
   </data>
 </root>

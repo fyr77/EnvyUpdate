@@ -9,6 +9,8 @@ using System.Windows;
 using Newtonsoft.Json;
 using System.Xml;
 using System.Xml.Linq;
+using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 
 namespace EnvyUpdate
 {
@@ -153,11 +155,11 @@ namespace EnvyUpdate
                 client.DownloadFile("https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.exe", appdata + "EnvyUpdated.exe");
             }
 
-            MessageBox.Show("New version of EnvyUpdate found. Application will restart.\nThis will probably take a few seconds.");
+            MessageBox.Show(Properties.Resources.message_new_version);
 
             // Replace exe with new one.
             // This starts a seperate cmd process which will wait a bit, then delete EnvyUpdate and rename the previously downloaded EnvyUpdated.exe to EnvyUpdate.exe
-            // I know this is a bit dumb, but I honestly couldn't think of a different way to solve this properly, since the Application would need to delete itself.
+            // I know this is a bit dumb, but I honestly couldn't think of a different way to solve this properly, since the Application has to delete itself.
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
@@ -170,6 +172,21 @@ namespace EnvyUpdate
             process.Start();
 
             Environment.Exit(2);
+        }
+        public static void SelfDelete()
+        {
+            string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\envyupdate\\";
+
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                WindowStyle = ProcessWindowStyle.Hidden,
+                WorkingDirectory = appdata,
+                FileName = "cmd.exe",
+                Arguments = "/C timeout 5 && del EnvyUpdate.exe"
+            };
+            process.StartInfo = startInfo;
+            process.Start();
         }
         public static int GetIDs(string IDtype)
         {
@@ -196,7 +213,7 @@ namespace EnvyUpdate
                 }
             }
             XDocument xDoc = XDocument.Parse(xmlcontent);
-            string gpuName = GetGPUName();
+            string gpuName = GetGPUName(true);
 
             switch (IDtype)
             {
@@ -266,7 +283,7 @@ namespace EnvyUpdate
                     
                     value = value1;
 
-                    if (GlobalVars.mobile)
+                    if (GlobalVars.isMobile)
                     {
                         value = value2;
                     }
@@ -317,7 +334,7 @@ namespace EnvyUpdate
         /// Returns GPU name in lower case.
         /// </summary>
         /// <returns></returns>
-        private static string GetGPUName()
+        public static string GetGPUName(bool lower)
         {
             string GPUName = null;
             foreach (ManagementObject obj in new ManagementObjectSearcher("SELECT * FROM Win32_VideoController").Get())
@@ -333,12 +350,35 @@ namespace EnvyUpdate
                 if (obj["Description"].ToString().ToLower().Contains("nvidia"))
                 {
                     // If it's an Nvidia GPU, use VideoProcessor so we don't have to truncate the resulting string.
-                    GPUName = obj["VideoProcessor"].ToString().ToLower();
+                    if (lower)
+                    {
+                        GPUName = obj["VideoProcessor"].ToString().ToLower();
+                        // Remove any 3GB, 6GB or similar from name. We don't need to know the VRAM to get results.
+                        GPUName = Regex.Replace(GPUName, "\\d+GB", "");
+                    }
+                    else
+                        GPUName = obj["VideoProcessor"].ToString();
+
                     break;
                 }
             }
             // This should NEVER return null outside of debugging mode, since EnvyUpdate should refuse to start without and Nvidia GPU.
             return GPUName;
+        }
+        public static bool IsMobile()
+        {
+            bool result = false;
+
+            foreach (ManagementObject obj in new ManagementObjectSearcher("SELECT * FROM Win32_Battery").Get())
+            {
+                result = true;
+            }
+            foreach (ManagementObject obj in new ManagementObjectSearcher("SELECT * FROM Win32_PortableBattery").Get())
+            {
+                result = true;
+            }
+
+            return result;
         }
     }
 }

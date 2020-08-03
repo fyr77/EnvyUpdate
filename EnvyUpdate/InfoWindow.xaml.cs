@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
+using System.IO;
 
 namespace EnvyUpdate
 {
@@ -8,12 +10,23 @@ namespace EnvyUpdate
     /// </summary>
     public partial class InfoWindow : Window
     {
+        bool defaultIsMobile = false;
+        bool isOverride = false;
         public InfoWindow()
         {
             InitializeComponent();
+
+            if (GlobalVars.isMobile)
+                chkMobile.IsChecked = true;
+
+            if (Util.IsMobile())
+                defaultIsMobile = true;
+
+            if (defaultIsMobile != GlobalVars.isMobile)
+                isOverride = true;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ButtonWeb_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/fyr77/EnvyUpdate/");
         }
@@ -55,6 +68,63 @@ namespace EnvyUpdate
         private void textNewtonsoft_MouseDown(object sender, MouseButtonEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md");
+        }
+
+        private void chkMobile_Checked(object sender, RoutedEventArgs e)
+        {
+            if (isOverride)
+            {
+                // If an override was present, delete it.
+                bool deleteSuccess = false;
+                while (!deleteSuccess)
+                {
+                    try
+                    {
+                        File.Delete(GlobalVars.desktopOverride);
+                        deleteSuccess = true;
+                    }
+                    catch (IOException)
+                    {
+                        // This is necessary in case someone ticks and unticks the option quickly, as the File.Create Method has sometimes yet to close the file.
+                    }
+                }
+                isOverride = false;
+            }
+            else
+            {
+                File.Create(GlobalVars.mobileOverride).Close();
+                GlobalVars.isMobile = true;
+                isOverride = true;
+            }
+        }
+
+        private void chkMobile_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (isOverride)
+            {
+                // If an override was present, delete it.
+                bool deleteSuccess = false;
+                while (!deleteSuccess)
+                {
+                    try
+                    {
+                        File.Delete(GlobalVars.mobileOverride);
+                        deleteSuccess = true;
+                    }
+                    catch (IOException)
+                    {
+                        // This is necessary in case someone ticks and unticks the option quickly, as the File.Create Method has sometimes yet to close the file.
+                    }
+                }
+                
+                isOverride = false;
+            }
+            else
+            {
+                File.Create(GlobalVars.desktopOverride).Close();
+                GlobalVars.isMobile = false;
+                isOverride = true;
+            }
         }
     }
 }
