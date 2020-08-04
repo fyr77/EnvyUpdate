@@ -47,4 +47,5 @@ The application is compatible with all Nvidia GPUs that have their drivers avail
 * wpf-notifyicon (for showing an icon in the system tray): [CPOL](https://github.com/hardcodet/wpf-notifyicon/blob/master/LICENSE)
 * Notifications.Wpf: [MIT](https://github.com/Federerer/Notifications.Wpf/blob/master/LICENSE)
 * Newtonsoft.Json: [MIT](https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md)
+* Resource Embedder: [MIT](https://github.com/MarcStan/resource-embedder/blob/master/LICENSE)
 * Icon made by Freepik from www.flaticon.com

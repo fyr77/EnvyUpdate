@@ -69,6 +69,10 @@ namespace EnvyUpdate
         {
             System.Diagnostics.Process.Start("https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md");
         }
+        private void textResourceEmbedder_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/MarcStan/resource-embedder/blob/master/LICENSE");
+        }
 
         private void chkMobile_Checked(object sender, RoutedEventArgs e)
         {
