@@ -247,46 +247,54 @@ namespace EnvyUpdate
         private static int GetValueFromName (XDocument xDoc, string query, bool psid)
         {
             int value = 0;
+            int i = 0;
+            int value1 = 0;
+            int value2 = 0;
 
             var names = xDoc.Descendants("Name");
             foreach (var name in names)
             {
-                int i = 0;
                 string sName = name.Value.ToString().ToLower();
                 if (sName == query)
                 {
-                    int value1 = 0;
-                    int value2 = 0;
                     string cleanResult = null;
 
                     if (psid)
                     {
-                        cleanResult = name.Parent.FirstAttribute.Value;
+                        if (i == 0)
+                            value1 = int.Parse(name.Parent.FirstAttribute.Value);
+                        else
+                            value2 = int.Parse(name.Parent.FirstAttribute.Value);
                     }
                     else
                     {
-                        string result = name.Parent.Value;
+                        string result = name.Parent.Value.ToLower();
                         int index = result.IndexOf(sName);
                         cleanResult = (index < 0)
                             ? result
                             : result.Remove(index, sName.Length);
+
+                        if (i == 0)
+                        {
+                            value1 = int.Parse(cleanResult);
+                        }
+                        else
+                        {
+                            value2 = int.Parse(cleanResult);
+                        }
                     }
 
-                    if (i == 0)
-                    {
-                        value1 = int.Parse(cleanResult);
-                    }
-                    else
-                    {
-                        value2 = int.Parse(cleanResult);
-                    }
-                    
-                    value = value1;
-
-                    if (GlobalVars.isMobile)
+                    if (GlobalVars.isMobile && (value2 != 0))
                     {
                         value = value2;
                     }
+                    else
+                    {
+                        value = value1;
+                    }
+
+                    if (value2 != 0)
+                        break;
 
                     i++;
                 }

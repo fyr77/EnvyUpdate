@@ -127,8 +127,8 @@ namespace EnvyUpdate
             // This little bool check is necessary for debug mode on systems without an Nvidia GPU. 
             if (!isDebug)
             {
-                psid = Util.GetIDs("psid");
-                pfid = Util.GetIDs("pfid");
+                psid = Util.GetIDs("pfid");
+                pfid = Util.GetIDs("psid");
                 osid = Util.GetIDs("osid");
                 gpuURL = "http://www.nvidia.com/Download/processDriver.aspx?psid=" + psid.ToString() + "&pfid=" + pfid.ToString() + "&osid=" + osid.ToString(); // + "&lid=" + langid.ToString();
                 WebClient c = new WebClient();
