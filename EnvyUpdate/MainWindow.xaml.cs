@@ -24,6 +24,12 @@ namespace EnvyUpdate
             InitializeComponent();
             Title += " " + GlobalVars.version;
 
+            if (Util.GetNewVer() != GlobalVars.version)
+            {
+                MessageBox.Show("yes");
+            }
+            MessageBox.Show(Util.GetNewVer());
+
             // Try to get command line arguments
             try
             {
@@ -51,7 +57,7 @@ namespace EnvyUpdate
             {
                 try
                 {
-                    if ((Util.GetNewVer() != GlobalVars.version) && (isDebug = false))
+                    if (Util.GetNewVer() != GlobalVars.version)
                     {
                         Util.UpdateApp();
                     }

@@ -17,31 +17,6 @@ namespace EnvyUpdate
     internal class Util
     {
         /// <summary>
-        /// Parses GPU info from a cookie file
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="term"></param>
-        /// <returns></returns>
-        public static int GetData(string path, string term)
-        {
-            string found = null;
-            string line;
-            using (StreamReader file = new StreamReader(path))
-            {
-                while ((line = file.ReadLine()) != null)
-                {
-                    if (line.Contains(term))
-                    {
-                        found = line;
-                        break;
-                    }
-                }
-            }
-            int lastno = Convert.ToInt32(found.Split().Last());
-            return lastno;
-        }
-
-        /// <summary>
         /// Gets local driver version.
         /// </summary>
         /// <returns></returns>
