@@ -210,16 +210,17 @@ namespace EnvyUpdate
                     chkAutostart.IsEnabled = false;
                     chkAutostart.IsChecked = false;
                 }
-                if ((GlobalVars.exepath == GlobalVars.appdata) && File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
-                    Util.SelfDelete();
-                else if (File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
-                    File.Delete(GlobalVars.appdata + "EnvyUpdate.exe");
 
                 File.Delete(GlobalVars.appdata + "desktop.envy");
                 File.Delete(GlobalVars.appdata + "mobile.envy");
 
                 File.Delete(GlobalVars.startup + "\\EnvyUpdate.lnk");
                 File.Delete(GlobalVars.startmenu + "\\EnvyUpdate.lnk");
+
+                if ((GlobalVars.exepath == GlobalVars.appdata) && File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
+                    Util.SelfDelete();
+                else if (File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
+                    File.Delete(GlobalVars.appdata + "EnvyUpdate.exe");
             }
             else
                 chkInstall.IsChecked = true;

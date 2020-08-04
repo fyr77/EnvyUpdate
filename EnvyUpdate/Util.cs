@@ -187,6 +187,8 @@ namespace EnvyUpdate
             };
             process.StartInfo = startInfo;
             process.Start();
+
+            Environment.Exit(2);
         }
         public static int GetIDs(string IDtype)
         {
