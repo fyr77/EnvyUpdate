@@ -7,6 +7,8 @@
  ![Issues](https://img.shields.io/github/issues/fyr77/envyupdate?style=for-the-badge)
  ![Version](https://img.shields.io/github/v/release/fyr77/envyupdate?style=for-the-badge)
  
+Be sure to also check [ElPumpo's TinyNvidiaUpdateChecker](https://github.com/ElPumpo/TinyNvidiaUpdateChecker). It's the project that inspired EnvyUpdate in the first place.
+ 
 ## How to use
 
 ### 2.0 and later
