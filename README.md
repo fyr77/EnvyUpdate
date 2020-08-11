@@ -9,7 +9,7 @@
  
 Be sure to also check [ElPumpo's TinyNvidiaUpdateChecker](https://github.com/ElPumpo/TinyNvidiaUpdateChecker). It's the project that inspired EnvyUpdate in the first place.
 
-There's also [Disable-Nvidia-Telemtry](https://github.com/NateShoffner/Disable-Nvidia-Telemetry), which does a really cool things I have not (yet) implemented.
+There's also [Disable-Nvidia-Telemtry](https://github.com/NateShoffner/Disable-Nvidia-Telemetry), which does some really cool things I have not (yet) implemented.
  
 ## How to use
 
