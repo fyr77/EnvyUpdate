@@ -7,10 +7,6 @@
  ![Issues](https://img.shields.io/github/issues/fyr77/envyupdate?style=for-the-badge)
  ![Version](https://img.shields.io/github/v/release/fyr77/envyupdate?style=for-the-badge)
  
-Be sure to also check [ElPumpo's TinyNvidiaUpdateChecker](https://github.com/ElPumpo/TinyNvidiaUpdateChecker). It's the project that inspired EnvyUpdate in the first place.
-
-There's also [Disable-Nvidia-Telemtry](https://github.com/NateShoffner/Disable-Nvidia-Telemetry), which does some really cool things I have not (yet) implemented.
- 
 ## How to use
 
 ### 2.0 and later
@@ -42,6 +38,14 @@ Simply download the latest release from the [releases page](https://github.com/f
 ## Compatibility
 
 The application is compatible with all Nvidia GPUs that have their drivers available on the nvidia.com download page and runs on Windows 7 and up.
+
+## Other interesting tools
+
+* [TinyNvidiaUpdateChecker](https://github.com/ElPumpo/TinyNvidiaUpdateChecker) - a command line update checker and installer. Inspired EnvyUpdate to begin with.
+* [Disable-Nvidia-Telemtry](https://github.com/NateShoffner/Disable-Nvidia-Telemetry) - does pretty much what the name says. It disables Nvidia Telemetry.
+* [NVCleanInstall](https://www.techpowerup.com/nvcleanstall/) - a closed-source application by TechPowerUp which does quite a lot of cool things.
+
+EnvyUpdate is not a replacement for any of these tools. I will still try to implement as many features in EnvyUpdate as possible while keeping the simple interface and as little settings as possible.
 
 ## Licenses
 
