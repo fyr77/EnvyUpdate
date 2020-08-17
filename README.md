@@ -43,7 +43,7 @@ The application is compatible with all Nvidia GPUs that have their drivers avail
 
 This application is currently maintained and developed by me (fyr77) alone in my free time. 
 
-I always try to implement critical fixes as fast as I can, but other features and minor bug fixes may take a few days to weeks to implement. 
+I always try to implement critical fixes as fast as I can, but other features and minor bug fixes may take a few days or weeks to implement. 
 
 If you want to help me develop EnvyUpdate, you can start by creating issues with your bug reports and/or feature requests. Pull requests are also welcome, especially regarding translations.
 
