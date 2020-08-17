@@ -39,6 +39,14 @@ Simply download the latest release from the [releases page](https://github.com/f
 
 The application is compatible with all Nvidia GPUs that have their drivers available on the nvidia.com download page and runs on Windows 7 and up.
 
+## Development
+
+This application is currently maintained and developed by me (fyr77) alone in my free time. 
+
+I always try to implement critical fixes as fast as I can, but other features and minor bug fixes may take a few days to weeks to implement. 
+
+If you want to help me develop EnvyUpdate, you can start by creating issues with your bug reports and/or feature requests. Pull requests are also welcome, especially regarding translations.
+
 ## Other interesting tools
 
 * [TinyNvidiaUpdateChecker](https://github.com/ElPumpo/TinyNvidiaUpdateChecker) - a command line update checker and installer. Inspired EnvyUpdate to begin with.
