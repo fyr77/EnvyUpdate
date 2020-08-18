@@ -103,7 +103,7 @@ namespace EnvyUpdate
         /// Checks for newest EnvyUpdate version.
         /// </summary>
         /// <returns></returns>
-        public static string GetNewVer()
+        public static float GetNewVer()
         {
             // This will fetch the most recent version's tag on GitHub.
             string updPath = "https://api.github.com/repos/fyr77/envyupdate/releases/latest";
@@ -113,7 +113,10 @@ namespace EnvyUpdate
             wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko");
             string webData = wc.DownloadString(updPath);
             dynamic data = JsonConvert.DeserializeObject(webData);
-            string version = data.tag_name;
+
+            // I am not catching a possible parsing exception, because I cannot think of any way it could happen. 
+            // If there is no internet connection, it should already throw when using the web client.
+            float version = float.Parse(data.tag_name);
 
             return version;
         }

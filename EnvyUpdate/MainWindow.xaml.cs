@@ -51,7 +51,7 @@ namespace EnvyUpdate
             {
                 try
                 {
-                    if (Util.GetNewVer() != GlobalVars.version)
+                    if (Util.GetNewVer() > GlobalVars.version)
                     {
                         Util.UpdateApp();
                     }
@@ -142,7 +142,7 @@ namespace EnvyUpdate
                 textblockOnline.Text = onlineDriv;
                 c.Dispose();
 
-                if (localDriv != onlineDriv)
+                if (float.Parse(localDriv) < float.Parse(onlineDriv))
                 {
                     textblockOnline.Foreground = Brushes.Red;
                     buttonDL.Visibility = Visibility.Visible;
