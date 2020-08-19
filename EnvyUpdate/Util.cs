@@ -11,6 +11,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
+using Microsoft.Win32;
 
 namespace EnvyUpdate
 {
@@ -367,6 +368,11 @@ namespace EnvyUpdate
             }
 
             return result;
+        }
+        public static bool IsDCH()
+        {
+            RegistryKey nvlddmkm = Registry.LocalMachine.OpenSubKey(@"System\CurrentControlSet\services\nvlddmkm", true);
+            return nvlddmkm.GetValueNames().Contains("DCHUVen");
         }
     }
 }
