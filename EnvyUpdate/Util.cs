@@ -108,12 +108,15 @@ namespace EnvyUpdate
         {
             // This will fetch the most recent version's tag on GitHub.
             string updPath = "https://api.github.com/repos/fyr77/envyupdate/releases/latest";
+            dynamic data = null;
 
-            WebClient wc = new WebClient();
-            // Use some user agent to not get 403'd by GitHub.
-            wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko");
-            string webData = wc.DownloadString(updPath);
-            dynamic data = JsonConvert.DeserializeObject(webData);
+            using (var wc = new WebClient())
+            {
+                // Use some user agent to not get 403'd by GitHub.
+                wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko");
+                string webData = wc.DownloadString(updPath);
+                data = JsonConvert.DeserializeObject(webData);
+            }
 
             // I am not catching a possible parsing exception, because I cannot think of any way it could happen. 
             // If there is no internet connection, it should already throw when using the web client.
