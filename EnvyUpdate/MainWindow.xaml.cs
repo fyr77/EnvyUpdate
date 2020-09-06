@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -85,16 +86,15 @@ namespace EnvyUpdate
             }
             else
             {
-                switch (argument)
+                if (argument == "/debug")
                 {
-                    case "/ignoregpu":
-                        MessageBox.Show("Debug: GPU ignored.");
-                        isDebug = true;
-                        break;
-                    default:
-                        MessageBox.Show(Properties.Resources.no_compatible_gpu);
-                        Environment.Exit(255);
-                        break;
+                    MessageBox.Show("Debug mode!");
+                    isDebug = true;
+                }
+                else
+                {
+                    MessageBox.Show(Properties.Resources.no_compatible_gpu);
+                    Environment.Exit(255);
                 }
             }
 
@@ -119,38 +119,50 @@ namespace EnvyUpdate
 
         private void Load()
         {
-            int psid;
-            int pfid;
-            int osid;
+            int psid = 0;
+            int pfid = 0;
+            int osid = 0;
+            int dtcid = 0;
             //int langid;
 
             // This little bool check is necessary for debug mode on systems without an Nvidia GPU. 
             if (!isDebug)
             {
-                psid = Util.GetIDs("pfid");
-                pfid = Util.GetIDs("psid");
+                psid = Util.GetIDs("psid");
+                pfid = Util.GetIDs("pfid");
                 osid = Util.GetIDs("osid");
-                gpuURL = "http://www.nvidia.com/Download/processDriver.aspx?psid=" + psid.ToString() + "&pfid=" + pfid.ToString() + "&osid=" + osid.ToString(); // + "&lid=" + langid.ToString();
-                WebClient c = new WebClient();
-                gpuURL = c.DownloadString(gpuURL);
-                string pContent = c.DownloadString(gpuURL);
-                var pattern = @"\d{3}\.\d{2}&nbsp";
-                Regex rgx = new Regex(pattern);
-                var matches = rgx.Matches(pContent);
-                onlineDriv = Convert.ToString(matches[0]);
-                onlineDriv = onlineDriv.Remove(onlineDriv.Length - 5);
-                textblockOnline.Text = onlineDriv;
-                c.Dispose();
-
-                if (float.Parse(localDriv) < float.Parse(onlineDriv))
-                {
-                    textblockOnline.Foreground = Brushes.Red;
-                    buttonDL.Visibility = Visibility.Visible;
-                    Notify.ShowDrivUpdatePopup();
-                }
-                else
-                    textblockOnline.Foreground = Brushes.Green;
+                dtcid = Util.GetDTCID();
             }
+            else
+            {
+                psid = Debug.LoadFakeIDs("psid");
+                pfid = Debug.LoadFakeIDs("pfid");
+                osid = Debug.LoadFakeIDs("osid");
+                dtcid = Debug.LoadFakeIDs("dtcid");
+                localDriv = Debug.LocalDriv();
+                textblockGPU.Text = localDriv;
+            }
+
+            gpuURL = "http://www.nvidia.com/Download/processDriver.aspx?psid=" + psid.ToString() + "&pfid=" + pfid.ToString() + "&osid=" + osid.ToString() + "&dtcid=" + dtcid.ToString(); // + "&lid=" + langid.ToString();
+            WebClient c = new WebClient();
+            gpuURL = c.DownloadString(gpuURL);
+            string pContent = c.DownloadString(gpuURL);
+            var pattern = @"\d{3}\.\d{2}&nbsp";
+            Regex rgx = new Regex(pattern);
+            var matches = rgx.Matches(pContent);
+            onlineDriv = Convert.ToString(matches[0]);
+            onlineDriv = onlineDriv.Remove(onlineDriv.Length - 5);
+            textblockOnline.Text = onlineDriv;
+            c.Dispose();
+
+            if (float.Parse(localDriv) < float.Parse(onlineDriv))
+            {
+                textblockOnline.Foreground = Brushes.Red;
+                buttonDL.Visibility = Visibility.Visible;
+                Notify.ShowDrivUpdatePopup();
+            }
+            else
+                textblockOnline.Foreground = Brushes.Green;
 
             if (GlobalVars.exepath == GlobalVars.appdata)
             {
@@ -161,7 +173,7 @@ namespace EnvyUpdate
 
         private void buttonDL_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start(gpuURL);
+            Process.Start(gpuURL);
         }
 
         private void TaskbarIcon_TrayLeftMouseDown(object sender, RoutedEventArgs e)

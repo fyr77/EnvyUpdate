@@ -7,7 +7,7 @@
         xmlns:p="clr-namespace:EnvyUpdate.Properties"
         xmlns:tb="http://www.hardcodet.net/taskbar" 
         mc:Ignorable="d"
-        Title="EnvyUpdate" Height="159" Width="290.5" Icon="icon.ico" StateChanged="Window_StateChanged" Closing="Window_Closing" ResizeMode="CanMinimize">
+        Title="EnvyUpdate" Height="160" Width="290" Icon="icon.ico" StateChanged="Window_StateChanged" Closing="Window_Closing" ResizeMode="CanMinimize">
     <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="17*"/>

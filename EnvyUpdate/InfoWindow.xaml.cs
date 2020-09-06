@@ -19,11 +19,12 @@ namespace EnvyUpdate
             if (GlobalVars.isMobile)
                 chkMobile.IsChecked = true;
 
-            if (Util.IsMobile())
-                defaultIsMobile = true;
+            defaultIsMobile = Util.IsMobile();
 
             if (defaultIsMobile != GlobalVars.isMobile)
                 isOverride = true;
+
+            chkDCH.IsChecked = Util.IsDCH();
         }
 
         private void ButtonWeb_Click(object sender, RoutedEventArgs e)

@@ -357,6 +357,10 @@ namespace EnvyUpdate
             // This should NEVER return null outside of debugging mode, since EnvyUpdate should refuse to start without and Nvidia GPU.
             return GPUName;
         }
+        /// <summary>
+        /// Checks for Battery and assumes a mobile GPU if present.
+        /// </summary>
+        /// <returns></returns>
         public static bool IsMobile()
         {
             bool result = false;
@@ -372,10 +376,31 @@ namespace EnvyUpdate
 
             return result;
         }
+        /// <summary>
+        /// Checks Windows registry for Nvidia DCH Key. If it is present, returns true.
+        /// </summary>
+        /// <returns></returns>
         public static bool IsDCH()
         {
-            RegistryKey nvlddmkm = Registry.LocalMachine.OpenSubKey(@"System\CurrentControlSet\services\nvlddmkm", true);
-            return nvlddmkm.GetValueNames().Contains("DCHUVen");
+            try
+            {
+                RegistryKey nvlddmkm = Registry.LocalMachine.OpenSubKey(@"System\CurrentControlSet\services\nvlddmkm", true);
+                return nvlddmkm.GetValueNames().Contains("DCHUVen");
+            }
+            catch (NullReferenceException)
+            {
+                // Assume no DCH driver is installed if key is not found.
+                return false;
+            }
+        }
+        public static int GetDTCID()
+        {
+            int dtcid = 0;
+            if (IsDCH())
+            {
+                dtcid = 1;
+            }
+            return dtcid;
         }
     }
 }

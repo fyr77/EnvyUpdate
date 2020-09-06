@@ -133,6 +133,15 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DCH driver.
+        /// </summary>
+        public static string ui_info_dch {
+            get {
+                return ResourceManager.GetString("ui_info_dch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mobile GPU (Laptop, etc)?.
         /// </summary>
         public static string ui_info_mobile {
