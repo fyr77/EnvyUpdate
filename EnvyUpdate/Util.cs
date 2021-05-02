@@ -1,17 +1,15 @@
 ﻿using IWshRuntimeLibrary;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management;
 using System.Net;
-using System.Windows;
-using Newtonsoft.Json;
-using System.Xml;
-using System.Xml.Linq;
 using System.Text.RegularExpressions;
-using System.Runtime.InteropServices;
-using Microsoft.Win32;
+using System.Windows;
+using System.Xml.Linq;
 
 namespace EnvyUpdate
 {
@@ -202,10 +200,10 @@ namespace EnvyUpdate
             switch (IDtype)
             {
                 case "psid":
-                    id = GetValueFromName(xDoc, gpuName, false);
+                    id = GetValueFromName(xDoc, gpuName, true);
                     break;
                 case "pfid":
-                    id = GetValueFromName(xDoc, gpuName, true);
+                    id = GetValueFromName(xDoc, gpuName, false);
                     break;
                 case "osid":
                     id = GetOSID();
@@ -228,7 +226,7 @@ namespace EnvyUpdate
         /// <param name="query"></param>
         /// <param name="psid"></param>
         /// <returns></returns>
-        private static int GetValueFromName (XDocument xDoc, string query, bool psid)
+        private static int GetValueFromName(XDocument xDoc, string query, bool psid)
         {
             int value = 0;
             int i = 0;
@@ -333,11 +331,11 @@ namespace EnvyUpdate
             {
                 //if (obj["Description"].ToString().ToLower().Contains("radeon"))
                 //{
-                    // If it's an AMD card, use the "Name" field, because they use chip code numbers in "VideoProcessor", which we do not need.
-                    // Todo for 3.0: Find a way to ignore mobile Radeon GPUs in Laptops.
-                    // For now: Since we only care about Nvidia GPUs, this is commented out.
-                    //GPUName = obj["Name"].ToString().ToLower();
-                    //break;
+                // If it's an AMD card, use the "Name" field, because they use chip code numbers in "VideoProcessor", which we do not need.
+                // Todo for 3.0: Find a way to ignore mobile Radeon GPUs in Laptops.
+                // For now: Since we only care about Nvidia GPUs, this is commented out.
+                //GPUName = obj["Name"].ToString().ToLower();
+                //break;
                 //}
                 if (obj["Description"].ToString().ToLower().Contains("nvidia"))
                 {
@@ -347,6 +345,7 @@ namespace EnvyUpdate
                         GPUName = obj["VideoProcessor"].ToString().ToLower();
                         // Remove any 3GB, 6GB or similar from name. We don't need to know the VRAM to get results.
                         GPUName = Regex.Replace(GPUName, "\\d+GB", "");
+                        GPUName = Regex.Replace(GPUName, "nvidia ", "");
                     }
                     else
                         GPUName = obj["VideoProcessor"].ToString();
