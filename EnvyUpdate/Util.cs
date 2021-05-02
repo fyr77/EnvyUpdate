@@ -394,19 +394,22 @@ namespace EnvyUpdate
                     // Assume no DCH driver is installed if key is not found.
                     return false;
                 }
-                else if (ex.InnerException is System.Security.SecurityException)
-                {
-                    //Registry reading error. Check for existance of file nvsvs.dll instead.
-                    if (System.IO.File.Exists(Path.Combine(Environment.SystemDirectory, "nvsvs.dll")))
-                        return true;
-                    else
-                        return false;
-                }
                 else
                 {
-                    MessageBox.Show("An error has occured. Please report this on GitHub.\nError:" + ex.Message);
-                    Environment.Exit(20);
-                    return false;
+                    try
+                    {
+                        //Registry reading error. Check for existance of file nvsvs.dll instead.
+                        if (System.IO.File.Exists(Path.Combine(Environment.SystemDirectory, "nvsvs.dll")))
+                            return true;
+                        else
+                            return false;
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("An error has occured. Please report this on GitHub.\nError:" + ex.Message);
+                        Environment.Exit(20);
+                        return false;
+                    }
                 }
             }
         }
