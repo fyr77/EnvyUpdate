@@ -111,14 +111,15 @@ namespace EnvyUpdate
             using (var wc = new WebClient())
             {
                 // Use some user agent to not get 403'd by GitHub.
-                wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko");
+                wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0");
                 string webData = wc.DownloadString(updPath);
                 data = JsonConvert.DeserializeObject(webData);
             }
 
             // I am not catching a possible parsing exception, because I cannot think of any way it could happen. 
             // If there is no internet connection, it should already throw when using the web client.
-            float version = float.Parse(data.tag_name);
+            string tagver = data.tag_name;
+            float version = float.Parse(tagver);
 
             return version;
         }
