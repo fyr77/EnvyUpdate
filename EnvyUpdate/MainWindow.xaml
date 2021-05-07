@@ -19,9 +19,7 @@
         <Button x:Name="buttonHelp" Content="..." Margin="0,12,10,0" Click="buttonHelp_Click" HorizontalAlignment="Right" Width="20" Height="20" VerticalAlignment="Top" Grid.RowSpan="2"/>
         <TextBlock Margin="10,40,0,0" TextWrapping="Wrap" FontWeight="Bold" Grid.Row="1" HorizontalAlignment="Left" Width="151" Height="16" VerticalAlignment="Top"><Run Text="{x:Static p:Resources.ui_onlinedriver}"/></TextBlock>
         <TextBlock x:Name="textblockOnline" HorizontalAlignment="Right" Margin="0,40,10,0" TextWrapping="Wrap" Text="&lt;none&gt;" Width="106" Grid.Row="1" Height="16" VerticalAlignment="Top" TextAlignment="Right"/>
-        <CheckBox x:Name="chkInstall" Content="{x:Static p:Resources.ui_install}" HorizontalAlignment="Left" Margin="10,83,0,0" IsChecked="False" Unchecked="chkInstall_Unchecked" Checked="chkInstall_Checked" Width="51" Grid.Row="1" Height="16" VerticalAlignment="Top"/>
         <Button x:Name="buttonDL" Content="⟱" Margin="0,0,10,10" FontSize="20" Click="buttonDL_Click" Foreground="White" Background="#FF3CDA00" Visibility="Hidden" Grid.Row="1" HorizontalAlignment="Right" Width="30" Height="30" VerticalAlignment="Bottom"/>
-        <CheckBox x:Name="chkAutostart" Content="{x:Static p:Resources.ui_autostart}" HorizontalAlignment="Left" Margin="10,62,0,0" IsEnabled="False" Checked="chkAutostart_Checked" Unchecked="chkAutostart_Unchecked" Width="69" Grid.Row="1" Height="16" VerticalAlignment="Top"/>
         <TextBlock x:Name="textblockGPUName" Margin="10,14,35,0" TextWrapping="Wrap" Text="GPU..." Height="16" VerticalAlignment="Top" TextAlignment="Center" Grid.RowSpan="2" FontWeight="Bold"/>
     </Grid>
 </Window>

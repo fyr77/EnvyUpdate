@@ -42,12 +42,15 @@ namespace EnvyUpdate
                 Environment.Exit(1);
             }
             // Set correct ticks
+            /*
             if (File.Exists(GlobalVars.startup + "\\EnvyUpdate.lnk"))
                 chkAutostart.IsChecked = true;
             if (File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
-                chkInstall.IsChecked = true;
+                chkInstall.IsChecked = true;*/
+            //ALSO BROKEN
 
             // Check if application is installed and update
+            /*
             if (GlobalVars.exepath == GlobalVars.appdata)
             {
                 try
@@ -63,7 +66,11 @@ namespace EnvyUpdate
                 }
                 // Also set correct ticks.
                 chkInstall.IsChecked = true;
-            }
+            }*/
+            //BROKEN
+
+            // Delete installed versions
+            UninstallAll();
 
             // Check for overrides
             if (File.Exists(GlobalVars.desktopOverride))
@@ -189,7 +196,7 @@ namespace EnvyUpdate
             }
         }
 
-        private void chkInstall_Checked(object sender, RoutedEventArgs e)
+        /*private void chkInstall_Checked(object sender, RoutedEventArgs e)
         {
             if (chkAutostart != null)
             {
@@ -246,6 +253,29 @@ namespace EnvyUpdate
         private void chkAutostart_Unchecked(object sender, RoutedEventArgs e)
         {
             File.Delete(GlobalVars.startup + "\\EnvyUpdate.lnk");
+        }
+        */
+
+        public void UninstallAll()
+        {
+            if (File.Exists(GlobalVars.startup + "\\EnvyUpdate.lnk"))
+            {
+                File.Delete(GlobalVars.startup + "\\EnvyUpdate.lnk");
+            }
+
+            if (File.Exists(GlobalVars.startmenu + "\\EnvyUpdate.lnk"))
+            {
+                File.Delete(GlobalVars.startmenu + "\\EnvyUpdate.lnk");
+            }
+            if ((GlobalVars.exepath == GlobalVars.appdata) && File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
+            {
+                MessageBox.Show("EnvyUpdate must be uninstalled because of an application bug. Please download the most recent version again.");
+                Util.SelfDelete();
+            }
+            else if (Directory.Exists(GlobalVars.appdata))
+            {
+                Directory.Delete(GlobalVars.appdata, true);
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
