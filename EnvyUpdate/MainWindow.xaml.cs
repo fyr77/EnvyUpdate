@@ -44,14 +44,7 @@ namespace EnvyUpdate
             // Delete installed legacy versions
             UninstallAll();
 
-            // Check for overrides
-            if (File.Exists(GlobalVars.desktopOverride))
-                GlobalVars.isMobile = false;
-            else if (File.Exists(GlobalVars.mobileOverride))
-                GlobalVars.isMobile = true;
-            // Check if mobile, if no override is present
-            else
-                GlobalVars.isMobile = Util.IsMobile();
+            GlobalVars.isMobile = Util.IsMobile();
 
             string locDriv = Util.GetLocDriv();
             if (locDriv != null)

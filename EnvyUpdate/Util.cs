@@ -98,62 +98,10 @@ namespace EnvyUpdate
             Application.Current.MainWindow.Show();
             Application.Current.MainWindow.WindowState = WindowState.Normal;
         }
-        /// <summary>
-        /// Checks for newest EnvyUpdate version.
-        /// </summary>
-        /// <returns></returns>
-        public static float GetNewVer()
-        {
-            // This will fetch the most recent version's tag on GitHub.
-            string updPath = "https://api.github.com/repos/fyr77/envyupdate/releases/latest";
-            dynamic data = null;
-
-            using (var wc = new WebClient())
-            {
-                // Use some user agent to not get 403'd by GitHub.
-                wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0");
-                string webData = wc.DownloadString(updPath);
-                data = JsonConvert.DeserializeObject(webData);
-            }
-
-            // I am not catching a possible parsing exception, because I cannot think of any way it could happen. 
-            // If there is no internet connection, it should already throw when using the web client.
-            string tagver = data.tag_name;
-            float version = float.Parse(tagver);
-
-            return version;
-        }
 
         /// <summary>
-        /// Updates the application by downloading the new version from Github and replacing the old file using a seperate CMD instance.
+        /// Deletes EnvyUpdate.exe by calling cmd
         /// </summary>
-        public static void UpdateApp()
-        {
-            string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\envyupdate\\";
-
-            using (var client = new WebClient())
-            {
-                client.DownloadFile("https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.exe", appdata + "EnvyUpdated.exe");
-            }
-
-            MessageBox.Show(Properties.Resources.message_new_version);
-
-            // Replace exe with new one.
-            // This starts a seperate cmd process which will wait a bit, then delete EnvyUpdate and rename the previously downloaded EnvyUpdated.exe to EnvyUpdate.exe
-            // I know this is a bit dumb, but I honestly couldn't think of a different way to solve this properly, since the Application has to delete itself.
-            Process process = new Process();
-            ProcessStartInfo startInfo = new ProcessStartInfo
-            {
-                WindowStyle = ProcessWindowStyle.Hidden,
-                WorkingDirectory = appdata,
-                FileName = "cmd.exe",
-                Arguments = "/C timeout 5 && del EnvyUpdate.exe && ren EnvyUpdated.exe EnvyUpdate.exe && EnvyUpdate.exe"
-            };
-            process.StartInfo = startInfo;
-            process.Start();
-
-            Environment.Exit(2);
-        }
         public static void SelfDelete()
         {
             string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\envyupdate\\";
