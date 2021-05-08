@@ -23,7 +23,6 @@ namespace EnvyUpdate
         public MainWindow()
         {
             InitializeComponent();
-            Title += " " + GlobalVars.version;
 
             // Try to get command line arguments
             try
@@ -41,35 +40,8 @@ namespace EnvyUpdate
                 MessageBox.Show(Properties.Resources.instance_already_running);
                 Environment.Exit(1);
             }
-            // Set correct ticks
-            /*
-            if (File.Exists(GlobalVars.startup + "\\EnvyUpdate.lnk"))
-                chkAutostart.IsChecked = true;
-            if (File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
-                chkInstall.IsChecked = true;*/
-            //ALSO BROKEN
 
-            // Check if application is installed and update
-            /*
-            if (GlobalVars.exepath == GlobalVars.appdata)
-            {
-                try
-                {
-                    if (Util.GetNewVer() > GlobalVars.version)
-                    {
-                        Util.UpdateApp();
-                    }
-                }
-                catch (WebException)
-                {
-                    // Silently fail.
-                }
-                // Also set correct ticks.
-                chkInstall.IsChecked = true;
-            }*/
-            //BROKEN
-
-            // Delete installed versions
+            // Delete installed legacy versions
             UninstallAll();
 
             // Check for overrides
@@ -195,66 +167,6 @@ namespace EnvyUpdate
                 Hide();
             }
         }
-
-        /*private void chkInstall_Checked(object sender, RoutedEventArgs e)
-        {
-            if (chkAutostart != null)
-            {
-                chkAutostart.IsEnabled = true;
-            }
-            if (GlobalVars.exepath != GlobalVars.appdata)
-            {
-                if (!Directory.Exists(GlobalVars.appdata))
-                {
-                    Directory.CreateDirectory(GlobalVars.appdata);
-                }
-                File.Copy(GlobalVars.exeloc, GlobalVars.appdata + "EnvyUpdate.exe", true);
-
-                if (File.Exists(GlobalVars.mobileOverride))
-                    File.Copy(GlobalVars.mobileOverride, GlobalVars.appdata + "mobile.envy", true);
-                if (File.Exists(GlobalVars.desktopOverride))
-                    File.Copy(GlobalVars.desktopOverride, GlobalVars.appdata + "desktop.envy", true);
-
-                Util.CreateShortcut("EnvyUpdate", GlobalVars.startmenu, GlobalVars.appdata + "EnvyUpdate.exe", Properties.Resources.app_description);
-            }
-        }
-
-        private void chkInstall_Unchecked(object sender, RoutedEventArgs e)
-        {
-            // Only uninstall if user confirms. Prevents accidental uninstalls.
-            if (MessageBox.Show(Properties.Resources.uninstall_confirm, Properties.Resources.uninstall_heading, MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-            {
-                if (chkAutostart != null)
-                {
-                    chkAutostart.IsEnabled = false;
-                    chkAutostart.IsChecked = false;
-                }
-
-                File.Delete(GlobalVars.appdata + "desktop.envy");
-                File.Delete(GlobalVars.appdata + "mobile.envy");
-
-                File.Delete(GlobalVars.startup + "\\EnvyUpdate.lnk");
-                File.Delete(GlobalVars.startmenu + "\\EnvyUpdate.lnk");
-
-                if ((GlobalVars.exepath == GlobalVars.appdata) && File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
-                    Util.SelfDelete();
-                else if (File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
-                    File.Delete(GlobalVars.appdata + "EnvyUpdate.exe");
-            }
-            else
-                chkInstall.IsChecked = true;
-        }
-
-        private void chkAutostart_Checked(object sender, RoutedEventArgs e)
-        {
-            Util.CreateShortcut("EnvyUpdate", GlobalVars.startup, GlobalVars.appdata + "EnvyUpdate.exe", Properties.Resources.app_description);
-        }
-
-        private void chkAutostart_Unchecked(object sender, RoutedEventArgs e)
-        {
-            File.Delete(GlobalVars.startup + "\\EnvyUpdate.lnk");
-        }
-        */
 
         public void UninstallAll()
         {

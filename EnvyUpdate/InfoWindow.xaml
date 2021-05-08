@@ -17,8 +17,7 @@
         <TextBlock Margin="10,230,10,0" TextWrapping="Wrap" Text="Icon made by Freepik from www.flaticon.com" Height="18" VerticalAlignment="Top"/>
         <TextBlock x:Name="textNewtonsoft" Margin="10,194,10,0" TextWrapping="Wrap" Height="18" VerticalAlignment="Top" MouseEnter="text_MouseEnter" MouseLeave="text_MouseLeave" MouseDown="textNewtonsoft_MouseDown"><Run Text="Newtonsoft.Json"/><Run Text=": MIT"/></TextBlock>
         <TextBlock x:Name="textCostura" Margin="10,140,10,0" TextWrapping="Wrap" Text="Costura.Fody: MIT" Height="18" VerticalAlignment="Top" MouseEnter="text_MouseEnter" MouseLeave="text_MouseLeave" MouseDown="textCostura_MouseDown"/>
-        <CheckBox x:Name="chkMobile" Content="{x:Static p:Resources.ui_info_mobile}" Margin="10,40,10,0" VerticalAlignment="Top" Checked="chkMobile_Checked" Unchecked="chkMobile_Unchecked"/>
         <TextBlock x:Name="textResourceEmbedder" Margin="10,212,10,0" TextWrapping="Wrap" Height="18" VerticalAlignment="Top" MouseEnter="text_MouseEnter" MouseLeave="text_MouseLeave" MouseDown="textResourceEmbedder_MouseDown"><Run Text="Resource Embedder"/><Run Text=": MIT"/></TextBlock>
-        <CheckBox x:Name="chkDCH" Content="{x:Static p:Resources.ui_info_dch}" Margin="10,60,10,0" VerticalAlignment="Top" IsEnabled="False"/>
+        <Label x:Name="labelVer" Content="EnvyUpdate" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
     </Grid>
 </Window>

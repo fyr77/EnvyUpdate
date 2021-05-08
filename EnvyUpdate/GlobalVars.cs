@@ -9,7 +9,6 @@ namespace EnvyUpdate
         public static readonly string exeloc = System.Reflection.Assembly.GetEntryAssembly().Location;
         public static readonly string exepath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\";
         public static readonly string startmenu = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
-        public static readonly float version = 2.8F;
         public static readonly string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\envyupdate\\";
         public static readonly string startup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
         public static readonly string desktopOverride = exepath + "desktop.envy";
