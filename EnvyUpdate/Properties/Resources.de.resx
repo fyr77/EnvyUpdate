@@ -156,6 +156,9 @@
   <data name="ui_localdriver" xml:space="preserve">
     <value>Lokale Treiberversion:</value>
   </data>
+  <data name="ui_localdriver_type" xml:space="preserve">
+    <value>Lokaler Treibertyp:</value>
+  </data>
   <data name="ui_onlinedriver" xml:space="preserve">
     <value>Online Treiberversion:</value>
   </data>

@@ -178,6 +178,15 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Local driver type:.
+        /// </summary>
+        public static string ui_localdriver_type {
+            get {
+                return ResourceManager.GetString("ui_localdriver_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Online driver version:.
         /// </summary>
         public static string ui_onlinedriver {

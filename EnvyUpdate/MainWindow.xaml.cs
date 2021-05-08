@@ -46,6 +46,11 @@ namespace EnvyUpdate
 
             GlobalVars.isMobile = Util.IsMobile();
 
+            if (Util.IsDCH())
+                textblockLocalType.Text = "DCH";
+            else
+                textblockLocalType.Text = "Standard";
+
             string locDriv = Util.GetLocDriv();
             if (locDriv != null)
             {
@@ -95,7 +100,11 @@ namespace EnvyUpdate
             int pfid = 0;
             int osid = 0;
             int dtcid = 0;
+            int dtid = 0;
             //int langid;
+
+            if (File.Exists(GlobalVars.exepath + "sd.envy"))
+                radioSD.IsChecked = true;
 
             // This little bool check is necessary for debug mode on systems without an Nvidia GPU. 
             if (!isDebug)
@@ -104,6 +113,7 @@ namespace EnvyUpdate
                 pfid = Util.GetIDs("pfid");
                 osid = Util.GetIDs("osid");
                 dtcid = Util.GetDTCID();
+                //dtid = Util.GetDTID();
             }
             else
             {
@@ -111,27 +121,38 @@ namespace EnvyUpdate
                 pfid = Debug.LoadFakeIDs("pfid");
                 osid = Debug.LoadFakeIDs("osid");
                 dtcid = Debug.LoadFakeIDs("dtcid");
+                dtid = Debug.LoadFakeIDs("dtid");
                 localDriv = Debug.LocalDriv();
                 textblockGPU.Text = localDriv;
                 textblockGPUName.Text = Debug.GPUname();
             }
 
-            gpuURL = "http://www.nvidia.com/Download/processDriver.aspx?psid=" + psid.ToString() + "&pfid=" + pfid.ToString() + "&osid=" + osid.ToString() + "&dtcid=" + dtcid.ToString(); // + "&lid=" + langid.ToString();
+            //Temporary Studio Driver override logic
+            try
+            {
+                if (radioSD.IsChecked == true)
+                    dtid = 18;
+                else
+                    dtid = 1;
+            }
+            catch (NullReferenceException)
+            { }
+
+            gpuURL = "http://www.nvidia.com/Download/processDriver.aspx?psid=" + psid.ToString() + "&pfid=" + pfid.ToString() + "&osid=" + osid.ToString() + "&dtcid=" + dtcid.ToString() + "&dtid=" + dtid.ToString(); // + "&lid=" + langid.ToString();
             WebClient c = new WebClient();
             gpuURL = c.DownloadString(gpuURL);
             string pContent = c.DownloadString(gpuURL);
-            var pattern = @"\d{3}\.\d{2}&nbsp";
+            var pattern = @"Windows\/\d{3}\.\d{2}";
             Regex rgx = new Regex(pattern);
             var matches = rgx.Matches(pContent);
-            onlineDriv = Convert.ToString(matches[0]);
-            onlineDriv = onlineDriv.Remove(onlineDriv.Length - 5);
+            onlineDriv = Regex.Replace(Convert.ToString(matches[0]), "Windows/", "");
             textblockOnline.Text = onlineDriv;
             c.Dispose();
 
             if (float.Parse(localDriv) < float.Parse(onlineDriv))
             {
                 textblockOnline.Foreground = Brushes.Red;
-                buttonDL.Visibility = Visibility.Visible;
+                buttonDL.IsEnabled = true;
                 Notify.ShowDrivUpdatePopup();
             }
             else
@@ -190,6 +211,24 @@ namespace EnvyUpdate
                 Application.Current.Shutdown();
             else
                 e.Cancel = true;
+        }
+
+        private void radioGRD_Checked(object sender, RoutedEventArgs e)
+        {
+            if (File.Exists(GlobalVars.exepath + "sd.envy"))
+            {
+                File.Delete(GlobalVars.exepath + "sd.envy");
+                Load();
+            }
+        }
+
+        private void radioSD_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!File.Exists(GlobalVars.exepath + "sd.envy"))
+            {
+                File.Create(GlobalVars.exepath + "sd.envy").Close();
+                Load();
+            }
         }
     }
 }

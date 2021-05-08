@@ -336,7 +336,7 @@ namespace EnvyUpdate
             }
             catch (Exception ex)
             {
-                if (ex.InnerException is NullReferenceException)
+                if (ex.Message == "Object reference not set to an instance of an object." || ex.InnerException is NullReferenceException)
                 {
                     // Assume no DCH driver is installed if key is not found.
                     return false;
@@ -368,6 +368,17 @@ namespace EnvyUpdate
                 dtcid = 1;
             }
             return dtcid;
+        }
+
+        public static int GetDTID()
+        {
+            /*
+             * 1 = Game Ready Driver (GRD)
+             * 18 = Studio Driver (SD)
+             */
+            //TODO: find way to differentiate between driver types
+
+            return 1;
         }
     }
 }

@@ -6,11 +6,10 @@ namespace EnvyUpdate
 {
     class Debug
     {
-        readonly static string debugFilePath = GlobalVars.exepath + "debug.txt";
         public static int LoadFakeIDs(string idType)
         {
             /* 
-             * Usage: Supply /debug flag to exe. Imitates a GTX 1080ti on Win10 x64 non-dch.
+             * Usage: Supply /debug flag to exe. Imitates a GTX 1080ti on Win10 x64 non-dch Game Ready Driver.
              */ 
             switch (idType)
             {
@@ -22,6 +21,8 @@ namespace EnvyUpdate
                     return 57;
                 case "dtcid":
                     return 0;
+                case "dtid":
+                    return 1;
                 default:
                     return -1;
             }
