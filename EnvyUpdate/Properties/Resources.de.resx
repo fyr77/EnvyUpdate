@@ -165,6 +165,9 @@
   <data name="uninstall_heading" xml:space="preserve">
     <value>Deinstallieren?</value>
   </data>
+  <data name="uninstall_legacy_message" xml:space="preserve">
+    <value>Aufgrund eines Programmfehlers musste EnvyUpdate deinstalliert werden. Bitte laden Sie die neuste Version erneut manuell herunter.</value>
+  </data>
   <data name="update_popup_message" xml:space="preserve">
     <value>Eine neue Treiberversion ist verfügbar. Hier klicken für mehr Info.</value>
   </data>

@@ -175,7 +175,7 @@ namespace EnvyUpdate
             }
             if ((GlobalVars.exepath == GlobalVars.appdata) && File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
             {
-                MessageBox.Show("EnvyUpdate must be uninstalled because of an application bug. Please download the most recent version again.");
+                MessageBox.Show(Properties.Resources.uninstall_legacy_message);
                 Util.SelfDelete();
             }
             else if (Directory.Exists(GlobalVars.appdata))

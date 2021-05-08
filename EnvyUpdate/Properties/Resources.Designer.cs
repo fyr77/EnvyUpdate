@@ -205,6 +205,15 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to EnvyUpdate must be uninstalled because of an application bug. Please download the most recent version again..
+        /// </summary>
+        public static string uninstall_legacy_message {
+            get {
+                return ResourceManager.GetString("uninstall_legacy_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A new driver update is available for your graphics card. Click for more info..
         /// </summary>
         public static string update_popup_message {
