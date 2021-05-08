@@ -1,9 +1,7 @@
-Currently (as of 2.8), EnvyUpdate is portable only, because of a broken installer and updater. This will be changed in a future update to be released soon!
-
 ![Logo](https://github.com/fyr77/envyupdate/blob/master/res/banner.png?raw=true)
 
 # EnvyUpdate
- A small update checker application for Nvidia GPUs
+ A small portable update checker application for Nvidia GPUs
  
  ![License](https://img.shields.io/github/license/fyr77/envyupdate?style=for-the-badge)
  ![Issues](https://img.shields.io/github/issues/fyr77/envyupdate?style=for-the-badge)
@@ -11,8 +9,7 @@ Currently (as of 2.8), EnvyUpdate is portable only, because of a broken installe
  
 ## How to use
 
- 1. Download the [latest release](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.exe) (or as a [.zip](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.zip)) and run it. Windows SmartScreen Messages can be safely ignored. They only happen because this project is not digitally signed.
- 2. Currently (as of 2.8), EnvyUpdate is portable only, because of a broken installer and updater. This will be changed in a future update to be released soon!
+ Download the [latest release](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.exe) (or as a [.zip](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.zip)) and run it. Windows SmartScreen Messages can be safely ignored. They only happen because this project is not digitally signed.
 
 ## Compatibility
 
@@ -41,23 +38,5 @@ EnvyUpdate is not a replacement for any of these tools. I will still try to impl
 * Costura.Fody (for embedding DLLs into the main executable): [MIT](https://github.com/Fody/Costura/blob/develop/LICENSE)
 * wpf-notifyicon (for showing an icon in the system tray): [CPOL](https://github.com/hardcodet/wpf-notifyicon/blob/master/LICENSE)
 * Notifications.Wpf: [MIT](https://github.com/Federerer/Notifications.Wpf/blob/master/LICENSE)
-* Newtonsoft.Json: [MIT](https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md)
 * Resource Embedder: [MIT](https://github.com/MarcStan/resource-embedder/blob/master/LICENSE)
 * Icon made by Freepik from www.flaticon.com
-
-## OLD 1.x Instructions for Archival purposes
-
-### Installing 
-
- 1. Download the [latest release](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.exe) (or as a [.zip](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.zip)) and run it. Windows SmartScreen Messages can be safely ignored. They only happen because this project is not digitally signed.
- 2. If you want to use the application without saving any settings to your drive, keep the "Portable mode" checkbox checked. Otherwise uncheck it to automatically save your configuration.
- 3. Install the cookie-txt addon for [Firefox](https://addons.mozilla.org/en-US/firefox/addon/cookies-txt-one-click/) or [Chrome](https://chrome.google.com/webstore/detail/cookiestxt/njabckikapfpffapmjgojcnbfjonfjfg).
- 4. Go to the [Nvidia driver download page](https://www.nvidia.com/Download/index.aspx), enter your graphics card model, operating system, etc. and click "Search".
- 5. On the resulting page, click back in your browser and use the previously installed cookie-txt addon to save your site cookies as a .txt file.
- 6. Drag this .txt file into the corresponding space inside EnvyUpdate.
- 7. If everything works correctly, the online driver version should be displayed in the application window. 
- 8. When not in portable mode, you may activate Autostart. This will make the application start everytime Windows boots. This will also install the application itself in your APPDATA folder.
- 
-### Uninstalling
-
-Simply download the latest release from the [releases page](https://github.com/fyr77/EnvyUpdate/releases), run it and untick "Autostart". This will remove EnvyUpdate from your system.
