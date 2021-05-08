@@ -10,41 +10,30 @@ namespace EnvyUpdate
         public static int LoadFakeIDs(string idType)
         {
             /* 
-             * Usage:
-             * Create debug.txt file.
-             * Fill in variables: 
-             * Line 1: psid
-             * Line 2: pfid
-             * Line 3: osid
-             * Line 4: dtcid
-             * Line 5: Local driver version
-             * 
-             * Supply /debug flag to exe.
+             * Usage: Supply /debug flag to exe. Imitates a GTX 1080ti on Win10 x64 non-dch.
              */ 
-            string line = null;
             switch (idType)
             {
                 case "psid":
-                    line = File.ReadLines(debugFilePath).Take(1).First();
-                    break;
+                    return 101;
                 case "pfid":
-                    line = File.ReadLines(debugFilePath).Skip(1).Take(1).First();
-                    break;
+                    return 845;
                 case "osid":
-                    line = File.ReadLines(debugFilePath).Skip(2).Take(1).First();
-                    break;
+                    return 57;
                 case "dtcid":
-                    line = File.ReadLines(debugFilePath).Skip(3).Take(1).First();
-                    break;
+                    return 0;
                 default:
-                    break;
+                    return -1;
             }
-
-            return int.Parse(line);
         }
         public static string LocalDriv()
         {
-            return File.ReadLines(debugFilePath).Skip(4).Take(1).First();
+            return "466.11";
+        }
+
+        public static string GPUname()
+        {
+            return "Nvidia GeForce GTX 1080ti (debug)";
         }
     }
 }

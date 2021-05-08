@@ -113,6 +113,7 @@ namespace EnvyUpdate
                 dtcid = Debug.LoadFakeIDs("dtcid");
                 localDriv = Debug.LocalDriv();
                 textblockGPU.Text = localDriv;
+                textblockGPUName.Text = Debug.GPUname();
             }
 
             gpuURL = "http://www.nvidia.com/Download/processDriver.aspx?psid=" + psid.ToString() + "&pfid=" + pfid.ToString() + "&osid=" + osid.ToString() + "&dtcid=" + dtcid.ToString(); // + "&lid=" + langid.ToString();
