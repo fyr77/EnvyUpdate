@@ -1,6 +1,5 @@
 ﻿using IWshRuntimeLibrary;
 using Microsoft.Win32;
-using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.IO;
