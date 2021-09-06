@@ -13,7 +13,11 @@
 
 ## Compatibility
 
-The application is compatible with all Nvidia GPUs that have their drivers available on the nvidia.com download page and runs on Windows 7 and up.
+The application should be compatible with all Nvidia GPUs that have their drivers available on the nvidia.com download page and runs on Windows 7 and up.
+
+It is tested with GeForce Series GPUs. Generally others should work, but they are (currently) untested.
+
+Studio drivers are currently unsupported.
 
 ## Development
 
