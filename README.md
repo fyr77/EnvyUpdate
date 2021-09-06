@@ -43,4 +43,5 @@ EnvyUpdate is not a replacement for any of these tools. I will still try to impl
 * wpf-notifyicon (for showing an icon in the system tray): [CPOL](https://github.com/hardcodet/wpf-notifyicon/blob/master/LICENSE)
 * Notifications.Wpf: [MIT](https://github.com/Federerer/Notifications.Wpf/blob/master/LICENSE)
 * Resource Embedder: [MIT](https://github.com/MarcStan/resource-embedder/blob/master/LICENSE)
+* Onova: [LGPL v3](https://github.com/Tyrrrz/Onova/blob/master/License.txt)
 * Icon made by Freepik from www.flaticon.com

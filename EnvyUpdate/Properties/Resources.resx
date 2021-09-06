@@ -139,7 +139,7 @@
     <value>No NVIDIA GPU found. Application will exit.</value>
   </data>
   <data name="ui_autostart" xml:space="preserve">
-    <value>Autostart</value>
+    <value>Run at Windows startup</value>
   </data>
   <data name="ui_info_dch" xml:space="preserve">
     <value>DCH driver</value>

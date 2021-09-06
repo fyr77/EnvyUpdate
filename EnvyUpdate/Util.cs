@@ -1,5 +1,7 @@
 ﻿using IWshRuntimeLibrary;
 using Microsoft.Win32;
+using Onova;
+using Onova.Services;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -7,6 +9,7 @@ using System.Linq;
 using System.Management;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 
@@ -325,6 +328,7 @@ namespace EnvyUpdate
         }
         /// <summary>
         /// Checks Windows registry for Nvidia DCH Key. If it is present, returns true.
+        /// Can also check file system for existance of DLL if registry access fails
         /// </summary>
         /// <returns></returns>
         public static bool IsDCH()
@@ -379,6 +383,15 @@ namespace EnvyUpdate
             //TODO: find way to differentiate between driver types
 
             return 1;
+        }
+
+        public static async Task DoUpdateAsync()
+        {
+            using (var manager = new UpdateManager(new GithubPackageResolver("fyr77", "EnvyUpdate", "EnvyUpdate*.zip"), new ZipPackageExtractor()))
+            {
+                // Check for new version and, if available, perform full update and restart
+                await manager.CheckPerformUpdateAsync();
+            }
         }
     }
 }

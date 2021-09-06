@@ -94,13 +94,16 @@ namespace EnvyUpdate
             infoWin.ShowDialog();
         }
 
-        private void Load()
+        private async void Load()
         {
+            await Util.DoUpdateAsync();
+
             int psid = 0;
             int pfid = 0;
             int osid = 0;
             int dtcid = 0;
             int dtid = 0;
+            //TODO: Make a list of languages and match OS language to driver
             //int langid;
 
             if (File.Exists(GlobalVars.exepath + "sd.envy"))
@@ -127,7 +130,7 @@ namespace EnvyUpdate
                 textblockGPUName.Text = Debug.GPUname();
             }
 
-            //Temporary Studio Driver override logic
+            //Temporary Studio Driver override logic until I have figured out how to detect it automatically
             try
             {
                 if (radioSD.IsChecked == true)
@@ -229,6 +232,11 @@ namespace EnvyUpdate
                 File.Create(GlobalVars.exepath + "sd.envy").Close();
                 Load();
             }
+        }
+
+        private void chkAutostart_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("TEST");
         }
     }
 }

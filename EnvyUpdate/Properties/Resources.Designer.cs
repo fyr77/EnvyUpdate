@@ -124,7 +124,7 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Autostart.
+        ///   Looks up a localized string similar to Run at Windows startup.
         /// </summary>
         public static string ui_autostart {
             get {
