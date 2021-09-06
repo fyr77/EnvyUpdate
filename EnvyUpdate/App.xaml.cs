@@ -14,10 +14,5 @@ namespace EnvyUpdate
     /// </summary>
     public partial class App : Application
     {
-        public bool DoHandle { get; set; }
-        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
-        {
-            MessageBox.Show(e.Exception.ToString());
-        }
     }
 }

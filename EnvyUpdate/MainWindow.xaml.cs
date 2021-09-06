@@ -152,14 +152,31 @@ namespace EnvyUpdate
             textblockOnline.Text = onlineDriv;
             c.Dispose();
 
-            if (float.Parse(localDriv) < float.Parse(onlineDriv))
+            try
             {
-                textblockOnline.Foreground = Brushes.Red;
-                buttonDL.IsEnabled = true;
-                Notify.ShowDrivUpdatePopup();
+                if (float.Parse(localDriv) < float.Parse(onlineDriv))
+                {
+                    textblockOnline.Foreground = Brushes.Red;
+                    buttonDL.IsEnabled = true;
+                    Notify.ShowDrivUpdatePopup();
+                }
+                else
+                    textblockOnline.Foreground = Brushes.Green;
             }
-            else
-                textblockOnline.Foreground = Brushes.Green;
+            catch (FormatException)
+            {
+                //Thank you locales. Some languages need , instead of .
+                string cLocalDriv = localDriv.Replace('.', ',');
+                string cOnlineDriv = onlineDriv.Replace('.', ',');
+                if (float.Parse(cLocalDriv) < float.Parse(cOnlineDriv))
+                {
+                    textblockOnline.Foreground = Brushes.Red;
+                    buttonDL.IsEnabled = true;
+                    Notify.ShowDrivUpdatePopup();
+                }
+                else
+                    textblockOnline.Foreground = Brushes.Green;
+            }
 
             if (GlobalVars.exepath == GlobalVars.appdata)
             {
