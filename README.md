@@ -9,9 +9,11 @@
  
 ## How to use
 
- Download the [latest release](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.exe) (or as a [.zip](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.zip)) and run it. Windows SmartScreen Messages can be safely ignored. They only happen because this project is not digitally signed.
+Download the [latest release](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.exe) (or as a [.zip](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.zip)) and run it. Windows SmartScreen Messages can be safely ignored. They only happen because this project is not digitally signed.
 
- Enabling Autostart will create a shortcut of EnvyUpdate in the Windows startup folder.
+Or install using [scoop](https://scoop.sh) by running `scoop install https://raw.githubusercontent.com/fyr77/EnvyUpdate/master/res/scoop/envyupdate.json`.
+
+Enabling Autostart will create a shortcut of EnvyUpdate in the Windows startup folder.
 
 ## Compatibility
 
