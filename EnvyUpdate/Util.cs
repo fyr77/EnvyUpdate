@@ -58,13 +58,15 @@ namespace EnvyUpdate
         /// <param name="shortcutPath"></param>
         /// <param name="targetFileLocation"></param>
         /// <param name="description"></param>
-        public static void CreateShortcut(string shortcutName, string shortcutPath, string targetFileLocation, string description)
+        /// <param name="arguments"></param>
+        public static void CreateShortcut(string shortcutName, string shortcutPath, string targetFileLocation, string description, string arguments = "")
         {
             // It seems unnecessarily complex to create a simple shortcut using C#. Oh well.
             string shortcutLocation = Path.Combine(shortcutPath, shortcutName + ".lnk");
             WshShell shell = new WshShell();
             IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutLocation);
 
+            shortcut.Arguments = arguments;
             shortcut.Description = description;
             shortcut.TargetPath = targetFileLocation;
             shortcut.Save();

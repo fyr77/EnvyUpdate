@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -17,7 +18,7 @@ namespace EnvyUpdate
         private string localDriv = null;
         private string onlineDriv = null;
         private string gpuURL = null;
-        private string argument = null;
+        private string[] arguments = null;
         private bool isDebug = false;
 
         public MainWindow()
@@ -27,7 +28,7 @@ namespace EnvyUpdate
             // Try to get command line arguments
             try
             {
-                argument = Environment.GetCommandLineArgs()[1];
+                arguments = Environment.GetCommandLineArgs();
             }
             catch (IndexOutOfRangeException)
             {
@@ -42,7 +43,8 @@ namespace EnvyUpdate
             }
 
             // Delete installed legacy versions
-            UninstallAll();
+            if (Directory.Exists(GlobalVars.appdata))
+                UninstallAll();
 
             GlobalVars.isMobile = Util.IsMobile();
 
@@ -63,7 +65,7 @@ namespace EnvyUpdate
             }
             else
             {
-                if (argument == "/debug")
+                if (arguments.Contains("/debug"))
                 {
                     MessageBox.Show("Debug mode!");
                     isDebug = true;
@@ -73,6 +75,20 @@ namespace EnvyUpdate
                     MessageBox.Show(Properties.Resources.no_compatible_gpu);
                     Environment.Exit(255);
                 }
+            }
+
+            // Check for startup shortcut
+            if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "EnvyUpdate.lnk")))
+            {
+                chkAutostart.IsChecked = true;
+                chkAutostart_Click(null, null); //Automatically recreate shortcut to account for moved EXE.
+            }
+
+            //Check if launched as miminized with arg
+            if (arguments.Contains("/minimize"))
+            {
+                WindowState = WindowState.Minimized;
+                Hide();
             }
 
             DispatcherTimer Dt = new DispatcherTimer();
@@ -177,12 +193,6 @@ namespace EnvyUpdate
                 else
                     textblockOnline.Foreground = Brushes.Green;
             }
-
-            if (GlobalVars.exepath == GlobalVars.appdata)
-            {
-                WindowState = WindowState.Minimized;
-                Hide();
-            }
         }
 
         private void buttonDL_Click(object sender, RoutedEventArgs e)
@@ -253,7 +263,14 @@ namespace EnvyUpdate
 
         private void chkAutostart_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("TEST");
+            if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "EnvyUpdate.lnk")))
+            {
+                File.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "EnvyUpdate.lnk"));
+            }
+            if (chkAutostart.IsChecked == true)
+            {
+                Util.CreateShortcut("EnvyUpdate", Environment.GetFolderPath(Environment.SpecialFolder.Startup), GlobalVars.exeloc, "NVidia Update Checker", "/minimize");
+            }
         }
     }
 }

@@ -11,6 +11,8 @@
 
  Download the [latest release](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.exe) (or as a [.zip](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.zip)) and run it. Windows SmartScreen Messages can be safely ignored. They only happen because this project is not digitally signed.
 
+ Enabling Autostart will create a shortcut of EnvyUpdate in the Windows startup folder.
+
 ## Compatibility
 
 The application should be compatible with all Nvidia GPUs that have their drivers available on the nvidia.com download page and runs on Windows 7 and up.
