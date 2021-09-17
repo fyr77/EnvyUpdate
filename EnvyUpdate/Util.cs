@@ -33,7 +33,8 @@ namespace EnvyUpdate
                 {
                     if (obj["Description"].ToString().ToLower().Contains("nvidia"))
                     {
-                        OfflineGPUVersion = obj["DriverVersion"].ToString().Replace(".", string.Empty).Substring(5);
+                        OfflineGPUVersion = obj["DriverVersion"].ToString().Replace(".", string.Empty);
+                        OfflineGPUVersion = OfflineGPUVersion.Substring(Math.Max(0, OfflineGPUVersion.Length - 5));
                         OfflineGPUVersion = OfflineGPUVersion.Substring(0, 3) + "." + OfflineGPUVersion.Substring(3); // add dot
                         foundGpu = true;
                         break;
