@@ -1,11 +1,11 @@
 {
-    "version": "2.10",
+    "version": "2.9",
     "description": "A small update checker for NVidia GPUs.",
     "homepage": "https://github.com/fyr77/EnvyUpdate",
     "license": "MIT",
-    "url": "https://github.com/fyr77/EnvyUpdate/releases/download/2.10/PackageManagerZip.zip",
-    "hash": "03B70FD950BD5A91B295706B2938C0AC33AE0607F901405CFA930CF0F04692E4",
-    "extract_dir": "EnvyUpdate-2.10",
+    "url": "https://github.com/fyr77/EnvyUpdate/releases/download/2.9/PackageManagerZip.zip",
+    "hash": "1041E050C0C1C7DC91E5CF18E0DBB445315BE93D53FEFD85ED0165CE5A85A9C1",
+    "extract_dir": "EnvyUpdate-2.9",
     "bin": "EnvyUpdate.exe",
     "shortcuts": [
         [
