@@ -390,10 +390,13 @@ namespace EnvyUpdate
 
         public static async Task DoUpdateAsync()
         {
-            using (var manager = new UpdateManager(new GithubPackageResolver("fyr77", "EnvyUpdate", "EnvyUpdate*.zip"), new ZipPackageExtractor()))
+            using (var httpc = new System.Net.Http.HttpClient())
             {
-                // Check for new version and, if available, perform full update and restart
-                await manager.CheckPerformUpdateAsync();
+                using (var manager = new UpdateManager(new WebPackageResolver(httpc, "https://dev.jakobsenkl.pw/envyupdate/versions.txt"), new ZipPackageExtractor()))
+                {
+                    // Check for new version and, if available, perform full update and restart
+                    await manager.CheckPerformUpdateAsync();
+                }
             }
         }
     }
