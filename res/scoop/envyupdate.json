@@ -18,6 +18,6 @@
         "github": "https://github.com/fyr77/EnvyUpdate"
     },
     "autoupdate": {
-        "url": "https://dev.jakobsenkl.pw/envyupdate/$version-scoop"
+        "url": "https://dev.jakobsenkl.pw/envyupdate/$version-scoop.zip"
     }
 }
