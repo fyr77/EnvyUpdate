@@ -20,7 +20,7 @@ namespace EnvyUpdate
                 case "osid":
                     return 57;
                 case "dtcid":
-                    return 0;
+                    return 1;
                 case "dtid":
                     return 1;
                 default:

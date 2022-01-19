@@ -338,7 +338,7 @@ namespace EnvyUpdate
         {
             try
             {
-                RegistryKey nvlddmkm = Registry.LocalMachine.OpenSubKey(@"System\CurrentControlSet\services\nvlddmkm", true);
+                RegistryKey nvlddmkm = Registry.LocalMachine.OpenSubKey(@"System\CurrentControlSet\services\nvlddmkm", false);
                 return nvlddmkm.GetValueNames().Contains("DCHUVen");
             }
             catch (Exception ex)
