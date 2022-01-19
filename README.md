@@ -23,11 +23,9 @@ Enabling Autostart will create a shortcut of EnvyUpdate in the Windows startup f
 
 ## Compatibility
 
-The application should be compatible with all Nvidia GPUs that have their drivers available on the nvidia.com download page and runs on Windows 7 and up.
+The application should be compatible with all Nvidia GeForce GPUs that have their drivers available on the nvidia.com download page and runs on Windows 7 and up.
 
-It is tested with GeForce Series GPUs. Generally others should work, but they are (currently) untested.
-
-Studio drivers are currently unsupported.
+It is tested with GeForce Series GPUs. Generally others might work, but they are (currently) untested.
 
 ## Development
 
