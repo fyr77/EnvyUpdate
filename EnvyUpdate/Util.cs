@@ -1,7 +1,5 @@
 ﻿using IWshRuntimeLibrary;
 using Microsoft.Win32;
-using Onova;
-using Onova.Services;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -386,18 +384,6 @@ namespace EnvyUpdate
             //TODO: find way to differentiate between driver types
 
             return 1;
-        }
-
-        public static async Task DoUpdateAsync()
-        {
-            using (var httpc = new System.Net.Http.HttpClient())
-            {
-                using (var manager = new UpdateManager(new WebPackageResolver(httpc, "https://dev.jakobsenkl.pw/envyupdate/versions.txt"), new ZipPackageExtractor()))
-                {
-                    // Check for new version and, if available, perform full update and restart
-                    await manager.CheckPerformUpdateAsync();
-                }
-            }
         }
     }
 }

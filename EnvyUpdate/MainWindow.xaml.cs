@@ -112,10 +112,6 @@ namespace EnvyUpdate
 
         private async void Load()
         {
-            //Check if updater disabled
-            if (!File.Exists(Path.Combine(GlobalVars.exepath, "disable_updater.envy")))
-                await Util.DoUpdateAsync();
-
             int psid = 0;
             int pfid = 0;
             int osid = 0;
