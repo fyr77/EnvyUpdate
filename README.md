@@ -46,7 +46,7 @@ EnvyUpdate is not a replacement for any of these tools. I will still try to impl
 ## Licenses
 
 * This project: [MIT](https://github.com/fyr77/EnvyUpdate/blob/master/LICENSE)
-* Fody (depency of Costura.Fody): [MIT](https://github.com/Fody/Fody/blob/master/License.txt)
+* Fody (dependency of Costura.Fody): [MIT](https://github.com/Fody/Fody/blob/master/License.txt)
 * Costura.Fody (for embedding DLLs into the main executable): [MIT](https://github.com/Fody/Costura/blob/develop/LICENSE)
 * wpf-notifyicon (for showing an icon in the system tray): [CPOL](https://github.com/hardcodet/wpf-notifyicon/blob/master/LICENSE)
 * Notifications.Wpf: [MIT](https://github.com/Federerer/Notifications.Wpf/blob/master/LICENSE)
