@@ -6,6 +6,12 @@
  ![License](https://img.shields.io/github/license/fyr77/envyupdate?style=for-the-badge)
  ![Issues](https://img.shields.io/github/issues/fyr77/envyupdate?style=for-the-badge)
  ![Version](https://img.shields.io/github/v/release/fyr77/envyupdate?style=for-the-badge)
+
+# Important Information
+
+Nvidia seems to have discontinued non-DCH drivers. This means only Windows 10 and Windows 11 can get the most recent driver versions. 
+
+If you are running Standard (non-DCH) drivers right now, EnvyUpdate will **NOT** display newer driver versions until you have manually updated to DCH drivers.
  
 ## How to use
 
@@ -38,6 +44,7 @@ If you want to help me develop EnvyUpdate, you can start by creating issues with
 ## Other interesting tools
 
 * [TinyNvidiaUpdateChecker](https://github.com/ElPumpo/TinyNvidiaUpdateChecker) - a command line update checker and installer. Inspired EnvyUpdate to begin with.
+* [nvidia-update](https://github.com/ZenitH-AT/nvidia-update) - a Powershell script to check for driver updates
 * [Disable-Nvidia-Telemtry](https://github.com/NateShoffner/Disable-Nvidia-Telemetry) - does pretty much what the name says. It disables Nvidia Telemetry.
 * [NVCleanInstall](https://www.techpowerup.com/nvcleanstall/) - a closed-source application by TechPowerUp which does quite a lot of cool things.
 
