@@ -1,17 +1,17 @@
 ![Logo](https://github.com/fyr77/envyupdate/blob/master/res/banner.png?raw=true)
 
+# Important Information
+
+Nvidia seems to have discontinued non-DCH drivers. This means only Windows 10 and Windows 11 can get the most recent driver versions. 
+
+If you are running Standard (non-DCH) drivers right now, EnvyUpdate will **NOT** display newer driver versions until you have manually updated to DCH drivers.
+
 # EnvyUpdate
  A small portable update checker application for Nvidia GPUs
  
  ![License](https://img.shields.io/github/license/fyr77/envyupdate?style=for-the-badge)
  ![Issues](https://img.shields.io/github/issues/fyr77/envyupdate?style=for-the-badge)
  ![Version](https://img.shields.io/github/v/release/fyr77/envyupdate?style=for-the-badge)
-
-# Important Information
-
-Nvidia seems to have discontinued non-DCH drivers. This means only Windows 10 and Windows 11 can get the most recent driver versions. 
-
-If you are running Standard (non-DCH) drivers right now, EnvyUpdate will **NOT** display newer driver versions until you have manually updated to DCH drivers.
  
 ## How to use
 
