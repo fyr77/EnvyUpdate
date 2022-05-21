@@ -138,6 +138,9 @@
   <data name="no_compatible_gpu" xml:space="preserve">
     <value>Keine NVIDIA GPU gefunden. EnvyUpdate wird sich nun schließen.</value>
   </data>
+  <data name="skip_confirm" xml:space="preserve">
+    <value>Version übersprungen. Aktualisierungsbenachrichtigungen werden bis zur nächsten Version deaktiviert.</value>
+  </data>
   <data name="ui_autostart" xml:space="preserve">
     <value>Beim Start von Windows ausführen</value>
   </data>
@@ -161,6 +164,12 @@
   </data>
   <data name="ui_onlinedriver" xml:space="preserve">
     <value>Online Treiberversion:</value>
+  </data>
+  <data name="ui_skipped" xml:space="preserve">
+    <value>Version übersprungen</value>
+  </data>
+  <data name="ui_skipversion" xml:space="preserve">
+    <value>Diese Version überspringen</value>
   </data>
   <data name="uninstall_confirm" xml:space="preserve">
     <value>Sind Sie sich sicher, dass Sie EnvyUpdate deinstallieren wollen?</value>

@@ -138,6 +138,9 @@
   <data name="no_compatible_gpu" xml:space="preserve">
     <value>No NVIDIA GPU found. Application will exit.</value>
   </data>
+  <data name="skip_confirm" xml:space="preserve">
+    <value>Version was skipped. Update popups will be disabled until a new version releases.</value>
+  </data>
   <data name="ui_autostart" xml:space="preserve">
     <value>Run at Windows startup</value>
   </data>
@@ -161,6 +164,12 @@
   </data>
   <data name="ui_onlinedriver" xml:space="preserve">
     <value>Online driver version:</value>
+  </data>
+  <data name="ui_skipped" xml:space="preserve">
+    <value>Version skipped</value>
+  </data>
+  <data name="ui_skipversion" xml:space="preserve">
+    <value>Skip this version</value>
   </data>
   <data name="uninstall_confirm" xml:space="preserve">
     <value>Are you sure you want to uninstall EnvyUpdate?</value>

@@ -19,7 +19,7 @@ namespace EnvyUpdate.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -124,6 +124,15 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Version was skipped. Update popups will be disabled until a new version releases..
+        /// </summary>
+        public static string skip_confirm {
+            get {
+                return ResourceManager.GetString("skip_confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Run at Windows startup.
         /// </summary>
         public static string ui_autostart {
@@ -192,6 +201,24 @@ namespace EnvyUpdate.Properties {
         public static string ui_onlinedriver {
             get {
                 return ResourceManager.GetString("ui_onlinedriver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version skipped.
+        /// </summary>
+        public static string ui_skipped {
+            get {
+                return ResourceManager.GetString("ui_skipped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip this version.
+        /// </summary>
+        public static string ui_skipversion {
+            get {
+                return ResourceManager.GetString("ui_skipversion", resourceCulture);
             }
         }
         

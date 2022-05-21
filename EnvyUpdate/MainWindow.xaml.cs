@@ -20,6 +20,7 @@ namespace EnvyUpdate
         private string gpuURL = null;
         private string[] arguments = null;
         private bool isDebug = false;
+        private string skippedVer = null;
 
         public MainWindow()
         {
@@ -122,6 +123,11 @@ namespace EnvyUpdate
 
             if (File.Exists(GlobalVars.exepath + "sd.envy"))
                 radioSD.IsChecked = true;
+            else
+                radioGRD.IsChecked = true;
+
+            if (File.Exists(GlobalVars.exepath + "skip.envy"))
+                skippedVer = File.ReadLines(GlobalVars.exepath + "skip.envy").First();
 
             // This little bool check is necessary for debug mode on systems without an Nvidia GPU. 
             if (!isDebug)
@@ -172,24 +178,53 @@ namespace EnvyUpdate
                 {
                     textblockOnline.Foreground = Brushes.Red;
                     buttonDL.IsEnabled = true;
-                    Notify.ShowDrivUpdatePopup();
+                    if (skippedVer == null)
+                    {
+                        buttonSkip.Content = Properties.Resources.ui_skipversion;
+                        buttonSkip.IsEnabled = true;
+                    }
+                    else
+                        buttonSkip.Content = Properties.Resources.ui_skipped;
+                    if (skippedVer != onlineDriv)
+                        Notify.ShowDrivUpdatePopup();
                 }
                 else
+                {
+                    buttonSkip.IsEnabled = false;
                     textblockOnline.Foreground = Brushes.Green;
+                }
             }
             catch (FormatException)
             {
-                //Thank you locales. Some languages need , instead of .
+                //Thank you locales. Some languages need , instead of . for proper parsing
                 string cLocalDriv = localDriv.Replace('.', ',');
                 string cOnlineDriv = onlineDriv.Replace('.', ',');
                 if (float.Parse(cLocalDriv) < float.Parse(cOnlineDriv))
                 {
                     textblockOnline.Foreground = Brushes.Red;
                     buttonDL.IsEnabled = true;
-                    Notify.ShowDrivUpdatePopup();
+                    if (skippedVer == null)
+                        buttonSkip.IsEnabled = true;
+                    else
+                        buttonSkip.Content = Properties.Resources.ui_skipped;
+                    if (skippedVer != onlineDriv)
+                        Notify.ShowDrivUpdatePopup();
                 }
                 else
+                {
+                    buttonSkip.IsEnabled = false;
                     textblockOnline.Foreground = Brushes.Green;
+                }
+            }
+
+            //Check for different version than skipped version
+            if (skippedVer != onlineDriv)
+            {
+                skippedVer = null;
+                if (File.Exists(GlobalVars.exepath + "skip.envy"))
+                    File.Delete(GlobalVars.exepath + "skip.envy");
+                buttonSkip.Content = Properties.Resources.ui_skipversion;
+                buttonSkip.IsEnabled = true;
             }
         }
 
@@ -269,6 +304,15 @@ namespace EnvyUpdate
             {
                 Util.CreateShortcut("EnvyUpdate", Environment.GetFolderPath(Environment.SpecialFolder.Startup), GlobalVars.exeloc, "NVidia Update Checker", "/minimize");
             }
+        }
+
+        private void buttonSkip_Click(object sender, RoutedEventArgs e)
+        {
+            skippedVer = onlineDriv;
+            File.WriteAllText(GlobalVars.exepath + "skip.envy", onlineDriv);
+            buttonSkip.IsEnabled = false;
+            buttonSkip.Content = Properties.Resources.ui_skipped;
+            MessageBox.Show(Properties.Resources.skip_confirm);
         }
     }
 }
