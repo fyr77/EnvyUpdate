@@ -19,12 +19,6 @@ Download the [latest release](https://github.com/fyr77/EnvyUpdate/releases/lates
 
 The application itself does not update itself. If you notice any bugs or issues, be sure to check for a new version on GitHub!
 
-Or install using [scoop](https://scoop.sh) by running
-```
-scoop bucket add fyr77 https://github.com/fyr77/fyr77-scoop
-scoop install envyupdate
-```
-
 Enabling Autostart will create a shortcut of EnvyUpdate in the Windows startup folder.
 
 ## Compatibility
