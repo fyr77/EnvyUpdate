@@ -151,6 +151,7 @@ namespace EnvyUpdate
             }
 
             //Temporary Studio Driver override logic until I have figured out how to detect it automatically
+            //TODO
             try
             {
                 if (radioSD.IsChecked == true)
@@ -164,6 +165,11 @@ namespace EnvyUpdate
             gpuURL = "http://www.nvidia.com/Download/processDriver.aspx?psid=" + psid.ToString() + "&pfid=" + pfid.ToString() + "&osid=" + osid.ToString() + "&dtcid=" + dtcid.ToString() + "&dtid=" + dtid.ToString(); // + "&lid=" + langid.ToString();
             WebClient c = new WebClient();
             gpuURL = c.DownloadString(gpuURL);
+            if (!gpuURL.Contains("://"))
+            {
+                //This means a relative link was used.
+                gpuURL = "https://www.nvidia.com/Download/" + gpuURL;
+            }
             string pContent = c.DownloadString(gpuURL);
             var pattern = @"Windows\/\d{3}\.\d{2}";
             Regex rgx = new Regex(pattern);

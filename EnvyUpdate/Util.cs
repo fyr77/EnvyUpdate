@@ -385,5 +385,11 @@ namespace EnvyUpdate
 
             return 1;
         }
+
+        public static void DownloadFile(string fileURL, string savePath)
+        {
+            //TODO Implement downloading
+            //TODO implement progress bar
+        }
     }
 }
