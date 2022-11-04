@@ -174,11 +174,18 @@ namespace EnvyUpdate
                 //protocol agnostic url
                 gpuURL = "https:" + gpuURL;
             }
-            else
+            else if (gpuURL.StartsWith("driverResults.aspx"))
             {
                 //relative url
                 gpuURL = "https://www.nvidia.com/Download/" + gpuURL;
             }
+            else
+            {
+                //panic.
+                MessageBox.Show("ERROR: Invalid API response from Nvidia. Please file an issue on GitHub.");
+                Environment.Exit(10);
+            }
+
             string pContent = c.DownloadString(gpuURL);
             var pattern = @"Windows\/\d{3}\.\d{2}";
             Regex rgx = new Regex(pattern);
