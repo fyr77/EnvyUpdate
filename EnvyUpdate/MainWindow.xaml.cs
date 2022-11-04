@@ -165,9 +165,18 @@ namespace EnvyUpdate
             gpuURL = "http://www.nvidia.com/Download/processDriver.aspx?psid=" + psid.ToString() + "&pfid=" + pfid.ToString() + "&osid=" + osid.ToString() + "&dtcid=" + dtcid.ToString() + "&dtid=" + dtid.ToString(); // + "&lid=" + langid.ToString();
             WebClient c = new WebClient();
             gpuURL = c.DownloadString(gpuURL);
-            if (!gpuURL.Contains("://"))
+            if (gpuURL.Contains("https://") || gpuURL.Contains("http://"))
             {
-                //This means a relative link was used.
+                //absolute url
+            }
+            else if (gpuURL.Contains("//"))
+            {
+                //protocol agnostic url
+                gpuURL = "https:" + gpuURL;
+            }
+            else
+            {
+                //relative url
                 gpuURL = "https://www.nvidia.com/Download/" + gpuURL;
             }
             string pContent = c.DownloadString(gpuURL);
