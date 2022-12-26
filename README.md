@@ -51,5 +51,5 @@ EnvyUpdate is not a replacement for any of these tools. I will still try to impl
 * Costura.Fody (for embedding DLLs into the main executable): [MIT](https://github.com/Fody/Costura/blob/develop/LICENSE)
 * wpf-notifyicon (for showing an icon in the system tray): [CPOL](https://github.com/hardcodet/wpf-notifyicon/blob/master/LICENSE)
 * Resource Embedder: [MIT](https://github.com/MarcStan/resource-embedder/blob/master/LICENSE)
-* Windows Community Toolkit [MIT](https://github.com/CommunityToolkit/WindowsCommunityToolkit/blob/main/License.md)
+* Windows Community Toolkit: [MIT](https://github.com/CommunityToolkit/WindowsCommunityToolkit/blob/main/License.md)
 * Icon made by Freepik from www.flaticon.com
