@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -295,7 +296,10 @@ namespace EnvyUpdate
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (MessageBox.Show(Properties.Resources.exit_confirm, "", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                ToastNotificationManagerCompat.Uninstall();
                 Application.Current.Shutdown();
+            }
             else
                 e.Cancel = true;
         }

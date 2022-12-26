@@ -181,6 +181,6 @@
     <value>EnvyUpdate must be uninstalled because of an application bug. Please download the most recent version again.</value>
   </data>
   <data name="update_popup_message" xml:space="preserve">
-    <value>A new driver update is available for your graphics card. Click for more info.</value>
+    <value>A new driver update is available for your graphics card.</value>
   </data>
 </root>

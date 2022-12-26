@@ -1,4 +1,4 @@
-﻿using Notifications.Wpf;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace EnvyUpdate
 {
@@ -6,14 +6,9 @@ namespace EnvyUpdate
     {
         public static void ShowDrivUpdatePopup()
         {
-            var notificationManager = new NotificationManager();
-
-            notificationManager.Show(new NotificationContent
-            {
-                Title = "EnvyUpdate",
-                Message = Properties.Resources.update_popup_message,
-                Type = NotificationType.Information
-            }, onClick: Util.ShowMain);
+            var toast = new ToastContentBuilder();
+            toast.AddText(Properties.Resources.update_popup_message);
+            toast.Show();
         }
     }
 }

@@ -250,7 +250,7 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A new driver update is available for your graphics card. Click for more info..
+        ///   Looks up a localized string similar to A new driver update is available for your graphics card..
         /// </summary>
         public static string update_popup_message {
             get {
