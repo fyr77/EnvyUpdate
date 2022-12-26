@@ -6,10 +6,12 @@ using System.IO;
 using System.Linq;
 using System.Management;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
+using Windows.Devices.Radios;
 
 namespace EnvyUpdate
 {
@@ -383,7 +385,66 @@ namespace EnvyUpdate
              */
             //TODO: find way to differentiate between driver types
 
-            return 1;
+            if (System.IO.File.Exists(GlobalVars.exepath + "sd.envy"))
+                return 18;
+            else
+                return 1;
+        }
+
+        public static string GetGpuUrl()
+        {
+            //TODO: Make a list of languages and match OS language to driver
+            //int langid;
+            int psid;
+            int pfid;
+            int osid;
+            int dtcid;
+            int dtid;
+
+            if (Debug.isDebug)
+            {
+                psid = Debug.LoadFakeIDs("psid");
+                pfid = Debug.LoadFakeIDs("pfid");
+                osid = Debug.LoadFakeIDs("osid");
+                dtcid = Debug.LoadFakeIDs("dtcid");
+                dtid = Debug.LoadFakeIDs("dtid");
+            }
+            else
+            {
+                psid = GetIDs("psid");
+                pfid = GetIDs("pfid");
+                osid = GetIDs("osid");
+                dtcid = GetDTCID();
+                dtid = GetDTID();
+            }
+            string gpuURL = "http://www.nvidia.com/Download/processDriver.aspx?psid=" + psid.ToString() + "&pfid=" + pfid.ToString() + "&osid=" + osid.ToString() + "&dtcid=" + dtcid.ToString() + "&dtid=" + dtid.ToString(); // + "&lid=" + langid.ToString();
+
+            using (var c = new WebClient())
+            {
+                gpuURL = c.DownloadString(gpuURL);
+                if (gpuURL.Contains("https://") || gpuURL.Contains("http://"))
+                {
+                    //absolute url
+                }
+                else if (gpuURL.Contains("//"))
+                {
+                    //protocol agnostic url
+                    gpuURL = "https:" + gpuURL;
+                }
+                else if (gpuURL.StartsWith("driverResults.aspx"))
+                {
+                    //relative url
+                    gpuURL = "https://www.nvidia.com/Download/" + gpuURL;
+                }
+                else
+                {
+                    //panic.
+                    MessageBox.Show("ERROR: Invalid API response from Nvidia. Please file an issue on GitHub.");
+                    Environment.Exit(10);
+                }
+            }
+
+            return gpuURL;
         }
 
         public static void DownloadFile(string fileURL, string savePath)

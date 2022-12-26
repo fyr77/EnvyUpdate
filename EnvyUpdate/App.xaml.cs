@@ -24,13 +24,18 @@ namespace EnvyUpdate
                 // Obtain the arguments from the notification
                 ToastArguments args = ToastArguments.Parse(toastArgs.Argument);
 
-                // Obtain any user input (text boxes, menu selections) from the notification
-                ValueSet userInput = toastArgs.UserInput;
-
                 // Need to dispatch to UI thread if performing UI operations
                 Application.Current.Dispatcher.Invoke(delegate
                 {
-                    Util.ShowMain();
+                    switch (args.Get("action"))
+                    {
+                        case "download":
+                            Process.Start(Util.GetGpuUrl());
+                            break;
+                        default:
+                            Util.ShowMain();
+                            break;
+                    }
                 });
             };
         }

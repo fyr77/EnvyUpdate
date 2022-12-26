@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media;
@@ -20,7 +21,6 @@ namespace EnvyUpdate
         private string onlineDriv = null;
         private string gpuURL = null;
         private string[] arguments = null;
-        private bool isDebug = false;
         private string skippedVer = null;
 
         public MainWindow()
@@ -64,8 +64,7 @@ namespace EnvyUpdate
             {
                 if (arguments.Contains("/debug"))
                 {
-                    MessageBox.Show("Debug mode!");
-                    isDebug = true;
+                    Debug.isDebug = true;
                 }
                 else
                 {
@@ -76,7 +75,7 @@ namespace EnvyUpdate
 
             if (Util.IsDCH())
                 textblockLocalType.Text = "DCH";
-            else if (isDebug)
+            else if (Debug.isDebug)
                 textblockLocalType.Text = "DCH (Debug)";
             else
                 textblockLocalType.Text = "Standard";
@@ -116,15 +115,7 @@ namespace EnvyUpdate
 
         private async void Load()
         {
-            int psid = 0;
-            int pfid = 0;
-            int osid = 0;
-            int dtcid = 0;
-            int dtid = 0;
-            //TODO: Make a list of languages and match OS language to driver
-            //int langid;
-
-            if (File.Exists(GlobalVars.exepath + "sd.envy"))
+            if (Util.GetDTID() == 18)
                 radioSD.IsChecked = true;
             else
                 radioGRD.IsChecked = true;
@@ -133,69 +124,24 @@ namespace EnvyUpdate
                 skippedVer = File.ReadLines(GlobalVars.exepath + "skip.envy").First();
 
             // This little bool check is necessary for debug mode on systems without an Nvidia GPU. 
-            if (!isDebug)
+            if (Debug.isDebug)
             {
-                psid = Util.GetIDs("psid");
-                pfid = Util.GetIDs("pfid");
-                osid = Util.GetIDs("osid");
-                dtcid = Util.GetDTCID();
-                //dtid = Util.GetDTID();
-            }
-            else
-            {
-                psid = Debug.LoadFakeIDs("psid");
-                pfid = Debug.LoadFakeIDs("pfid");
-                osid = Debug.LoadFakeIDs("osid");
-                dtcid = Debug.LoadFakeIDs("dtcid");
-                dtid = Debug.LoadFakeIDs("dtid");
                 localDriv = Debug.LocalDriv();
                 textblockGPU.Text = localDriv;
                 textblockGPUName.Text = Debug.GPUname();
             }
 
-            //Temporary Studio Driver override logic until I have figured out how to detect it automatically
-            //TODO
-            try
-            {
-                if (radioSD.IsChecked == true)
-                    dtid = 18;
-                else
-                    dtid = 1;
-            }
-            catch (NullReferenceException)
-            { }
+            gpuURL = Util.GetGpuUrl();
 
-            gpuURL = "http://www.nvidia.com/Download/processDriver.aspx?psid=" + psid.ToString() + "&pfid=" + pfid.ToString() + "&osid=" + osid.ToString() + "&dtcid=" + dtcid.ToString() + "&dtid=" + dtid.ToString(); // + "&lid=" + langid.ToString();
-            WebClient c = new WebClient();
-            gpuURL = c.DownloadString(gpuURL);
-            if (gpuURL.Contains("https://") || gpuURL.Contains("http://"))
+            using (var c = new WebClient())
             {
-                //absolute url
+                string pContent = c.DownloadString(gpuURL);
+                var pattern = @"Windows\/\d{3}\.\d{2}";
+                Regex rgx = new Regex(pattern);
+                var matches = rgx.Matches(pContent);
+                onlineDriv = Regex.Replace(Convert.ToString(matches[0]), "Windows/", "");
+                textblockOnline.Text = onlineDriv;
             }
-            else if (gpuURL.Contains("//"))
-            {
-                //protocol agnostic url
-                gpuURL = "https:" + gpuURL;
-            }
-            else if (gpuURL.StartsWith("driverResults.aspx"))
-            {
-                //relative url
-                gpuURL = "https://www.nvidia.com/Download/" + gpuURL;
-            }
-            else
-            {
-                //panic.
-                MessageBox.Show("ERROR: Invalid API response from Nvidia. Please file an issue on GitHub.");
-                Environment.Exit(10);
-            }
-
-            string pContent = c.DownloadString(gpuURL);
-            var pattern = @"Windows\/\d{3}\.\d{2}";
-            Regex rgx = new Regex(pattern);
-            var matches = rgx.Matches(pContent);
-            onlineDriv = Regex.Replace(Convert.ToString(matches[0]), "Windows/", "");
-            textblockOnline.Text = onlineDriv;
-            c.Dispose();
 
             try
             {
@@ -297,7 +243,7 @@ namespace EnvyUpdate
         {
             if (MessageBox.Show(Properties.Resources.exit_confirm, "", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                ToastNotificationManagerCompat.Uninstall();
+                ToastNotificationManagerCompat.Uninstall(); // Uninstall notifications to prevent issues with the app being portable.
                 Application.Current.Shutdown();
             }
             else

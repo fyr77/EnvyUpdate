@@ -6,6 +6,8 @@ namespace EnvyUpdate
 {
     class Debug
     {
+        public static bool isDebug = false;
+
         public static int LoadFakeIDs(string idType)
         {
             /* 
