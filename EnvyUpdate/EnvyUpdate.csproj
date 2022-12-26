@@ -203,9 +203,6 @@
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
       <Version>6.1.1</Version>
     </PackageReference>
-    <PackageReference Include="Notifications.Wpf">
-      <Version>0.1.1</Version>
-    </PackageReference>
     <PackageReference Include="Resource.Embedder">
       <Version>2.2.0</Version>
     </PackageReference>
