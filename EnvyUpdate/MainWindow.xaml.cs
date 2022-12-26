@@ -49,11 +49,6 @@ namespace EnvyUpdate
 
             GlobalVars.isMobile = Util.IsMobile();
 
-            if (Util.IsDCH())
-                textblockLocalType.Text = "DCH";
-            else
-                textblockLocalType.Text = "Standard";
-
             string locDriv = Util.GetLocDriv();
             if (locDriv != null)
             {
@@ -77,6 +72,13 @@ namespace EnvyUpdate
                     Environment.Exit(255);
                 }
             }
+
+            if (Util.IsDCH())
+                textblockLocalType.Text = "DCH";
+            else if (isDebug)
+                textblockLocalType.Text = "DCH (Debug)";
+            else
+                textblockLocalType.Text = "Standard";
 
             // Check for startup shortcut
             if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "EnvyUpdate.lnk")))

@@ -9,7 +9,7 @@ namespace EnvyUpdate
         public static int LoadFakeIDs(string idType)
         {
             /* 
-             * Usage: Supply /debug flag to exe. Imitates a GTX 1080ti on Win10 x64 non-dch Game Ready Driver.
+             * Usage: Supply /debug flag to exe. Imitates a GTX 1080ti on Win10 x64 DCH Game Ready Driver.
              */ 
             switch (idType)
             {

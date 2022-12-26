@@ -2,7 +2,7 @@
 
 # Important Information
 
-Nvidia seems to have discontinued non-DCH drivers. This means only Windows 10 and Windows 11 can get the most recent driver versions. 
+Nvidia has discontinued non-DCH drivers. This means only Windows 10 and Windows 11 can get the most recent driver versions. 
 
 If you are running Standard (non-DCH) drivers right now, EnvyUpdate will **NOT** display newer driver versions until you have manually updated to DCH drivers.
 
@@ -23,7 +23,7 @@ Enabling Autostart will create a shortcut of EnvyUpdate in the Windows startup f
 
 ## Compatibility
 
-The application should be compatible with all Nvidia GeForce GPUs that have their drivers available on the nvidia.com download page and runs on Windows 7 and up.
+The application should be compatible with all Nvidia GeForce GPUs that have their drivers available on the nvidia.com download page and runs on Windows 10 and up.
 
 It is tested with GeForce Series GPUs. Generally others might work, but they are (currently) untested.
 

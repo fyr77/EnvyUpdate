@@ -329,7 +329,7 @@ namespace EnvyUpdate
         }
         /// <summary>
         /// Checks Windows registry for Nvidia DCH Key. If it is present, returns true.
-        /// Can also check file system for existance of DLL if registry access fails
+        /// Can also check file system for existence of DLL if registry access fails
         /// </summary>
         /// <returns></returns>
         public static bool IsDCH()
