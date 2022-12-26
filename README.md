@@ -1,4 +1,4 @@
-![Logo](https://github.com/fyr77/envyupdate/blob/master/res/banner.png?raw=true)
+![Logo](https://github.com/fyr77/envyupdate/blob/master/res/banner_bg.png?raw=true)
 
 # Important Information
 
