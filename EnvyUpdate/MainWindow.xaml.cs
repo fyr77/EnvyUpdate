@@ -325,7 +325,7 @@ namespace EnvyUpdate
 
             Console.WriteLine("Process stopped. Name: " + processName + " | ID: " + processID);
             */
-
+            System.Threading.Thread.Sleep(30000);
             UpdateLocalVer();
             Load();
         }
