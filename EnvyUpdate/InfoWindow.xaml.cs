@@ -19,6 +19,8 @@ namespace EnvyUpdate
             string version = fvi.FileVersion;
 
             labelVer.Content += " " + version;
+            if (GlobalVars.monitoringInstall)
+                labelVer.FontStyle = FontStyles.Italic;
         }
 
         private void ButtonWeb_Click(object sender, RoutedEventArgs e)

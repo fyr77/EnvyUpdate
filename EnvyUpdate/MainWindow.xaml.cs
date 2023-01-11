@@ -3,8 +3,8 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Net;
-using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media;
@@ -50,15 +50,10 @@ namespace EnvyUpdate
 
             GlobalVars.isMobile = Util.IsMobile();
 
-            string locDriv = Util.GetLocDriv();
-            if (locDriv != null)
+            localDriv = Util.GetLocDriv();
+            if (localDriv != null)
             {
-                localDriv = locDriv;
-                textblockGPU.Text = locDriv;
-                if (GlobalVars.isMobile)
-                    textblockGPUName.Text = Util.GetGPUName(false) + " (mobile)";
-                else
-                    textblockGPUName.Text = Util.GetGPUName(false);
+                UpdateLocalVer(false);
             }
             else
             {
@@ -99,6 +94,28 @@ namespace EnvyUpdate
             // Check for new updates every 5 hours.
             Dt.Interval = new TimeSpan(5, 0, 0);
             Dt.Start();
+
+            string watchDirPath = Path.Combine(Environment.ExpandEnvironmentVariables("%ProgramW6432%"), "NVIDIA Corporation\\Installer2\\InstallerCore");
+            if (Directory.Exists(watchDirPath))
+            {
+                GlobalVars.monitoringInstall = true;
+
+                var driverFileChangedWatcher = new FileSystemWatcher(watchDirPath);
+                driverFileChangedWatcher.NotifyFilter = NotifyFilters.Attributes
+                                 | NotifyFilters.CreationTime
+                                 | NotifyFilters.FileName
+                                 | NotifyFilters.LastAccess
+                                 | NotifyFilters.LastWrite
+                                 | NotifyFilters.Size;
+                driverFileChangedWatcher.Changed += DriverFileChanged;
+                driverFileChangedWatcher.Created += DriverFileChanged;
+                driverFileChangedWatcher.Deleted += DriverFileChanged;
+
+                driverFileChangedWatcher.Filter = "*.dll";
+                driverFileChangedWatcher.IncludeSubdirectories = false;
+                driverFileChangedWatcher.EnableRaisingEvents = true;
+            }
+
             Load();
         }
 
@@ -113,7 +130,7 @@ namespace EnvyUpdate
             infoWin.ShowDialog();
         }
 
-        private async void Load()
+        private void Load()
         {
             if (Util.GetDTID() == 18)
                 radioSD.IsChecked = true;
@@ -287,6 +304,30 @@ namespace EnvyUpdate
             buttonSkip.IsEnabled = false;
             buttonSkip.Content = Properties.Resources.ui_skipped;
             MessageBox.Show(Properties.Resources.skip_confirm);
+        }
+
+        private void UpdateLocalVer(bool reloadLocalDriv = true)
+        {
+            if (reloadLocalDriv)
+                localDriv = Util.GetLocDriv();
+            textblockGPU.Text = localDriv;
+            if (GlobalVars.isMobile)
+                textblockGPUName.Text = Util.GetGPUName(false) + " (mobile)";
+            else
+                textblockGPUName.Text = Util.GetGPUName(false);
+        }
+
+        void DriverFileChanged(object sender, FileSystemEventArgs e)
+        {
+            /*
+            string processName = e.NewEvent.Properties["ProcessName"].Value.ToString();
+            string processID = Convert.ToInt32(e.NewEvent.Properties["ProcessID"].Value).ToString();
+
+            Console.WriteLine("Process stopped. Name: " + processName + " | ID: " + processID);
+            */
+
+            UpdateLocalVer();
+            Load();
         }
     }
 }

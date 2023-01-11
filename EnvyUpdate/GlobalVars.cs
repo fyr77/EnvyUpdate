@@ -11,5 +11,6 @@ namespace EnvyUpdate
         public static readonly string startmenu = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
         public static readonly string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\envyupdate\\";
         public static readonly string startup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+        public static bool monitoringInstall = false;
     }
 }
