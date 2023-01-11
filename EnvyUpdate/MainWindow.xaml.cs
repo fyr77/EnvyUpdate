@@ -108,8 +108,6 @@ namespace EnvyUpdate
                                  | NotifyFilters.LastWrite
                                  | NotifyFilters.Size;
                 driverFileChangedWatcher.Changed += DriverFileChanged;
-                driverFileChangedWatcher.Created += DriverFileChanged;
-                driverFileChangedWatcher.Deleted += DriverFileChanged;
 
                 driverFileChangedWatcher.Filter = "*.dll";
                 driverFileChangedWatcher.IncludeSubdirectories = false;
@@ -319,15 +317,12 @@ namespace EnvyUpdate
 
         void DriverFileChanged(object sender, FileSystemEventArgs e)
         {
-            /*
-            string processName = e.NewEvent.Properties["ProcessName"].Value.ToString();
-            string processID = Convert.ToInt32(e.NewEvent.Properties["ProcessID"].Value).ToString();
-
-            Console.WriteLine("Process stopped. Name: " + processName + " | ID: " + processID);
-            */
-            System.Threading.Thread.Sleep(30000);
-            UpdateLocalVer();
-            Load();
+            System.Threading.Thread.Sleep(10000);
+            Application.Current.Dispatcher.Invoke(delegate
+            {
+                UpdateLocalVer();
+                Load();
+            });
         }
     }
 }
