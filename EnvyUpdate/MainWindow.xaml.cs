@@ -146,7 +146,31 @@ namespace EnvyUpdate
                 textblockGPUName.Text = Debug.GPUname();
             }
 
-            gpuURL = Util.GetGpuUrl();
+            try
+            {
+                gpuURL = Util.GetGpuUrl();
+            }
+            catch (ArgumentException)
+            {
+                try
+                {
+                    // disable SD and try with GRD
+                    if (File.Exists(GlobalVars.exepath + "sd.envy"))
+                    {
+                        File.Delete(GlobalVars.exepath + "sd.envy");
+                    }
+
+                    gpuURL = Util.GetGpuUrl(); //try again with GRD
+                    MessageBox.Show(Properties.Resources.ui_studionotsupported);
+                    radioGRD.IsChecked = true;
+                }
+                catch (ArgumentException)
+                {
+                    // Now we have a problem.
+                    MessageBox.Show("ERROR: Invalid API response from Nvidia. Please file an issue on GitHub.");
+                    Environment.Exit(10);
+                }
+            }
 
             using (var c = new WebClient())
             {

@@ -171,6 +171,9 @@
   <data name="ui_skipversion" xml:space="preserve">
     <value>Skip this version</value>
   </data>
+  <data name="ui_studionotsupported" xml:space="preserve">
+    <value>Studio Driver is not supported by this graphics card.</value>
+  </data>
   <data name="uninstall_confirm" xml:space="preserve">
     <value>Are you sure you want to uninstall EnvyUpdate?</value>
   </data>

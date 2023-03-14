@@ -394,8 +394,6 @@ namespace EnvyUpdate
 
         public static string GetGpuUrl()
         {
-            //TODO: Make a list of languages and match OS language to driver
-            //int langid;
             int psid;
             int pfid;
             int osid;
@@ -436,6 +434,11 @@ namespace EnvyUpdate
                 {
                     //relative url
                     gpuURL = "https://www.nvidia.com/Download/" + gpuURL;
+                }
+                else if (gpuURL.Contains("No certified downloads were found"))
+                {
+                    //configuration not supported
+                    throw new ArgumentException();
                 }
                 else
                 {

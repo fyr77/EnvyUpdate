@@ -223,6 +223,15 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Studio Driver is not supported by this graphics card..
+        /// </summary>
+        public static string ui_studionotsupported {
+            get {
+                return ResourceManager.GetString("ui_studionotsupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to uninstall EnvyUpdate?.
         /// </summary>
         public static string uninstall_confirm {
