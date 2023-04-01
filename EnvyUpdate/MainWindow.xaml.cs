@@ -135,8 +135,8 @@ namespace EnvyUpdate
             else
                 radioGRD.IsChecked = true;
 
-            if (File.Exists(GlobalVars.exepath + "skip.envy"))
-                skippedVer = File.ReadLines(GlobalVars.exepath + "skip.envy").First();
+            if (File.Exists(GlobalVars.exedirectory + "skip.envy"))
+                skippedVer = File.ReadLines(GlobalVars.exedirectory + "skip.envy").First();
 
             // This little bool check is necessary for debug mode on systems without an Nvidia GPU. 
             if (Debug.isDebug)
@@ -155,19 +155,19 @@ namespace EnvyUpdate
                 try
                 {
                     // disable SD and try with GRD
-                    if (File.Exists(GlobalVars.exepath + "sd.envy"))
+                    if (File.Exists(GlobalVars.exedirectory + "sd.envy"))
                     {
-                        File.Delete(GlobalVars.exepath + "sd.envy");
+                        File.Delete(GlobalVars.exedirectory + "sd.envy");
                     }
 
                     gpuURL = Util.GetGpuUrl(); //try again with GRD
                     MessageBox.Show(Properties.Resources.ui_studionotsupported);
                     radioGRD.IsChecked = true;
                 }
-                catch (ArgumentException)
+                catch (ArgumentException e)
                 {
                     // Now we have a problem.
-                    MessageBox.Show("ERROR: Invalid API response from Nvidia. Please file an issue on GitHub.");
+                    MessageBox.Show("ERROR: Invalid API response from Nvidia. Please file an issue on GitHub.\nAttempted API call:\n" + e.Message);
                     Environment.Exit(10);
                 }
             }
@@ -231,8 +231,8 @@ namespace EnvyUpdate
             if (skippedVer != onlineDriv)
             {
                 skippedVer = null;
-                if (File.Exists(GlobalVars.exepath + "skip.envy"))
-                    File.Delete(GlobalVars.exepath + "skip.envy");
+                if (File.Exists(GlobalVars.exedirectory + "skip.envy"))
+                    File.Delete(GlobalVars.exedirectory + "skip.envy");
                 buttonSkip.Content = Properties.Resources.ui_skipversion;
                 buttonSkip.IsEnabled = true;
             }
@@ -267,7 +267,7 @@ namespace EnvyUpdate
             {
                 File.Delete(GlobalVars.startmenu + "\\EnvyUpdate.lnk");
             }
-            if ((GlobalVars.exepath == GlobalVars.appdata) && File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
+            if ((GlobalVars.exedirectory == GlobalVars.appdata) && File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
             {
                 MessageBox.Show(Properties.Resources.uninstall_legacy_message);
                 Util.SelfDelete();
@@ -291,18 +291,18 @@ namespace EnvyUpdate
 
         private void radioGRD_Checked(object sender, RoutedEventArgs e)
         {
-            if (File.Exists(GlobalVars.exepath + "sd.envy"))
+            if (File.Exists(GlobalVars.exedirectory + "sd.envy"))
             {
-                File.Delete(GlobalVars.exepath + "sd.envy");
+                File.Delete(GlobalVars.exedirectory + "sd.envy");
                 Load();
             }
         }
 
         private void radioSD_Checked(object sender, RoutedEventArgs e)
         {
-            if (!File.Exists(GlobalVars.exepath + "sd.envy"))
+            if (!File.Exists(GlobalVars.exedirectory + "sd.envy"))
             {
-                File.Create(GlobalVars.exepath + "sd.envy").Close();
+                File.Create(GlobalVars.exedirectory + "sd.envy").Close();
                 Load();
             }
         }
@@ -322,7 +322,7 @@ namespace EnvyUpdate
         private void buttonSkip_Click(object sender, RoutedEventArgs e)
         {
             skippedVer = onlineDriv;
-            File.WriteAllText(GlobalVars.exepath + "skip.envy", onlineDriv);
+            File.WriteAllText(GlobalVars.exedirectory + "skip.envy", onlineDriv);
             buttonSkip.IsEnabled = false;
             buttonSkip.Content = Properties.Resources.ui_skipped;
             MessageBox.Show(Properties.Resources.skip_confirm);

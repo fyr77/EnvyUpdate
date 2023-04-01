@@ -16,9 +16,9 @@ namespace EnvyUpdate
             switch (idType)
             {
                 case "psid":
-                    return 101;
+                    return 127;
                 case "pfid":
-                    return 845;
+                    return 999;
                 case "osid":
                     return 57;
                 case "dtcid":
@@ -36,7 +36,7 @@ namespace EnvyUpdate
 
         public static string GPUname()
         {
-            return "Nvidia GeForce GTX 1080ti (debug)";
+            return "Nvidia GeForce RTX 4080 (debug)";
         }
     }
 }

@@ -384,7 +384,7 @@ namespace EnvyUpdate
              */
             //TODO: find way to differentiate between driver types
 
-            if (System.IO.File.Exists(GlobalVars.exepath + "sd.envy"))
+            if (System.IO.File.Exists(GlobalVars.exedirectory + "sd.envy"))
                 return 18;
             else
                 return 1;
@@ -414,39 +414,40 @@ namespace EnvyUpdate
                 dtcid = GetDTCID();
                 dtid = GetDTID();
             }
-            string gpuURL = "http://www.nvidia.com/Download/processDriver.aspx?psid=" + psid.ToString() + "&pfid=" + pfid.ToString() + "&osid=" + osid.ToString() + "&dtcid=" + dtcid.ToString() + "&dtid=" + dtid.ToString(); // + "&lid=" + langid.ToString();
+            string gpuUrlBuild = "http://www.nvidia.com/Download/processDriver.aspx?psid=" + psid.ToString() + "&pfid=" + pfid.ToString() + "&osid=" + osid.ToString() + "&dtcid=" + dtcid.ToString() + "&dtid=" + dtid.ToString();
+            string gpuUrl;
 
             using (var c = new WebClient())
             {
-                gpuURL = c.DownloadString(gpuURL);
-                if (gpuURL.Contains("https://") || gpuURL.Contains("http://"))
+                gpuUrl = c.DownloadString(gpuUrlBuild);
+                if (gpuUrl.Contains("https://") || gpuUrl.Contains("http://"))
                 {
                     //absolute url
                 }
-                else if (gpuURL.Contains("//"))
+                else if (gpuUrl.Contains("//"))
                 {
                     //protocol agnostic url
-                    gpuURL = "https:" + gpuURL;
+                    gpuUrl = "https:" + gpuUrl;
                 }
-                else if (gpuURL.StartsWith("driverResults.aspx"))
+                else if (gpuUrl.StartsWith("driverResults.aspx"))
                 {
                     //relative url
-                    gpuURL = "https://www.nvidia.com/Download/" + gpuURL;
+                    gpuUrl = "https://www.nvidia.com/Download/" + gpuUrl;
                 }
-                else if (gpuURL.Contains("No certified downloads were found"))
+                else if (gpuUrl.Contains("No certified downloads were found"))
                 {
                     //configuration not supported
-                    throw new ArgumentException();
+                    throw new ArgumentException(gpuUrlBuild);
                 }
                 else
                 {
                     //panic.
-                    MessageBox.Show("ERROR: Invalid API response from Nvidia. Please file an issue on GitHub.");
+                    MessageBox.Show("ERROR: Invalid API response from Nvidia - unexpected web response. Please file an issue on GitHub.");
                     Environment.Exit(10);
                 }
             }
 
-            return gpuURL;
+            return gpuUrl;
         }
 
         public static void DownloadFile(string fileURL, string savePath)
