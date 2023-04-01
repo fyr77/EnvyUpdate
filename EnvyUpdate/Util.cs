@@ -298,9 +298,7 @@ namespace EnvyUpdate
                     {
                         GPUName = obj["VideoProcessor"].ToString().ToLower();
                         // Remove any 3GB, 6GB or similar from name. We don't need to know the VRAM to get results.
-                        GPUName = Regex.Replace(GPUName, " \\d+gb", "");
-                        GPUName = Regex.Replace(GPUName, " max-q", "");
-                        GPUName = Regex.Replace(GPUName, "nvidia ", "");
+                        GPUName = Regex.Match(GPUName, "(geforce )?.tx \\w*\\d*").Value;
                     }
                     else
                         GPUName = obj["VideoProcessor"].ToString();

@@ -23,7 +23,7 @@
         <TextBlock x:Name="textblockGPUName" Margin="10,14,35,0" TextWrapping="Wrap" Text="GPU..." Height="16" VerticalAlignment="Top" TextAlignment="Center" Grid.RowSpan="2" FontWeight="Bold"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,19,0,0" TextWrapping="Wrap" FontWeight="Bold" Width="140" Height="16" VerticalAlignment="Top" Grid.Row="1" Text="{x:Static p:Resources.ui_localdriver_type}"/>
         <TextBlock x:Name="textblockLocalType" HorizontalAlignment="Right" Margin="0,19,10,0" TextWrapping="Wrap" Width="134" Height="16" VerticalAlignment="Top" TextAlignment="Right" Grid.Row="1"><Run Text="&lt;none&gt;"/><LineBreak/><Run/></TextBlock>
-        <RadioButton x:Name="radioGRD" Content="Game Ready Driver" HorizontalAlignment="Left" Margin="10,40,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="radioGRD_Checked"/>
+        <RadioButton x:Name="radioGRD" Content="Game Ready / Standard Driver" HorizontalAlignment="Left" Margin="10,40,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="radioGRD_Checked"/>
         <RadioButton x:Name="radioSD" Content="Studio Driver" HorizontalAlignment="Left" Margin="10,60,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="radioSD_Checked"/>
         <CheckBox x:Name="chkAutostart" Content="{x:Static p:Resources.ui_autostart}" HorizontalAlignment="Left" Margin="10,131,0,0" Grid.Row="1" VerticalAlignment="Top" Click="chkAutostart_Click"/>
         <Button x:Name="buttonSkip" Content="{x:Static p:Resources.ui_skipversion}" Margin="0,131,10,0" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Right" Click="buttonSkip_Click" IsEnabled="False"/>
