@@ -48,8 +48,7 @@ namespace EnvyUpdate
             // Check if EnvyUpdate is already running
             if (Util.IsInstanceOpen("EnvyUpdate"))
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "FATAL Found another instance, terminating.");
+                Debug.LogToFile("FATAL Found another instance, terminating.");
 
                 MessageBox.Show(Properties.Resources.instance_already_running);
                 Environment.Exit(1);
@@ -58,24 +57,20 @@ namespace EnvyUpdate
             // Delete installed legacy versions
             if (Directory.Exists(GlobalVars.appdata))
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Found old appdata installation, uninstalling.");
+                Debug.LogToFile("INFO Found old appdata installation, uninstalling.");
                 UninstallAll();
             }
 
             GlobalVars.isMobile = Util.IsMobile();
-            if (Debug.isVerbose)
-                File.AppendAllText(Debug.debugFile, "INFO Mobile: " + GlobalVars.isMobile);
+            Debug.LogToFile("INFO Mobile: " + GlobalVars.isMobile);
 
             localDriv = Util.GetLocDriv();
 
-            if (Debug.isVerbose)
-                File.AppendAllText(Debug.debugFile, "INFO Local driver version: " + localDriv);
+            Debug.LogToFile("INFO Local driver version: " + localDriv);
 
             if (localDriv != null)
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Local driver version already known, updating info without reloading.");
+                Debug.LogToFile("INFO Local driver version already known, updating info without reloading.");
                 UpdateLocalVer(false);
             }
             else
@@ -83,13 +78,11 @@ namespace EnvyUpdate
                 if (arguments.Contains("/fake"))
                 {
                     Debug.isFake = true;
-                    if (Debug.isVerbose)
-                        File.AppendAllText(Debug.debugFile, "WARN Faking GPU with debug info.");
+                    Debug.LogToFile("WARN Faking GPU with debug info.");
                 }
                 else
                 {
-                    if (Debug.isVerbose)
-                        File.AppendAllText(Debug.debugFile, "FATAL No supported GPU found, terminating.");
+                    Debug.LogToFile("FATAL No supported GPU found, terminating.");
                     MessageBox.Show(Properties.Resources.no_compatible_gpu);
                     Environment.Exit(255);
                 }
@@ -105,14 +98,12 @@ namespace EnvyUpdate
             else
                 textblockLocalType.Text = "Standard";
 
-            if (Debug.isVerbose)
-                File.AppendAllText(Debug.debugFile, "INFO Done detecting driver type.");
+            Debug.LogToFile("INFO Done detecting driver type.");
 
             // Check for startup shortcut
             if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "EnvyUpdate.lnk")))
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Autostart is enabled.");
+                Debug.LogToFile("INFO Autostart is enabled.");
                 chkAutostart.IsChecked = true;
                 chkAutostart_Click(null, null); //Automatically recreate shortcut to account for moved EXE.
             }
@@ -120,8 +111,7 @@ namespace EnvyUpdate
             //Check if launched as miminized with arg
             if (arguments.Contains("/minimize"))
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Launching minimized.");
+                Debug.LogToFile("INFO Launching minimized.");
                 WindowState = WindowState.Minimized;
                 Hide();
             }
@@ -131,8 +121,7 @@ namespace EnvyUpdate
             // Check for new updates every 5 hours.
             Dt.Interval = new TimeSpan(5, 0, 0);
             Dt.Start();
-            if (Debug.isVerbose)
-                File.AppendAllText(Debug.debugFile, "INFO Started check timer.");
+            Debug.LogToFile("INFO Started check timer.");
 
             string watchDirPath = Path.Combine(Environment.ExpandEnvironmentVariables("%ProgramW6432%"), "NVIDIA Corporation\\Installer2\\InstallerCore");
             if (Directory.Exists(watchDirPath))
@@ -151,8 +140,7 @@ namespace EnvyUpdate
                 driverFileChangedWatcher.Filter = "*.dll";
                 driverFileChangedWatcher.IncludeSubdirectories = false;
                 driverFileChangedWatcher.EnableRaisingEvents = true;
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Started update file system watcher.");
+                Debug.LogToFile("INFO Started update file system watcher.");
             }
 
             Load();
@@ -165,8 +153,7 @@ namespace EnvyUpdate
 
         private void buttonHelp_Click(object sender, RoutedEventArgs e)
         {
-            if (Debug.isVerbose)
-                File.AppendAllText(Debug.debugFile, "INFO Showing info window.");
+            Debug.LogToFile("INFO Showing info window.");
             InfoWindow infoWin = new InfoWindow();
             infoWin.ShowDialog();
         }
@@ -175,21 +162,18 @@ namespace EnvyUpdate
         {
             if (Util.GetDTID() == 18)
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Found studio driver.");
+                Debug.LogToFile("INFO Found studio driver.");
                 radioSD.IsChecked = true;
             }
             else
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Found standard driver.");
+                Debug.LogToFile("INFO Found standard driver.");
                 radioGRD.IsChecked = true;
             }
 
             if (File.Exists(GlobalVars.exedirectory + "skip.envy"))
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Found version skip config.");
+                Debug.LogToFile("INFO Found version skip config.");
                 skippedVer = File.ReadLines(GlobalVars.exedirectory + "skip.envy").First();
             }
 
@@ -203,14 +187,12 @@ namespace EnvyUpdate
 
             try
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Trying to get GPU update URL.");
+                Debug.LogToFile("INFO Trying to get GPU update URL.");
                 gpuURL = Util.GetGpuUrl();
             }
             catch (ArgumentException)
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "WARN Could not get GPU update URL, trying again with standard driver.");
+                Debug.LogToFile("WARN Could not get GPU update URL, trying again with standard driver.");
                 try
                 {
                     // disable SD and try with GRD
@@ -226,8 +208,7 @@ namespace EnvyUpdate
                 catch (ArgumentException e)
                 {
                     // Now we have a problem.
-                    if (Debug.isVerbose)
-                        File.AppendAllText(Debug.debugFile, "FATAL Invalid API response from Nvidia. Attempted API call: " + e.Message);
+                    Debug.LogToFile("FATAL Invalid API response from Nvidia. Attempted API call: " + e.Message);
                     MessageBox.Show("ERROR: Invalid API response from Nvidia. Please file an issue on GitHub.\nAttempted API call:\n" + e.Message);
                     Environment.Exit(10);
                 }
@@ -235,24 +216,21 @@ namespace EnvyUpdate
 
             using (var c = new WebClient())
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Trying to get newest driver version.");
+                Debug.LogToFile("INFO Trying to get newest driver version.");
                 string pContent = c.DownloadString(gpuURL);
                 var pattern = @"Windows\/\d{3}\.\d{2}";
                 Regex rgx = new Regex(pattern);
                 var matches = rgx.Matches(pContent);
                 onlineDriv = Regex.Replace(Convert.ToString(matches[0]), "Windows/", "");
                 textblockOnline.Text = onlineDriv;
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Got online driver version: " + onlineDriv);
+                Debug.LogToFile("INFO Got online driver version: " + onlineDriv);
             }
 
             try
             {
                 if (float.Parse(localDriv) < float.Parse(onlineDriv))
                 {
-                    if (Debug.isVerbose)
-                        File.AppendAllText(Debug.debugFile, "INFO Local version is older than online. Setting UI...");
+                    Debug.LogToFile("INFO Local version is older than online. Setting UI...");
                     textblockOnline.Foreground = Brushes.Red;
                     buttonDL.IsEnabled = true;
                     if (skippedVer == null)
@@ -263,35 +241,30 @@ namespace EnvyUpdate
                     else
                         buttonSkip.Content = Properties.Resources.ui_skipped;
 
-                    if (Debug.isVerbose)
-                        File.AppendAllText(Debug.debugFile, "INFO UI set.");
+                    Debug.LogToFile("INFO UI set.");
 
                     if (skippedVer != onlineDriv)
                     {
-                        if (Debug.isVerbose)
-                            File.AppendAllText(Debug.debugFile, "INFO Showing update popup notification.");
+                        Debug.LogToFile("INFO Showing update popup notification.");
                         Notify.ShowDrivUpdatePopup();
                     }
                 }
                 else
                 {
-                    if (Debug.isVerbose)
-                        File.AppendAllText(Debug.debugFile, "INFO Local version is up to date.");
+                    Debug.LogToFile("INFO Local version is up to date.");
                     buttonSkip.IsEnabled = false;
                     textblockOnline.Foreground = Brushes.Green;
                 }
             }
             catch (FormatException)
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Caught FormatException, assuming locale workaround is necessary.");
+                Debug.LogToFile("INFO Caught FormatException, assuming locale workaround is necessary.");
                 //Thank you locales. Some languages need , instead of . for proper parsing
                 string cLocalDriv = localDriv.Replace('.', ',');
                 string cOnlineDriv = onlineDriv.Replace('.', ',');
                 if (float.Parse(cLocalDriv) < float.Parse(cOnlineDriv))
                 {
-                    if (Debug.isVerbose)
-                        File.AppendAllText(Debug.debugFile, "INFO Local version is older than online. Setting UI...");
+                    Debug.LogToFile("INFO Local version is older than online. Setting UI...");
                     textblockOnline.Foreground = Brushes.Red;
                     buttonDL.IsEnabled = true;
                     if (skippedVer == null)
@@ -300,15 +273,13 @@ namespace EnvyUpdate
                         buttonSkip.Content = Properties.Resources.ui_skipped;
                     if (skippedVer != onlineDriv)
                     {
-                        if (Debug.isVerbose)
-                            File.AppendAllText(Debug.debugFile, "INFO Showing update popup notification.");
+                        Debug.LogToFile("INFO Showing update popup notification.");
                         Notify.ShowDrivUpdatePopup();
                     }
                 }
                 else
                 {
-                    if (Debug.isVerbose)
-                        File.AppendAllText(Debug.debugFile, "INFO Local version is up to date.");
+                    Debug.LogToFile("INFO Local version is up to date.");
                     buttonSkip.IsEnabled = false;
                     textblockOnline.Foreground = Brushes.Green;
                 }
@@ -317,8 +288,7 @@ namespace EnvyUpdate
             //Check for different version than skipped version
             if (skippedVer != onlineDriv)
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Skipped version is surpassed, deleting setting.");
+                Debug.LogToFile("INFO Skipped version is surpassed, deleting setting.");
                 skippedVer = null;
                 if (File.Exists(GlobalVars.exedirectory + "skip.envy"))
                     File.Delete(GlobalVars.exedirectory + "skip.envy");
@@ -329,15 +299,13 @@ namespace EnvyUpdate
 
         private void buttonDL_Click(object sender, RoutedEventArgs e)
         {
-            if (Debug.isVerbose)
-                File.AppendAllText(Debug.debugFile, "INFO Opening download page.");
+            Debug.LogToFile("INFO Opening download page.");
             Process.Start(gpuURL);
         }
 
         private void TaskbarIcon_TrayLeftMouseDown(object sender, RoutedEventArgs e)
         {
-            if (Debug.isVerbose)
-                File.AppendAllText(Debug.debugFile, "INFO Tray was clicked, opening main window.");
+            Debug.LogToFile("INFO Tray was clicked, opening main window.");
             Util.ShowMain();
         }
 
@@ -345,8 +313,7 @@ namespace EnvyUpdate
         {
             if (WindowState == WindowState.Minimized)
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Window was minimized, closing to tray.");
+                Debug.LogToFile("INFO Window was minimized, closing to tray.");
                 Hide();
             }
         }
@@ -355,28 +322,24 @@ namespace EnvyUpdate
         {
             if (File.Exists(GlobalVars.startup + "\\EnvyUpdate.lnk"))
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Deleted startup entry.");
+                Debug.LogToFile("INFO Deleted startup entry.");
                 File.Delete(GlobalVars.startup + "\\EnvyUpdate.lnk");
             }
 
             if (File.Exists(GlobalVars.startmenu + "\\EnvyUpdate.lnk"))
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Deleted start menu entry.");
+                Debug.LogToFile("INFO Deleted start menu entry.");
                 File.Delete(GlobalVars.startmenu + "\\EnvyUpdate.lnk");
             }
             if ((GlobalVars.exedirectory == GlobalVars.appdata) && File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Deleting EnvyUpdate appdata and self.");
+                Debug.LogToFile("INFO Deleting EnvyUpdate appdata and self.");
                 MessageBox.Show(Properties.Resources.uninstall_legacy_message);
                 Util.SelfDelete();
             }
             else if (Directory.Exists(GlobalVars.appdata))
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Deleting EnvyUpdate appdata folder");
+                Debug.LogToFile("INFO Deleting EnvyUpdate appdata folder");
                 Directory.Delete(GlobalVars.appdata, true);
             }
         }
@@ -385,15 +348,13 @@ namespace EnvyUpdate
         {
             if (MessageBox.Show(Properties.Resources.exit_confirm, "", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Uninstalling notifications and shutting down.");
+                Debug.LogToFile("INFO Uninstalling notifications and shutting down.");
                 ToastNotificationManagerCompat.Uninstall(); // Uninstall notifications to prevent issues with the app being portable.
                 Application.Current.Shutdown();
             }
             else
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Application shutdown was cancelled.");
+                Debug.LogToFile("INFO Application shutdown was cancelled.");
                 e.Cancel = true;
             }
         }
@@ -402,8 +363,7 @@ namespace EnvyUpdate
         {
             if (File.Exists(GlobalVars.exedirectory + "sd.envy"))
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Switching to game ready driver.");
+                Debug.LogToFile("INFO Switching to game ready driver.");
                 File.Delete(GlobalVars.exedirectory + "sd.envy");
                 Load();
             }
@@ -413,8 +373,7 @@ namespace EnvyUpdate
         {
             if (!File.Exists(GlobalVars.exedirectory + "sd.envy"))
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Switching to studio driver.");
+                Debug.LogToFile("INFO Switching to studio driver.");
                 File.Create(GlobalVars.exedirectory + "sd.envy").Close();
                 Load();
             }
@@ -424,22 +383,19 @@ namespace EnvyUpdate
         {
             if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "EnvyUpdate.lnk")))
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Removing autostart entry.");
+                Debug.LogToFile("INFO Removing autostart entry.");
                 File.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "EnvyUpdate.lnk"));
             }
             if (chkAutostart.IsChecked == true)
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Creating autostart entry.");
+                Debug.LogToFile("INFO Creating autostart entry.");
                 Util.CreateShortcut("EnvyUpdate", Environment.GetFolderPath(Environment.SpecialFolder.Startup), GlobalVars.exeloc, "NVidia Update Checker", "/minimize");
             }
         }
 
         private void buttonSkip_Click(object sender, RoutedEventArgs e)
         {
-            if (Debug.isVerbose)
-                File.AppendAllText(Debug.debugFile, "INFO Skipping version.");
+            Debug.LogToFile("INFO Skipping version.");
             skippedVer = onlineDriv;
             File.WriteAllText(GlobalVars.exedirectory + "skip.envy", onlineDriv);
             buttonSkip.IsEnabled = false;
@@ -449,12 +405,10 @@ namespace EnvyUpdate
 
         private void UpdateLocalVer(bool reloadLocalDriv = true)
         {
-            if (Debug.isVerbose)
-                File.AppendAllText(Debug.debugFile, "INFO Updating local driver version in UI.");
+            Debug.LogToFile("INFO Updating local driver version in UI.");
             if (reloadLocalDriv)
             {
-                if (Debug.isVerbose)
-                    File.AppendAllText(Debug.debugFile, "INFO Reloading local driver version.");
+                Debug.LogToFile("INFO Reloading local driver version.");
                 localDriv = Util.GetLocDriv();
             }
             textblockGPU.Text = localDriv;
@@ -466,8 +420,7 @@ namespace EnvyUpdate
 
         void DriverFileChanged(object sender, FileSystemEventArgs e)
         {
-            if (Debug.isVerbose)
-                File.AppendAllText(Debug.debugFile, "INFO Watched driver file changed! Reloading data.");
+            Debug.LogToFile("INFO Watched driver file changed! Reloading data.");
             System.Threading.Thread.Sleep(10000);
             Application.Current.Dispatcher.Invoke(delegate
             {

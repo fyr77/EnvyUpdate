@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 using Windows.Devices.Radios;
+using Windows.UI.Xaml.Input;
 
 namespace EnvyUpdate
 {
@@ -29,8 +30,7 @@ namespace EnvyUpdate
             // query local driver version
             try
             {
-                if (Debug.isVerbose)
-                    System.IO.File.AppendAllText(Debug.debugFile, "INFO Looking for driver version in ManagementObjects");
+                Debug.LogToFile("INFO Looking for driver version in ManagementObjects");
 
                 foreach (ManagementObject obj in new ManagementObjectSearcher("SELECT * FROM Win32_VideoController").Get())
                 {
@@ -40,16 +40,14 @@ namespace EnvyUpdate
                         OfflineGPUVersion = OfflineGPUVersion.Substring(Math.Max(0, OfflineGPUVersion.Length - 5));
                         OfflineGPUVersion = OfflineGPUVersion.Substring(0, 3) + "." + OfflineGPUVersion.Substring(3); // add dot
                         foundGpu = true;
-                        if (Debug.isVerbose)
-                            System.IO.File.AppendAllText(Debug.debugFile, "INFO Found driver in ManagementObjects.");
+                        Debug.LogToFile("INFO Found driver in ManagementObjects.");
                         break;
                     }
                 }
 
                 if (!foundGpu)
                 {
-                    if (Debug.isVerbose)
-                        System.IO.File.AppendAllText(Debug.debugFile, "WARN Did NOT find driver in ManagementObjects.");
+                    Debug.LogToFile("WARN Did NOT find driver in ManagementObjects.");
                     throw new InvalidDataException();
                 }
 
@@ -79,8 +77,7 @@ namespace EnvyUpdate
             shortcut.Arguments = arguments;
             shortcut.Description = description;
             shortcut.TargetPath = targetFileLocation;
-            if (Debug.isVerbose)
-                System.IO.File.AppendAllText(Debug.debugFile, "INFO Saving shortcut link.");
+            Debug.LogToFile("INFO Saving shortcut link.");
             shortcut.Save();
         }
         /// <summary>
@@ -140,8 +137,7 @@ namespace EnvyUpdate
             string xmlcontent = null;
             int id = -1;
 
-            if (Debug.isVerbose)
-                System.IO.File.AppendAllText(Debug.debugFile, "INFO Getting Nvidia GPU list...");
+            Debug.LogToFile("INFO Getting Nvidia GPU list...");
             using (var wc = new WebClient())
             {
                 switch (IDtype)
@@ -155,14 +151,9 @@ namespace EnvyUpdate
                 }
             }
 
-            if (Debug.isVerbose)
-            {
-                System.IO.File.AppendAllText(Debug.debugFile, "INFO Got Nvidia GPU list.");
-                if (xmlcontent == null)
-                {
-                    System.IO.File.AppendAllText(Debug.debugFile, "WARN GPU list is NULL! This is a possible error source.");
-                }
-            }
+            Debug.LogToFile("INFO Got Nvidia GPU list.");
+            if (xmlcontent == null)
+                Debug.LogToFile("WARN GPU list is NULL! This is a possible error source.");
 
             XDocument xDoc = XDocument.Parse(xmlcontent);
             string gpuName = GetGPUName(true);
@@ -171,22 +162,18 @@ namespace EnvyUpdate
             {
                 case "psid":
                     id = GetValueFromName(xDoc, gpuName, true);
-                    if (Debug.isVerbose)
-                        System.IO.File.AppendAllText(Debug.debugFile, "INFO Got psid: " + id);
+                    Debug.LogToFile("INFO Got psid: " + id);
                     break;
                 case "pfid":
                     id = GetValueFromName(xDoc, gpuName, false);
-                    if (Debug.isVerbose)
-                        System.IO.File.AppendAllText(Debug.debugFile, "INFO Got pfid: " + id);
+                    Debug.LogToFile("INFO Got pfid: " + id);
                     break;
                 case "osid":
                     id = GetOSID();
-                    if (Debug.isVerbose)
-                        System.IO.File.AppendAllText(Debug.debugFile, "INFO Got osid: " + id);
+                    Debug.LogToFile("INFO Got osid: " + id);
                     break;
                 default:
-                    if (Debug.isVerbose)
-                        System.IO.File.AppendAllText(Debug.debugFile, "WARN GetIDs was called, but nothing was specified.");
+                    Debug.LogToFile("WARN GetIDs was called, but nothing was specified.");
                     break;
             }
 
@@ -213,14 +200,12 @@ namespace EnvyUpdate
                 string sName = name.Value.ToString().ToLower();
                 if (sName == query)
                 {
-                    if (Debug.isVerbose)
-                        System.IO.File.AppendAllText(Debug.debugFile, "DEBUG Matched GetValueFromName query: " + sName);
+                    Debug.LogToFile("DEBUG Matched GetValueFromName query: " + sName);
                     string cleanResult = null;
 
                     if (psid)
                     {
-                        if (Debug.isVerbose)
-                            System.IO.File.AppendAllText(Debug.debugFile, "DEBUG Getting psid.");
+                        Debug.LogToFile("DEBUG Getting psid.");
 
                         if (i == 0)
                             value1 = int.Parse(name.Parent.FirstAttribute.Value);
@@ -229,8 +214,7 @@ namespace EnvyUpdate
                     }
                     else
                     {
-                        if (Debug.isVerbose)
-                            System.IO.File.AppendAllText(Debug.debugFile, "DEBUG Getting something else than psid.");
+                        Debug.LogToFile("DEBUG Getting something else than psid.");
 
                         string result = name.Parent.Value.ToLower();
                         int index = result.IndexOf(sName);
@@ -311,8 +295,7 @@ namespace EnvyUpdate
         {
             string GPUName = null;
 
-            if (Debug.isVerbose)
-                System.IO.File.AppendAllText(Debug.debugFile, "INFO Trying to get GPU name from ManagementObjects...");
+            Debug.LogToFile("INFO Trying to get GPU name from ManagementObjects...");
             foreach (ManagementObject obj in new ManagementObjectSearcher("SELECT * FROM Win32_VideoController").Get())
             {
                 //if (obj["Description"].ToString().ToLower().Contains("radeon"))
@@ -338,8 +321,7 @@ namespace EnvyUpdate
                     break;
                 }
             }
-            if (Debug.isVerbose)
-                System.IO.File.AppendAllText(Debug.debugFile, "INFO Found GPU name: " + GPUName);
+            Debug.LogToFile("INFO Found GPU name: " + GPUName);
             // This should NEVER return null outside of debugging mode, since EnvyUpdate should refuse to start without and Nvidia GPU.
             return GPUName;
         }
@@ -353,10 +335,12 @@ namespace EnvyUpdate
 
             foreach (ManagementObject obj in new ManagementObjectSearcher("SELECT * FROM Win32_Battery").Get())
             {
+                Debug.LogToFile("INFO Found Win32_Battery, assuming mobile device.");
                 result = true;
             }
             foreach (ManagementObject obj in new ManagementObjectSearcher("SELECT * FROM Win32_PortableBattery").Get())
             {
+                Debug.LogToFile("INFO Found Win32_PortableBattery, assuming mobile device.");
                 result = true;
             }
 
@@ -371,6 +355,7 @@ namespace EnvyUpdate
         {
             try
             {
+                Debug.LogToFile("INFO Trying to find DCH key in registry...");
                 RegistryKey nvlddmkm = Registry.LocalMachine.OpenSubKey(@"System\CurrentControlSet\services\nvlddmkm", false);
                 return nvlddmkm.GetValueNames().Contains("DCHUVen");
             }
@@ -378,6 +363,7 @@ namespace EnvyUpdate
             {
                 if (ex.Message == "Object reference not set to an instance of an object." || ex.InnerException is NullReferenceException)
                 {
+                    Debug.LogToFile("INFO could not find key. Assuming non-DCH driver.");
                     // Assume no DCH driver is installed if key is not found.
                     return false;
                 }
@@ -385,14 +371,23 @@ namespace EnvyUpdate
                 {
                     try
                     {
+                        Debug.LogToFile("WARN Could not read registry, probing file system instead...");
                         //Registry reading error. Check for existance of file nvsvs.dll instead.
                         if (System.IO.File.Exists(Path.Combine(Environment.SystemDirectory, "nvsvs.dll")))
+                        {
+                            Debug.LogToFile("INFO Found DCH driver file.");
                             return true;
+                        }
                         else
+                        {
+                            Debug.LogToFile("INFO Did not find DCH driver file. Assuming non-DCH driver.");
                             return false;
+                        }
+
                     }
                     catch (Exception)
                     {
+                        Debug.LogToFile("FATAL Could not probe file system. Error: " + ex.Message);
                         MessageBox.Show("An error has occured. Please report this on GitHub.\nError:" + ex.Message);
                         Environment.Exit(20);
                         return false;
@@ -434,6 +429,7 @@ namespace EnvyUpdate
 
             if (Debug.isFake)
             {
+                Debug.LogToFile("DEBUG Loading fake IDs.");
                 psid = Debug.LoadFakeIDs("psid");
                 pfid = Debug.LoadFakeIDs("pfid");
                 osid = Debug.LoadFakeIDs("osid");
@@ -447,13 +443,20 @@ namespace EnvyUpdate
                 osid = GetIDs("osid");
                 dtcid = GetDTCID();
                 dtid = GetDTID();
+                Debug.LogToFile("INFO Getting GPU URLs. IDs in order psid, pfid, osid, dtcid, dtid: " + psid + ", " + pfid + ", " + osid + ", " + dtcid + ", " + dtid);
             }
             string gpuUrlBuild = "http://www.nvidia.com/Download/processDriver.aspx?psid=" + psid.ToString() + "&pfid=" + pfid.ToString() + "&osid=" + osid.ToString() + "&dtcid=" + dtcid.ToString() + "&dtid=" + dtid.ToString();
+
+            Debug.LogToFile("INFO Built GPU URL: " + gpuUrlBuild);
+
             string gpuUrl;
 
             using (var c = new WebClient())
             {
                 gpuUrl = c.DownloadString(gpuUrlBuild);
+
+                Debug.LogToFile("INFO Downloaded driver page URL: " + gpuUrl);
+
                 if (gpuUrl.Contains("https://") || gpuUrl.Contains("http://"))
                 {
                     //absolute url
@@ -476,6 +479,7 @@ namespace EnvyUpdate
                 else
                 {
                     //panic.
+                    Debug.LogToFile("FATAL Unexpected web response: " + gpuUrl);
                     MessageBox.Show("ERROR: Invalid API response from Nvidia - unexpected web response. Please file an issue on GitHub.");
                     Environment.Exit(10);
                 }
