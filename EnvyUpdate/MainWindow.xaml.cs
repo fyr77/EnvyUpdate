@@ -37,9 +37,8 @@ namespace EnvyUpdate
                 // This is necessary, since .NET throws an exception if you check for a non-existant arg.
             }
 
-            if (arguments.Contains("/verbose"))
+            if (Debug.isVerbose)
             {
-                Debug.isVerbose = true;
                 if (!File.Exists(Debug.debugFile))
                     File.CreateText(Debug.debugFile);
                 File.AppendAllText(Debug.debugFile, "INFO Starting EnvyUpdate, version " + System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion);

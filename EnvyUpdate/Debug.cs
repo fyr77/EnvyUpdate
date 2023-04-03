@@ -9,7 +9,13 @@ namespace EnvyUpdate
     class Debug
     {
         public static bool isFake = false;
+#if DEBUG
+        public static bool isVerbose = true;
+#else
         public static bool isVerbose = false;
+#endif
+
+
         public static string debugFile = Path.Combine(GlobalVars.exedirectory, "envyupdate.log");
 
         public static int LoadFakeIDs(string idType)
