@@ -25,6 +25,8 @@ namespace EnvyUpdate
 
         private void ButtonWeb_Click(object sender, RoutedEventArgs e)
         {
+            if (Debug.isVerbose)
+                File.AppendAllText(Debug.debugFile, "INFO Launching website.");
             System.Diagnostics.Process.Start("https://github.com/fyr77/EnvyUpdate/");
         }
     }

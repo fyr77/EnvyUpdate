@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 
 namespace EnvyUpdate
 {
     class Debug
     {
-        public static bool isDebug = false;
+        public static bool isFake = false;
+        public static bool isVerbose = false;
+        public static string debugFile = Path.Combine(GlobalVars.exedirectory, "envyupdate.log");
 
         public static int LoadFakeIDs(string idType)
         {
@@ -37,6 +41,13 @@ namespace EnvyUpdate
         public static string GPUname()
         {
             return "Nvidia GeForce RTX 4080 (debug)";
+        }
+
+        [ConditionalAttribute("DEBUG")]
+        public static void LogToFile(string content)
+        {
+            if (isVerbose)
+                System.IO.File.AppendAllText(Debug.debugFile, content);
         }
     }
 }
