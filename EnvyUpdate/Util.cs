@@ -138,9 +138,6 @@ namespace EnvyUpdate
                     case "pfid":
                         xmlcontent = wc.DownloadString("https://www.nvidia.com/Download/API/lookupValueSearch.aspx?TypeID=3");
                         break;
-                    case "osid":
-                        xmlcontent = wc.DownloadString("https://www.nvidia.com/Download/API/lookupValueSearch.aspx?TypeID=4");
-                        break;
                     default:
                         break;
                 }
@@ -178,10 +175,10 @@ namespace EnvyUpdate
             int value = 0;
             int i = 0;
             int value1 = 0;
-            int value2 = 0;
+            int value2 = 0; //Two values are used to cover the eventuality of there being two Nvidia cards (unlikely) in a mobile device
 
             var names = xDoc.Descendants("Name");
-            foreach (var name in names)
+            foreach (var name in names) // Looping through the XML Doc because the name is not the primary key
             {
                 string sName = name.Value.ToString().ToLower();
                 if (sName == query)
