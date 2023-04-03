@@ -39,8 +39,6 @@ namespace EnvyUpdate
 
             if (Debug.isVerbose)
             {
-                if (!File.Exists(Debug.debugFile))
-                    File.CreateText(Debug.debugFile);
                 File.AppendAllText(Debug.debugFile, "INFO Starting EnvyUpdate, version " + System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion);
             }
 

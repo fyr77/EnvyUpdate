@@ -53,7 +53,7 @@ namespace EnvyUpdate
         public static void LogToFile(string content)
         {
             if (isVerbose)
-                System.IO.File.AppendAllText(Debug.debugFile, content);
+                System.IO.File.AppendAllText(Debug.debugFile, content + "\n");
         }
     }
 }
