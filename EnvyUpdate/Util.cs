@@ -243,18 +243,18 @@ namespace EnvyUpdate
             string OS = Environment.OSVersion.Version.Major.ToString() + "." + Environment.OSVersion.Version.Minor.ToString();
 
             // Here the 32bit values are used. Later, if the OS is 64bit, we'll add 1, since that is how Nvidia does their IDs.
-            switch (OS)
+            switch (OS) //TODO until Win10 EOL: Differentiate between Win10 and Win11
             {
-                case "10.0":
+                case "10.0": //Win10 or Win11
                     value = 56;
                     break;
-                case "6.1":
+                case "6.1": //Win7
                     value = 18;
                     break;
-                case "6.2":
+                case "6.2": //Win8
                     value = 27;
                     break;
-                case "6.3":
+                case "6.3": //Win8.1
                     value = 40;
                     break;
                 default:
