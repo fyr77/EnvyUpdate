@@ -141,9 +141,6 @@ namespace EnvyUpdate
                     case "osid":
                         xmlcontent = wc.DownloadString("https://www.nvidia.com/Download/API/lookupValueSearch.aspx?TypeID=4");
                         break;
-                    case "langid":
-                        xmlcontent = wc.DownloadString("https://www.nvidia.com/Download/API/lookupValueSearch.aspx?TypeID=5");
-                        break;
                     default:
                         break;
                 }
@@ -161,10 +158,6 @@ namespace EnvyUpdate
                     break;
                 case "osid":
                     id = GetOSID();
-                    break;
-                case "langid":
-                    // Currently unsupported, because Nvidia has a weird way of naming languages in their native OR english version.
-                    // https://www.nvidia.com/Download/API/lookupValueSearch.aspx?TypeID=5
                     break;
                 default:
                     break;
