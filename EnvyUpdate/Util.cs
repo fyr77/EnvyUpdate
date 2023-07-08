@@ -153,28 +153,38 @@ namespace EnvyUpdate
 
             Debug.LogToFile("INFO Got Nvidia GPU list.");
             if (xmlcontent == null)
-                Debug.LogToFile("WARN GPU list is NULL! This is a possible error source.");
-
-            XDocument xDoc = XDocument.Parse(xmlcontent);
-            string gpuName = GetGPUName(true);
-
-            switch (IDtype)
             {
-                case "psid":
-                    id = GetValueFromName(xDoc, gpuName, true);
-                    Debug.LogToFile("INFO Got psid: " + id);
-                    break;
-                case "pfid":
-                    id = GetValueFromName(xDoc, gpuName, false);
-                    Debug.LogToFile("INFO Got pfid: " + id);
-                    break;
-                case "osid":
-                    id = GetOSID();
-                    Debug.LogToFile("INFO Got osid: " + id);
-                    break;
-                default:
-                    Debug.LogToFile("WARN GetIDs was called, but nothing was specified.");
-                    break;
+                Debug.LogToFile("WARN GPU list is NULL! This is a possible error source.");
+                switch (IDtype)
+                {
+                    case "osid":
+                        id = GetOSID();
+                        Debug.LogToFile("WARN Ignore previous warning, just getting osid.");
+                        Debug.LogToFile("INFO Got osid: " + id);
+                        break;
+                    default:
+                        Debug.LogToFile("WARN GetIDs was called, but nothing was specified.");
+                        break;
+                }
+            }
+            else
+            {
+                XDocument xDoc = XDocument.Parse(xmlcontent);
+                string gpuName = GetGPUName(true);
+                switch (IDtype)
+                {
+                    case "psid":
+                        id = GetValueFromName(xDoc, gpuName, true);
+                        Debug.LogToFile("INFO Got psid: " + id);
+                        break;
+                    case "pfid":
+                        id = GetValueFromName(xDoc, gpuName, false);
+                        Debug.LogToFile("INFO Got pfid: " + id);
+                        break;
+                    default:
+                        Debug.LogToFile("WARN GetIDs was called, but nothing was specified.");
+                        break;
+                }
             }
 
             return id;
