@@ -22,7 +22,7 @@ namespace EnvyUpdate
             if (GlobalVars.monitoringInstall)
                 labelVer.FontStyle = FontStyles.Italic;
 
-            if (File.Exists(Path.Combine(GlobalVars.exeloc, "envyupdate.log")))
+            if (File.Exists(Path.Combine(GlobalVars.exedirectory, "envyupdate.log")))
                 chkLog.IsChecked = true;
         }
 
@@ -42,8 +42,8 @@ namespace EnvyUpdate
         private void chkLog_Unchecked(object sender, RoutedEventArgs e)
         {
             Debug.LogToFile("INFO Disabled logging to file.");
-            if (File.Exists(Path.Combine(GlobalVars.exeloc, "envyupdate.log")))
-                File.Move(Path.Combine(GlobalVars.exeloc, "envyupdate.log"), Path.Combine(GlobalVars.exeloc, "envyupdate.old.log"));
+            if (File.Exists(Path.Combine(GlobalVars.exedirectory, "envyupdate.log")))
+                File.Move(Path.Combine(GlobalVars.exedirectory, "envyupdate.log"), Path.Combine(GlobalVars.exedirectory, "envyupdate." + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".log"));
             Debug.isVerbose = false;
         }
     }
