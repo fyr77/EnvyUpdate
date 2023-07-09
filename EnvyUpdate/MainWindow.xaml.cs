@@ -90,8 +90,7 @@ namespace EnvyUpdate
                 }
             }
 
-            if (Debug.isVerbose)
-                File.AppendAllText(Debug.debugFile, "INFO Detecting driver type.");
+            Debug.LogToFile("INFO Detecting driver type.");
 
             if (Util.IsDCH())
                 textblockLocalType.Text = "DCH";
