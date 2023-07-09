@@ -158,7 +158,6 @@ namespace EnvyUpdate
                 {
                     case "osid":
                         id = GetOSID();
-                        Debug.LogToFile("WARN Ignore previous warning, just getting osid.");
                         Debug.LogToFile("INFO Got osid: " + id);
                         break;
                     case "psid":
