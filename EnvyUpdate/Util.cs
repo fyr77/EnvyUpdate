@@ -223,12 +223,12 @@ namespace EnvyUpdate
                 string sName = name.Value.ToString().ToLower();
                 if (sName == query)
                 {
-                    Debug.LogToFile("DEBUG Matched GetValueFromName query: " + sName);
+                    Debug.LogToFile("INFO Matched GetValueFromName query: " + sName);
                     string cleanResult = null;
 
                     if (psid)
                     {
-                        Debug.LogToFile("DEBUG Getting psid.");
+                        Debug.LogToFile("INFO Getting psid.");
 
                         if (i == 0)
                             value1 = int.Parse(name.Parent.FirstAttribute.Value);
@@ -237,7 +237,7 @@ namespace EnvyUpdate
                     }
                     else
                     {
-                        Debug.LogToFile("DEBUG Getting something other than psid.");
+                        Debug.LogToFile("INFO Getting something other than psid.");
 
                         string result = name.Parent.Value.ToLower();
                         int index = result.IndexOf(sName);
@@ -452,7 +452,7 @@ namespace EnvyUpdate
 
             if (Debug.isFake)
             {
-                Debug.LogToFile("DEBUG Loading fake IDs.");
+                Debug.LogToFile("INFO Loading fake IDs.");
                 psid = Debug.LoadFakeIDs("psid");
                 pfid = Debug.LoadFakeIDs("pfid");
                 osid = Debug.LoadFakeIDs("osid");

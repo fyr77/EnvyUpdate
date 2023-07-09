@@ -292,7 +292,7 @@ namespace EnvyUpdate
             }
 
             //Check for different version than skipped version
-            if (skippedVer != onlineDriv)
+            if (skippedVer != null && skippedVer != onlineDriv)
             {
                 Debug.LogToFile("INFO Skipped version is surpassed, deleting setting.");
                 skippedVer = null;
