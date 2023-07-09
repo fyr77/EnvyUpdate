@@ -132,7 +132,7 @@ namespace EnvyUpdate
 
             Environment.Exit(2);
         }
-        public static int GetIDs(string IDtype)
+        public static int GetIDs(string IDtype, bool retry = true)
         {
             string xmlcontent = null;
             int id = -1;
@@ -154,7 +154,6 @@ namespace EnvyUpdate
             Debug.LogToFile("INFO Got Nvidia GPU list.");
             if (xmlcontent == null)
             {
-                Debug.LogToFile("WARN GPU list is NULL! This is a possible error source.");
                 switch (IDtype)
                 {
                     case "osid":
@@ -162,8 +161,22 @@ namespace EnvyUpdate
                         Debug.LogToFile("WARN Ignore previous warning, just getting osid.");
                         Debug.LogToFile("INFO Got osid: " + id);
                         break;
+                    case "psid":
+                    case "pfid":
+                        Debug.LogToFile("WARN GPU list is NULL! This is a possible error source.");
+                        if (retry)
+                        {
+                            Debug.LogToFile("WARN Trying to get ID again.");
+                            id = GetIDs(IDtype, false);
+                        }
+                        else
+                        {
+                            Debug.LogToFile("FATAL Could not get GPU list to find IDs.");
+                            throw new ArgumentNullException();
+                        }
+                        break;
                     default:
-                        Debug.LogToFile("WARN GetIDs was called, but nothing was specified.");
+                        Debug.LogToFile("WARN GetIDs was called, but nothing was specified. THIS SHOULD NOT HAPPEN!");
                         break;
                 }
             }
@@ -224,7 +237,7 @@ namespace EnvyUpdate
                     }
                     else
                     {
-                        Debug.LogToFile("DEBUG Getting something else than psid.");
+                        Debug.LogToFile("DEBUG Getting something other than psid.");
 
                         string result = name.Parent.Value.ToLower();
                         int index = result.IndexOf(sName);

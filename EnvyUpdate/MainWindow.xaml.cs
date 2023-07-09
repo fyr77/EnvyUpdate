@@ -37,10 +37,15 @@ namespace EnvyUpdate
                 // This is necessary, since .NET throws an exception if you check for a non-existant arg.
             }
 
-            if (Debug.isVerbose)
+            // Check if Debug file exists
+            if (File.Exists(Path.Combine(GlobalVars.exedirectory, "envyupdate.log")))
             {
-                File.AppendAllText(Debug.debugFile, "INFO Starting EnvyUpdate, version " + System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion);
+                Debug.isVerbose = true;
+                Debug.LogToFile("------");
+                Debug.LogToFile("INFO Found log file, will start logging to this.");
             }
+
+            Debug.LogToFile("INFO Starting EnvyUpdate, version " + System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion);
 
             // Check if EnvyUpdate is already running
             if (Util.IsInstanceOpen("EnvyUpdate"))
@@ -95,7 +100,7 @@ namespace EnvyUpdate
             else
                 textblockLocalType.Text = "Standard";
 
-            Debug.LogToFile("INFO Done detecting driver type.");
+            Debug.LogToFile("INFO Done detecting driver type: " + textblockLocalType.Text);
 
             // Check for startup shortcut
             if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "EnvyUpdate.lnk")))
@@ -189,7 +194,7 @@ namespace EnvyUpdate
             }
             catch (ArgumentException)
             {
-                Debug.LogToFile("WARN Could not get GPU update URL, trying again with standard driver.");
+                Debug.LogToFile("WARN Could not get GPU update URL, trying again with non-studio driver.");
                 try
                 {
                     // disable SD and try with GRD
@@ -201,6 +206,11 @@ namespace EnvyUpdate
                     gpuURL = Util.GetGpuUrl(); //try again with GRD
                     MessageBox.Show(Properties.Resources.ui_studionotsupported);
                     radioGRD.IsChecked = true;
+                }
+                catch (ArgumentNullException)
+                {
+                    MessageBox.Show("ERROR: Could not get list of GPU models from Nvidia, please check your network connection.\nOtherwise, please report this issue on GitHub.");
+                    Environment.Exit(11);
                 }
                 catch (ArgumentException e)
                 {

@@ -49,7 +49,6 @@ namespace EnvyUpdate
             return "Nvidia GeForce RTX 4080 (debug)";
         }
 
-        [ConditionalAttribute("DEBUG")]
         public static void LogToFile(string content)
         {
             if (isVerbose)
