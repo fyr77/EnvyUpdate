@@ -135,6 +135,9 @@
   <data name="message_new_version" xml:space="preserve">
     <value>New version of EnvyUpdate found. Application will restart.\nThis will probably take a few seconds.</value>
   </data>
+  <data name="no" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="no_compatible_gpu" xml:space="preserve">
     <value>No NVIDIA GPU found. Application will exit.</value>
   </data>
@@ -144,11 +147,23 @@
   <data name="ui_autostart" xml:space="preserve">
     <value>Run at Windows startup</value>
   </data>
+  <data name="ui_enable_logging" xml:space="preserve">
+    <value>Enable logging to file</value>
+  </data>
+  <data name="ui_home" xml:space="preserve">
+    <value>Home</value>
+  </data>
   <data name="ui_info_dch" xml:space="preserve">
     <value>DCH driver</value>
   </data>
   <data name="ui_info_mobile" xml:space="preserve">
     <value>Mobile GPU (Laptop, etc)?</value>
+  </data>
+  <data name="ui_info_outdated" xml:space="preserve">
+    <value>Update available.</value>
+  </data>
+  <data name="ui_info_uptodate" xml:space="preserve">
+    <value>Up to date.</value>
   </data>
   <data name="ui_info_website" xml:space="preserve">
     <value>EnvyUpdate website</value>
@@ -156,14 +171,29 @@
   <data name="ui_install" xml:space="preserve">
     <value>Install</value>
   </data>
+  <data name="ui_licenses" xml:space="preserve">
+    <value>Licenses</value>
+  </data>
   <data name="ui_localdriver" xml:space="preserve">
     <value>Local driver version:</value>
   </data>
   <data name="ui_localdriver_type" xml:space="preserve">
     <value>Local driver type:</value>
   </data>
+  <data name="ui_message_good" xml:space="preserve">
+    <value>All good.</value>
+  </data>
+  <data name="ui_message_update" xml:space="preserve">
+    <value>New driver found.</value>
+  </data>
   <data name="ui_onlinedriver" xml:space="preserve">
     <value>Online driver version:</value>
+  </data>
+  <data name="ui_openwebsite" xml:space="preserve">
+    <value>Open website</value>
+  </data>
+  <data name="ui_settings" xml:space="preserve">
+    <value>Settings</value>
   </data>
   <data name="ui_skipped" xml:space="preserve">
     <value>Version skipped</value>
@@ -185,5 +215,8 @@
   </data>
   <data name="update_popup_message" xml:space="preserve">
     <value>A new driver update is available for your graphics card.</value>
+  </data>
+  <data name="yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

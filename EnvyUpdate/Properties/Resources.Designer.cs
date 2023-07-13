@@ -115,6 +115,15 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string no {
+            get {
+                return ResourceManager.GetString("no", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No NVIDIA GPU found. Application will exit..
         /// </summary>
         public static string no_compatible_gpu {
@@ -142,6 +151,24 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable logging to file.
+        /// </summary>
+        public static string ui_enable_logging {
+            get {
+                return ResourceManager.GetString("ui_enable_logging", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string ui_home {
+            get {
+                return ResourceManager.GetString("ui_home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DCH driver.
         /// </summary>
         public static string ui_info_dch {
@@ -156,6 +183,24 @@ namespace EnvyUpdate.Properties {
         public static string ui_info_mobile {
             get {
                 return ResourceManager.GetString("ui_info_mobile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update available..
+        /// </summary>
+        public static string ui_info_outdated {
+            get {
+                return ResourceManager.GetString("ui_info_outdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Up to date..
+        /// </summary>
+        public static string ui_info_uptodate {
+            get {
+                return ResourceManager.GetString("ui_info_uptodate", resourceCulture);
             }
         }
         
@@ -178,6 +223,15 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Licenses.
+        /// </summary>
+        public static string ui_licenses {
+            get {
+                return ResourceManager.GetString("ui_licenses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Local driver version:.
         /// </summary>
         public static string ui_localdriver {
@@ -196,11 +250,47 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All good..
+        /// </summary>
+        public static string ui_message_good {
+            get {
+                return ResourceManager.GetString("ui_message_good", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New driver found..
+        /// </summary>
+        public static string ui_message_update {
+            get {
+                return ResourceManager.GetString("ui_message_update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Online driver version:.
         /// </summary>
         public static string ui_onlinedriver {
             get {
                 return ResourceManager.GetString("ui_onlinedriver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open website.
+        /// </summary>
+        public static string ui_openwebsite {
+            get {
+                return ResourceManager.GetString("ui_openwebsite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string ui_settings {
+            get {
+                return ResourceManager.GetString("ui_settings", resourceCulture);
             }
         }
         
@@ -264,6 +354,15 @@ namespace EnvyUpdate.Properties {
         public static string update_popup_message {
             get {
                 return ResourceManager.GetString("update_popup_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string yes {
+            get {
+                return ResourceManager.GetString("yes", resourceCulture);
             }
         }
     }

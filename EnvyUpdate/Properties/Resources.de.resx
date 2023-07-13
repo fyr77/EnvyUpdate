@@ -135,6 +135,9 @@
   <data name="message_new_version" xml:space="preserve">
     <value>Neue Version von EnvyUpdate gefunden. Die Anwendung wird neu starten.\nDies wird wahrscheinlich einige Sekunden dauern.</value>
   </data>
+  <data name="no" xml:space="preserve">
+    <value>Nein</value>
+  </data>
   <data name="no_compatible_gpu" xml:space="preserve">
     <value>Keine NVIDIA GPU gefunden. EnvyUpdate wird sich nun schließen.</value>
   </data>
@@ -144,11 +147,23 @@
   <data name="ui_autostart" xml:space="preserve">
     <value>Beim Start von Windows ausführen</value>
   </data>
+  <data name="ui_enable_logging" xml:space="preserve">
+    <value>Programm-Log in Datei schreiben</value>
+  </data>
+  <data name="ui_home" xml:space="preserve">
+    <value>Start</value>
+  </data>
   <data name="ui_info_dch" xml:space="preserve">
     <value>DCH Treiber</value>
   </data>
   <data name="ui_info_mobile" xml:space="preserve">
     <value>Mobile Grafikkarte (Laptop, etc)?</value>
+  </data>
+  <data name="ui_info_outdated" xml:space="preserve">
+    <value>Aktualisierung verfügbar.</value>
+  </data>
+  <data name="ui_info_uptodate" xml:space="preserve">
+    <value>Aktuell.</value>
   </data>
   <data name="ui_info_website" xml:space="preserve">
     <value>EnvyUpdate Webseite</value>
@@ -156,14 +171,29 @@
   <data name="ui_install" xml:space="preserve">
     <value>Installieren</value>
   </data>
+  <data name="ui_licenses" xml:space="preserve">
+    <value>Lizenzen</value>
+  </data>
   <data name="ui_localdriver" xml:space="preserve">
     <value>Lokale Treiberversion:</value>
   </data>
   <data name="ui_localdriver_type" xml:space="preserve">
     <value>Lokaler Treibertyp:</value>
   </data>
+  <data name="ui_message_good" xml:space="preserve">
+    <value>Alles in Ordnung.</value>
+  </data>
+  <data name="ui_message_update" xml:space="preserve">
+    <value>Neue Treiberversion gefunden.</value>
+  </data>
   <data name="ui_onlinedriver" xml:space="preserve">
     <value>Online Treiberversion:</value>
+  </data>
+  <data name="ui_openwebsite" xml:space="preserve">
+    <value>Webseite öffnen</value>
+  </data>
+  <data name="ui_settings" xml:space="preserve">
+    <value>Einstellungen</value>
   </data>
   <data name="ui_skipped" xml:space="preserve">
     <value>Version übersprungen</value>
@@ -185,5 +215,8 @@
   </data>
   <data name="update_popup_message" xml:space="preserve">
     <value>Eine neue Treiberversion ist verfügbar.</value>
+  </data>
+  <data name="yes" xml:space="preserve">
+    <value>Ja</value>
   </data>
 </root>

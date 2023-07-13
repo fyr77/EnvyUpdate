@@ -1,0 +1,61 @@
+﻿<ui:UiPage x:Class="EnvyUpdate.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:EnvyUpdate"
+      xmlns:p="clr-namespace:EnvyUpdate.Properties"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d" 
+      d:DesignHeight="400" d:DesignWidth="600"
+      Title="SettingsPage">
+
+    <Grid Margin="8,0,8,8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ui:SymbolIcon Grid.Column="1" Symbol="WindowApps24" FontSize="32" />
+            <TextBlock Grid.Column="2" x:Name="textBlockVer" Text="" VerticalAlignment="Center" FontSize="24"/>
+        </Grid>
+
+        <ui:CardAction Grid.Row="1" Margin="0,12,0,0" Icon="Open24" Content="{x:Static p:Resources.ui_info_website}" Click="CardWeb_Click"/>
+        <ui:CardControl Grid.Row="2" Margin="0,12,0,0" Icon="Bug24" Header="{x:Static p:Resources.ui_enable_logging}" >
+            <ui:ToggleSwitch x:Name="chkLog" Checked="chkLog_Checked" Unchecked="chkLog_Unchecked"/>
+        </ui:CardControl>
+
+        <Label Grid.Row="3" Content="{x:Static p:Resources.ui_licenses}" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+        <ScrollViewer Grid.Row="4" MaxHeight="700" HorizontalAlignment="Stretch">
+            <StackPanel>
+                <Expander Header="EnvyUpdate">
+                    <TextBox x:Name="textBoxLicEnvyupdate" IsReadOnly="True" TextWrapping="Wrap"/>
+                </Expander>
+                <Expander Margin="0,4,0,0" Header="Fody">
+                    <TextBox x:Name="textBoxLicFody" IsReadOnly="True" TextWrapping="Wrap"/>
+                </Expander>
+                <Expander Margin="0,4,0,0" Header="Costura.Fody">
+                    <TextBox x:Name="textBoxLicCostura" IsReadOnly="True" TextWrapping="Wrap"/>
+                </Expander>
+                <Expander Margin="0,4,0,0" Header="ResourceEmbedder">
+                    <TextBox x:Name="textBoxLicResourceembedder" IsReadOnly="True" TextWrapping="Wrap"/>
+                </Expander>
+                <Expander Margin="0,4,0,0" Header="Windows Community Toolkit">
+                    <TextBox x:Name="textBoxLicWindowscommunitytoolkit" IsReadOnly="True" TextWrapping="Wrap"/>
+                </Expander>
+                <Expander Margin="0,4,0,0" Header="WPF-UI">
+                    <TextBox x:Name="textBoxLicWpfui" IsReadOnly="True" TextWrapping="Wrap"/>
+                </Expander>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</ui:UiPage>

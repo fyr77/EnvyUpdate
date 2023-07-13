@@ -1,32 +1,38 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Input;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 
 namespace EnvyUpdate
 {
     /// <summary>
-    /// Interaction logic for InfoWindow.xaml
+    /// Interaction logic for SettingsPage.xaml
     /// </summary>
-    public partial class InfoWindow : Window
+    public partial class SettingsPage
     {
-        public InfoWindow()
+        public SettingsPage()
         {
             InitializeComponent();
 
-            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            System.Diagnostics.FileVersionInfo fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
-            string version = fvi.FileVersion;
-
-            labelVer.Content += " " + version;
-            if (GlobalVars.monitoringInstall)
-                labelVer.FontStyle = FontStyles.Italic;
-
-            if (File.Exists(Path.Combine(GlobalVars.exedirectory, "envyupdate.log")))
-                chkLog.IsChecked = true;
+            textBoxLicEnvyupdate.Text = Properties.Licenses.EnvyUpdate;
+            textBoxLicFody.Text = Properties.Licenses.Fody;
+            textBoxLicCostura.Text = Properties.Licenses.CosturaFody;
+            textBoxLicResourceembedder.Text = Properties.Licenses.ResourceEmbedder;
+            textBoxLicWindowscommunitytoolkit.Text = Properties.Licenses.WindowsCommunityToolkit;
+            textBoxLicWpfui.Text = Properties.Licenses.wpfui;
         }
 
-        private void ButtonWeb_Click(object sender, RoutedEventArgs e)
+        private void CardWeb_Click(object sender, RoutedEventArgs e)
         {
             Debug.LogToFile("INFO Launching website.");
             System.Diagnostics.Process.Start("https://github.com/fyr77/EnvyUpdate/");

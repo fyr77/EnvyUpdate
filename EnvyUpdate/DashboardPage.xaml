@@ -1,0 +1,85 @@
+﻿<ui:UiPage x:Class="EnvyUpdate.DashboardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:EnvyUpdate"
+      xmlns:p="clr-namespace:EnvyUpdate.Properties"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d" 
+      d:DesignHeight="400" d:DesignWidth="600"
+      Title="DashboardPage">
+
+    <Grid Margin="8,0,8,8">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ui:SymbolIcon Symbol="DeveloperBoard24" FontSize="64"/>
+            <TextBlock Margin="8,0,0,0" x:Name="textblockGPUName" Grid.Column="1" Text="GPU..." FontSize="32" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+        </Grid>
+        
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <ui:InfoBar x:Name="infoBarStatus"
+            Title="Checking"
+            IsOpen="True"
+            IsClosable="False"
+            Message="..."
+            Severity="Informational" />
+
+            <ui:Button x:Name="buttonSkipVersion" Margin="8,0,0,0" Grid.Column="1" Appearance="Secondary" Icon="ArrowForward24" Visibility="Collapsed" ToolTip="{x:Static p:Resources.ui_skipversion}" />
+            
+            <ui:Button x:Name="buttonDownload" Margin="8,0,0,0" MinWidth="100" Grid.Column="2" Appearance="Primary" Icon="ArrowDownload24" Visibility="Collapsed" />
+        </Grid>
+
+        <ProgressBar Grid.Row="2" Value="0" Visibility="Collapsed"/>
+        <!-- This is for later automatic downloading. Todo! -->
+
+        <Grid Margin="0,12,0,0" Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <ui:CardExpander x:Name="cardLocal" Margin="0,0,4,0" Grid.Column="0" Grid.Row="0" Icon="Desktop32" Header="..." ToolTip="{x:Static p:Resources.ui_localdriver}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" FontWeight="Bold" Text="{x:Static p:Resources.ui_localdriver_type}"/>
+                    <TextBlock Grid.Column="1" x:Name="textblockLocalType" Text="?" />
+                </Grid>
+            </ui:CardExpander>
+            <ui:CardExpander x:Name="cardOnline" Margin="4,0,0,0" Grid.Column="1" Grid.Row="0" Icon="Earth32" Header="..." ToolTip="{x:Static p:Resources.ui_onlinedriver}">
+                <ui:Button Icon="Open24" Click="CardOnline_Click" Content="{x:Static p:Resources.ui_openwebsite}" HorizontalAlignment="Stretch"/>
+            </ui:CardExpander>
+        </Grid>
+
+        <ui:CardControl Margin="0,12,0,0" Grid.Row="4" Icon="Color24" Header="Studio Driver">
+            <ui:ToggleSwitch x:Name="switchStudioDriver" IsChecked="False" />
+        </ui:CardControl>
+
+        <ui:CardControl Margin="0,12,0,0" Grid.Row="5" Icon="LightbulbFilament48" Header="{x:Static p:Resources.ui_autostart}">
+            <ui:ToggleSwitch x:Name="switchAutostart" IsChecked="False" Click="switchAutostart_Click" />
+        </ui:CardControl>
+    </Grid>
+</ui:UiPage>
