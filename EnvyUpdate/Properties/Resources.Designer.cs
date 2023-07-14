@@ -79,6 +79,42 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was a problem downloading the driver installer. Please try again..
+        /// </summary>
+        public static string info_download_error {
+            get {
+                return ResourceManager.GetString("info_download_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error while downloading.
+        /// </summary>
+        public static string info_download_error_title {
+            get {
+                return ResourceManager.GetString("info_download_error_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Driver installer successfully downloaded..
+        /// </summary>
+        public static string info_download_success {
+            get {
+                return ResourceManager.GetString("info_download_success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download successful.
+        /// </summary>
+        public static string info_download_success_title {
+            get {
+                return ResourceManager.GetString("info_download_success_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Preference reset..
         /// </summary>
         public static string info_reset_caption {

@@ -1,4 +1,5 @@
-﻿using IWshRuntimeLibrary;
+﻿using EnvyUpdate.Properties;
+using IWshRuntimeLibrary;
 using Microsoft.Win32;
 using System;
 using System.Diagnostics;
@@ -7,7 +8,9 @@ using System.Linq;
 using System.Management;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Xml.Linq;
 
 namespace EnvyUpdate

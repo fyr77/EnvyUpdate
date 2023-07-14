@@ -123,6 +123,18 @@
   <data name="exit_confirm" xml:space="preserve">
     <value>EnvyUpdate schließen?</value>
   </data>
+  <data name="info_download_error" xml:space="preserve">
+    <value>Fehler beim Herunterladen der Treiber-Installationsdatei. Bitte versuchen Sie es erneut.</value>
+  </data>
+  <data name="info_download_error_title" xml:space="preserve">
+    <value>Fehler beim Herunterladen</value>
+  </data>
+  <data name="info_download_success" xml:space="preserve">
+    <value>Treiber-Installationsdatei erfolgreich heruntergeladen.</value>
+  </data>
+  <data name="info_download_success_title" xml:space="preserve">
+    <value>Herunterladen erfolgreich abgeschlossen</value>
+  </data>
   <data name="info_reset_caption" xml:space="preserve">
     <value>Einstellung zurückgesetzt.</value>
   </data>

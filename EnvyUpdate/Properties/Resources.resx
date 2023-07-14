@@ -123,6 +123,18 @@
   <data name="exit_confirm" xml:space="preserve">
     <value>Exit EnvyUpdate?</value>
   </data>
+  <data name="info_download_error" xml:space="preserve">
+    <value>There was a problem downloading the driver installer. Please try again.</value>
+  </data>
+  <data name="info_download_error_title" xml:space="preserve">
+    <value>Error while downloading</value>
+  </data>
+  <data name="info_download_success" xml:space="preserve">
+    <value>Driver installer successfully downloaded.</value>
+  </data>
+  <data name="info_download_success_title" xml:space="preserve">
+    <value>Download successful</value>
+  </data>
   <data name="info_reset_caption" xml:space="preserve">
     <value>Preference reset.</value>
   </data>

@@ -8,6 +8,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
+using Wpf.Ui.Controls;
+using MessageBox = System.Windows.MessageBox;
 
 namespace EnvyUpdate
 {
@@ -352,7 +354,7 @@ namespace EnvyUpdate
                 client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0";
                 client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
                 client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
-                client.DownloadFileAsync(new Uri(Util.GetDirectDownload(gpuURL)), Path.Combine(GlobalVars.exedirectory, "nvidia-installer.exe"));
+                client.DownloadFileAsync(new Uri(Util.GetDirectDownload(gpuURL)), Path.Combine(GlobalVars.exedirectory, "nvidia-installer.exe.downloading"));
             });
             thread.Start();
         }
@@ -369,9 +371,34 @@ namespace EnvyUpdate
         void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             Application.Current.Dispatcher.Invoke(new Action(() => {
+                buttonDownload.IsEnabled = true;
                 progressbarDownload.Visibility = Visibility.Collapsed;
-                buttonDownload.Icon = Wpf.Ui.Common.SymbolRegular.CheckmarkCircle24;
             }));
+            if (e.Error == null)
+            {
+                Application.Current.Dispatcher.Invoke(new Action(() => {
+                    showSnackbar(Wpf.Ui.Common.ControlAppearance.Success, Wpf.Ui.Common.SymbolRegular.CheckmarkCircle24, Properties.Resources.info_download_success, Properties.Resources.info_download_success_title);
+                }));
+                if (File.Exists(Path.Combine(GlobalVars.exedirectory, "nvidia-installer.exe")))
+                    File.Delete(Path.Combine(GlobalVars.exedirectory, "nvidia-installer.exe"));
+                File.Move(Path.Combine(GlobalVars.exedirectory, "nvidia-installer.exe.downloading"), Path.Combine(GlobalVars.exedirectory, "nvidia-installer.exe"));
+            }
+            else
+            {
+                File.Delete(Path.Combine(GlobalVars.exedirectory, "nvidia-installer.exe.downloading"));
+                Application.Current.Dispatcher.Invoke(new Action(() => {
+                    showSnackbar(Wpf.Ui.Common.ControlAppearance.Danger, Wpf.Ui.Common.SymbolRegular.ErrorCircle24, Properties.Resources.info_download_error, Properties.Resources.info_download_error_title);
+                }));
+            }
+        }
+
+        private void showSnackbar (Wpf.Ui.Common.ControlAppearance appearance, Wpf.Ui.Common.SymbolRegular icon, string message = "", string title = "")
+        {
+            snackbarInfo.Appearance = appearance;
+            snackbarInfo.Icon = icon;
+            snackbarInfo.Title = title;
+            snackbarInfo.Message = message;
+            snackbarInfo.Show();
         }
     }
 }
