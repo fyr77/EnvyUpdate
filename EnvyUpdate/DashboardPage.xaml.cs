@@ -36,7 +36,10 @@ namespace EnvyUpdate
         {
             InitializeComponent();
 
-            localDriv = Util.GetLocDriv();
+            if (Debug.isFake)
+                localDriv = Debug.LocalDriv();
+            else
+                localDriv = Util.GetLocDriv();
 
             Debug.LogToFile("INFO Local driver version: " + localDriv);
 
@@ -48,10 +51,10 @@ namespace EnvyUpdate
 
             Debug.LogToFile("INFO Detecting driver type.");
 
-            if (Util.IsDCH())
-                textblockLocalType.Text = "DCH";
-            else if (Debug.isFake)
+            if (Debug.isFake)
                 textblockLocalType.Text = "DCH (Debug)";
+            else if (Util.IsDCH())
+                textblockLocalType.Text = "DCH";
             else
                 textblockLocalType.Text = "Standard";
 
@@ -91,6 +94,8 @@ namespace EnvyUpdate
                 driverFileChangedWatcher.EnableRaisingEvents = true;
                 Debug.LogToFile("INFO Started update file system watcher.");
             }
+            else
+                Debug.LogToFile("WARN Could not start update file system watcher. Path not found: " + watchDirPath);
 
             Load();
         }
@@ -119,7 +124,7 @@ namespace EnvyUpdate
                 skippedVer = File.ReadLines(GlobalVars.exedirectory + "skip.envy").First();
             }
 
-            // This little bool check is necessary for debug mode on systems without an Nvidia GPU. 
+            // This little bool check is necessary for debug fake mode. 
             if (Debug.isFake)
             {
                 localDriv = Debug.LocalDriv();
@@ -296,7 +301,7 @@ namespace EnvyUpdate
             }
         }
 
-        private void buttonSkip_Click(object sender, RoutedEventArgs e)
+        private void buttonSkipVersion_Click(object sender, RoutedEventArgs e)
         {
             Debug.LogToFile("INFO Skipping version.");
             skippedVer = onlineDriv;
