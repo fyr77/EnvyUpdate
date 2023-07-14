@@ -48,6 +48,7 @@
                 <ui:Button x:Name="buttonSkipVersion" Margin="8,0,0,0" Grid.Column="1" Appearance="Secondary" Icon="ArrowForward24" Visibility="Collapsed" ToolTip="{x:Static p:Resources.ui_skipversion}" Click="buttonSkipVersion_Click" />
             
                 <ui:Button x:Name="buttonDownload" Margin="8,0,0,0" MinWidth="100" Grid.Column="2" Appearance="Primary" Icon="ArrowDownload24" Visibility="Collapsed" Click="buttonDownload_Click" />
+                <ui:Button x:Name="buttonInstall" Margin="8,0,0,0" MinWidth="100" Grid.Column="2" Appearance="Primary" Icon="AppsAddIn24" Visibility="Collapsed" Click="buttonInstall_Click" />
             </Grid>
 
             <ProgressBar x:Name="progressbarDownload" Grid.Row="2" Value="0" Visibility="Collapsed"/>

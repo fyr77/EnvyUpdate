@@ -378,6 +378,8 @@ namespace EnvyUpdate
             {
                 Application.Current.Dispatcher.Invoke(new Action(() => {
                     showSnackbar(Wpf.Ui.Common.ControlAppearance.Success, Wpf.Ui.Common.SymbolRegular.CheckmarkCircle24, Properties.Resources.info_download_success, Properties.Resources.info_download_success_title);
+                    buttonDownload.Visibility = Visibility.Collapsed;
+                    buttonInstall.Visibility = Visibility.Visible;
                 }));
                 if (File.Exists(Path.Combine(GlobalVars.exedirectory, "nvidia-installer.exe")))
                     File.Delete(Path.Combine(GlobalVars.exedirectory, "nvidia-installer.exe"));
@@ -390,6 +392,10 @@ namespace EnvyUpdate
                     showSnackbar(Wpf.Ui.Common.ControlAppearance.Danger, Wpf.Ui.Common.SymbolRegular.ErrorCircle24, Properties.Resources.info_download_error, Properties.Resources.info_download_error_title);
                 }));
             }
+        }
+        private void buttonInstall_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void showSnackbar (Wpf.Ui.Common.ControlAppearance appearance, Wpf.Ui.Common.SymbolRegular icon, string message = "", string title = "")

@@ -31,25 +31,16 @@ namespace EnvyUpdate
             // TODO: Watch for theme changes and dynamically update
 
             // Listen to notification activation
-            ToastNotificationManagerCompat.OnActivated += toastArgs =>
-            {
-                // Obtain the arguments from the notification
-                ToastArguments args = ToastArguments.Parse(toastArgs.Argument);
+            ToastNotificationManagerCompat.OnActivated += ToastNotificationManagerCompat_OnActivated;
+        }
 
-                // Need to dispatch to UI thread if performing UI operations
-                Application.Current.Dispatcher.Invoke(delegate
-                {
-                    switch (args.Get("action"))
-                    {
-                        case "download":
-                            Process.Start(Util.GetGpuUrl());
-                            break;
-                        default:
-                            Util.ShowMain();
-                            break;
-                    }
-                });
-            };
+        private void ToastNotificationManagerCompat_OnActivated(ToastNotificationActivatedEventArgsCompat e)
+        {
+            // Need to dispatch to UI thread if performing UI operations
+            Application.Current.Dispatcher.Invoke(delegate
+            {
+                Util.ShowMain();
+            });
         }
     }
 }
