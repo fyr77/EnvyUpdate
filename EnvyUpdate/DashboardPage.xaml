@@ -26,7 +26,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <ui:SymbolIcon Symbol="DeveloperBoard24" FontSize="64"/>
+            <ui:SymbolIcon Symbol="DeveloperBoard24" FontSize="56"/>
             <TextBlock Margin="8,0,0,0" x:Name="textblockGPUName" Grid.Column="1" Text="GPU..." FontSize="32" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
         </Grid>
         

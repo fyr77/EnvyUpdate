@@ -31,7 +31,6 @@ namespace EnvyUpdate
         private string onlineDriv = null;
         private string gpuURL = null;
         private string skippedVer = null;
-        private string[] arguments = null;
 
         public DashboardPage()
         {
