@@ -60,6 +60,22 @@ namespace EnvyUpdate
         }
 
         /// <summary>
+        /// Check for existence of Nvidia GPU
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsNvidia()
+        {
+            Debug.LogToFile("INFO Checking for existence of Nvidia GPU.");
+
+            foreach (ManagementObject obj in new ManagementObjectSearcher("SELECT * FROM Win32_VideoController").Get())
+            {
+                if (obj["Description"].ToString().ToLower().Contains("nvidia"))
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Creates a standard Windows shortcut.
         /// </summary>
         /// <param name="shortcutName"></param>

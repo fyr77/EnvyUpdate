@@ -75,7 +75,7 @@
         </Grid>
 
         <ui:CardControl Margin="0,12,0,0" Grid.Row="4" Icon="Color24" Header="Studio Driver">
-            <ui:ToggleSwitch x:Name="switchStudioDriver" IsChecked="False" />
+            <ui:ToggleSwitch x:Name="switchStudioDriver" IsChecked="False" Checked="switchStudioDriver_Checked" Unchecked="switchStudioDriver_Unchecked" />
         </ui:CardControl>
 
         <ui:CardControl Margin="0,12,0,0" Grid.Row="5" Icon="LightbulbFilament48" Header="{x:Static p:Resources.ui_autostart}">

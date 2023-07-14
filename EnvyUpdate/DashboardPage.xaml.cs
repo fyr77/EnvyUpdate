@@ -37,16 +37,6 @@ namespace EnvyUpdate
         {
             InitializeComponent();
 
-            // Try to get command line arguments
-            try
-            {
-                arguments = Environment.GetCommandLineArgs();
-            }
-            catch (IndexOutOfRangeException)
-            {
-                // This is necessary, since .NET throws an exception if you check for a non-existant arg.
-            }
-
             // Delete installed legacy versions
             if (Directory.Exists(GlobalVars.appdata))
             {
@@ -62,20 +52,6 @@ namespace EnvyUpdate
             {
                 Debug.LogToFile("INFO Local driver version already known, updating info without reloading.");
                 UpdateLocalVer(false);
-            }
-            else
-            {
-                if (arguments.Contains("/fake"))
-                {
-                    Debug.isFake = true;
-                    Debug.LogToFile("WARN Faking GPU with debug info.");
-                }
-                else
-                {
-                    Debug.LogToFile("FATAL No supported GPU found, terminating.");
-                    MessageBox.Show(Properties.Resources.no_compatible_gpu);
-                    Environment.Exit(255);
-                }
             }
 
             Debug.LogToFile("INFO Detecting driver type.");
@@ -320,7 +296,7 @@ namespace EnvyUpdate
             }
         }
 
-        private void radioGRD_Checked(object sender, RoutedEventArgs e)
+        private void switchStudioDriver_Unchecked(object sender, RoutedEventArgs e)
         {
             if (File.Exists(GlobalVars.exedirectory + "sd.envy"))
             {
@@ -330,7 +306,7 @@ namespace EnvyUpdate
             }
         }
 
-        private void radioSD_Checked(object sender, RoutedEventArgs e)
+        private void switchStudioDriver_Checked(object sender, RoutedEventArgs e)
         {
             if (!File.Exists(GlobalVars.exedirectory + "sd.envy"))
             {

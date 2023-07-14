@@ -54,6 +54,21 @@ namespace EnvyUpdate
                 Environment.Exit(1);
             }
 
+            if (!Util.IsNvidia())
+            {
+                if (arguments.Contains("/fake"))
+                {
+                    Debug.isFake = true;
+                    Debug.LogToFile("WARN Faking GPU with debug info.");
+                }
+                else
+                {
+                    Debug.LogToFile("FATAL No supported GPU found, terminating.");
+                    MessageBox.Show(Properties.Resources.no_compatible_gpu);
+                    Environment.Exit(255);
+                }
+            }
+
             //Check if launched as miminized with arg
             if (arguments.Contains("/minimize"))
             {
