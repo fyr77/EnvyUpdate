@@ -1,24 +1,13 @@
-﻿using Microsoft.Build.Framework.XamlTypes;
-using Microsoft.Toolkit.Uwp.Notifications;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Threading;
-using Windows.ApplicationModel.VoiceCommands;
 
 namespace EnvyUpdate
 {
@@ -261,12 +250,6 @@ namespace EnvyUpdate
             }
         }
 
-        private void buttonDL_Click(object sender, RoutedEventArgs e)
-        {
-            Debug.LogToFile("INFO Opening download page.");
-            Process.Start(gpuURL);
-        }
-
         private void switchStudioDriver_Unchecked(object sender, RoutedEventArgs e)
         {
             if (File.Exists(GlobalVars.exedirectory + "sd.envy"))
@@ -357,6 +340,38 @@ namespace EnvyUpdate
                 infoBarStatus.Title = Properties.Resources.ui_info_outdated;
                 infoBarStatus.Message = Properties.Resources.ui_message_update;
             }
+        }
+
+        private void buttonDownload_Click(object sender, RoutedEventArgs e)
+        {
+            progressbarDownload.Visibility = Visibility.Visible;
+            buttonDownload.IsEnabled = false;
+            
+            Thread thread = new Thread(() => {
+                WebClient client = new WebClient();
+                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0";
+                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
+                client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
+                client.DownloadFileAsync(new Uri(Util.GetDirectDownload(gpuURL)), Path.Combine(GlobalVars.exedirectory, "nvidia-installer.exe"));
+            });
+            thread.Start();
+        }
+
+        void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            double bytesIn = double.Parse(e.BytesReceived.ToString());
+            double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
+            double percentage = bytesIn / totalBytes * 100;
+            Application.Current.Dispatcher.Invoke(new Action(() => {
+                progressbarDownload.Value = int.Parse(Math.Truncate(percentage).ToString());
+            }));
+        }
+        void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() => {
+                progressbarDownload.Visibility = Visibility.Collapsed;
+                buttonDownload.Icon = Wpf.Ui.Common.SymbolRegular.CheckmarkCircle24;
+            }));
         }
     }
 }

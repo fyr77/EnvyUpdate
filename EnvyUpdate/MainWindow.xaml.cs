@@ -1,17 +1,8 @@
-﻿using Microsoft.Build.Framework.XamlTypes;
-using Microsoft.Toolkit.Uwp.Notifications;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Management;
-using System.Net;
-using System.Runtime.Remoting.Messaging;
-using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Threading;
-using Wpf.Ui.Controls.Interfaces;
 
 namespace EnvyUpdate
 {

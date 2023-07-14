@@ -573,10 +573,15 @@ namespace EnvyUpdate
             }
         }
 
-        public static void DownloadFile(string fileURL, string savePath)
+        public static string GetDirectDownload(string gpuUrl)
         {
-            //TODO Implement downloading
-            //TODO implement progress bar
+            string webcontent;
+            using (var wc = new WebClient())
+                webcontent = wc.DownloadString(gpuUrl);
+
+            string directUrl = Regex.Match(webcontent, "\\/Windows\\/\\d+\\.\\d+\\/[\\w\\d\\/\\-\\.]*exe").Value;
+            directUrl = "https://us.download.nvidia.com" + directUrl;
+            return directUrl;
         }
     }
 }
