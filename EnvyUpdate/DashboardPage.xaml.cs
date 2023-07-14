@@ -36,13 +36,6 @@ namespace EnvyUpdate
         {
             InitializeComponent();
 
-            // Delete installed legacy versions
-            if (Directory.Exists(GlobalVars.appdata))
-            {
-                Debug.LogToFile("INFO Found old appdata installation, uninstalling.");
-                UninstallAll();
-            }
-
             localDriv = Util.GetLocDriv();
 
             Debug.LogToFile("INFO Local driver version: " + localDriv);
@@ -267,32 +260,6 @@ namespace EnvyUpdate
         {
             Debug.LogToFile("INFO Opening download page.");
             Process.Start(gpuURL);
-        }
-
-        public void UninstallAll()
-        {
-            if (File.Exists(GlobalVars.startup + "\\EnvyUpdate.lnk"))
-            {
-                Debug.LogToFile("INFO Deleted startup entry.");
-                File.Delete(GlobalVars.startup + "\\EnvyUpdate.lnk");
-            }
-
-            if (File.Exists(GlobalVars.startmenu + "\\EnvyUpdate.lnk"))
-            {
-                Debug.LogToFile("INFO Deleted start menu entry.");
-                File.Delete(GlobalVars.startmenu + "\\EnvyUpdate.lnk");
-            }
-            if ((GlobalVars.exedirectory == GlobalVars.appdata) && File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
-            {
-                Debug.LogToFile("INFO Deleting EnvyUpdate appdata and self.");
-                MessageBox.Show(Properties.Resources.uninstall_legacy_message);
-                Util.SelfDelete();
-            }
-            else if (Directory.Exists(GlobalVars.appdata))
-            {
-                Debug.LogToFile("INFO Deleting EnvyUpdate appdata folder");
-                Directory.Delete(GlobalVars.appdata, true);
-            }
         }
 
         private void switchStudioDriver_Unchecked(object sender, RoutedEventArgs e)

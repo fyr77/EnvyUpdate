@@ -54,6 +54,13 @@ namespace EnvyUpdate
                 Environment.Exit(1);
             }
 
+            // Delete installed legacy versions
+            if (Directory.Exists(GlobalVars.appdata))
+            {
+                Debug.LogToFile("INFO Found old appdata installation, uninstalling.");
+                Util.UninstallAll();
+            }
+
             if (!Util.IsNvidia())
             {
                 if (arguments.Contains("/fake"))

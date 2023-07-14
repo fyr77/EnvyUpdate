@@ -526,6 +526,32 @@ namespace EnvyUpdate
             return gpuUrl;
         }
 
+        public static void UninstallAll()
+        {
+            if (System.IO.File.Exists(GlobalVars.startup + "\\EnvyUpdate.lnk"))
+            {
+                Debug.LogToFile("INFO Deleted startup entry.");
+                System.IO.File.Delete(GlobalVars.startup + "\\EnvyUpdate.lnk");
+            }
+
+            if (System.IO.File.Exists(GlobalVars.startmenu + "\\EnvyUpdate.lnk"))
+            {
+                Debug.LogToFile("INFO Deleted start menu entry.");
+                System.IO.File.Delete(GlobalVars.startmenu + "\\EnvyUpdate.lnk");
+            }
+            if ((GlobalVars.exedirectory == GlobalVars.appdata) && System.IO.File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
+            {
+                Debug.LogToFile("INFO Deleting EnvyUpdate appdata and self.");
+                MessageBox.Show(Properties.Resources.uninstall_legacy_message);
+                Util.SelfDelete();
+            }
+            else if (Directory.Exists(GlobalVars.appdata))
+            {
+                Debug.LogToFile("INFO Deleting EnvyUpdate appdata folder");
+                Directory.Delete(GlobalVars.appdata, true);
+            }
+        }
+
         public static void DownloadFile(string fileURL, string savePath)
         {
             //TODO Implement downloading
