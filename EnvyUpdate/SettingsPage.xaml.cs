@@ -24,6 +24,17 @@ namespace EnvyUpdate
         {
             InitializeComponent();
 
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            System.Diagnostics.FileVersionInfo fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = fvi.FileVersion;
+
+            textBlockVer.Text = version;
+            if (GlobalVars.monitoringInstall)
+                textBlockVer.FontStyle = FontStyles.Italic;
+
+            if (File.Exists(Path.Combine(GlobalVars.exedirectory, "envyupdate.log")))
+                chkLog.IsChecked = true;
+
             textBoxLicEnvyupdate.Text = Properties.Licenses.EnvyUpdate;
             textBoxLicFody.Text = Properties.Licenses.Fody;
             textBoxLicCostura.Text = Properties.Licenses.CosturaFody;
