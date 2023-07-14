@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Windows.Foundation.Collections;
+using Wpf.Ui.Markup;
 
 namespace EnvyUpdate
 {
@@ -18,6 +19,14 @@ namespace EnvyUpdate
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+            Wpf.Ui.Appearance.Accent.ApplySystemAccent();
+            ThemesDictionary themedict = new ThemesDictionary();
+            if (Util.IsDarkTheme())
+                themedict.Theme = Wpf.Ui.Appearance.ThemeType.Dark;
+            else
+                themedict.Theme = Wpf.Ui.Appearance.ThemeType.Light;
+            Application.Current.Resources.MergedDictionaries.Add(themedict);
+
             // Listen to notification activation
             ToastNotificationManagerCompat.OnActivated += toastArgs =>
             {

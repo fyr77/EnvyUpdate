@@ -24,6 +24,8 @@ namespace EnvyUpdate
 
         public MainWindow()
         {
+            InitializeComponent();
+
             // Try to get command line arguments
             try
             {
@@ -83,11 +85,6 @@ namespace EnvyUpdate
 
             GlobalVars.isMobile = Util.IsMobile();
             Debug.LogToFile("INFO Mobile: " + GlobalVars.isMobile);
-
-            InitializeComponent();
-            Wpf.Ui.Appearance.Accent.ApplySystemAccent();
-
-            
         }
         private void Window_StateChanged(object sender, EventArgs e)
         {

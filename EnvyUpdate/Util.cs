@@ -6,13 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Management;
 using System.Net;
-using System.Security.Cryptography;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
-using Windows.Devices.Radios;
-using Windows.UI.Xaml.Input;
 
 namespace EnvyUpdate
 {
@@ -549,6 +545,31 @@ namespace EnvyUpdate
             {
                 Debug.LogToFile("INFO Deleting EnvyUpdate appdata folder");
                 Directory.Delete(GlobalVars.appdata, true);
+            }
+        }
+
+        public static bool IsDarkTheme()
+        {
+            try
+            {
+                Debug.LogToFile("INFO Trying to get app theme...");
+                int res = (int)Registry.GetValue("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "AppsUseLightTheme", -1);
+                switch (res)
+                {
+                    case 0:
+                        Debug.LogToFile("INFO Using dark theme.");
+                        return true;
+                    case 1:
+                        Debug.LogToFile("INFO Using light theme.");
+                        return false;
+                    default:
+                        throw new IndexOutOfRangeException();
+                }
+            }
+            catch (Exception)
+            {
+                Debug.LogToFile("WARN Could not determine theme. Setting light theme.");
+                return false;
             }
         }
 
