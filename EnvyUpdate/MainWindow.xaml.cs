@@ -37,23 +37,31 @@ namespace EnvyUpdate
 
             Debug.LogToFile("INFO Starting EnvyUpdate, version " + System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion);
 
+            // Check if running on supported Windows version.
+            if (Environment.OSVersion.Version.Major < 10)
+            {
+                Debug.LogToFile("FATAL Unsupported OS version, terminating.");
+                MessageBox.Show(Properties.Resources.unsupported_os);
+                Environment.Exit(1);
+            }
+
             // Check if EnvyUpdate is already running
             if (Util.IsInstanceOpen("EnvyUpdate"))
             {
                 Debug.LogToFile("FATAL Found another instance, terminating.");
 
-
                 MessageBox.Show(Properties.Resources.instance_already_running);
                 Environment.Exit(1);
             }
 
-            // Delete installed legacy versions
+            // Delete installed legacy versions, required for people upgrading from very old versions.
             if (Directory.Exists(GlobalVars.appdata))
             {
                 Debug.LogToFile("INFO Found old appdata installation, uninstalling.");
                 Util.UninstallAll();
             }
 
+            // Allow for running using a fake graphics card if no nvidia card is present.
             if (arguments.Contains("/fake"))
             {
                 Debug.isFake = true;

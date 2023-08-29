@@ -385,6 +385,15 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your operating system is not supported by EnvyUpdate. Windows 10 or later is required..
+        /// </summary>
+        public static string unsupported_os {
+            get {
+                return ResourceManager.GetString("unsupported_os", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A new driver update is available for your graphics card..
         /// </summary>
         public static string update_popup_message {

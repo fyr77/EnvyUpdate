@@ -296,31 +296,21 @@ namespace EnvyUpdate
         private static int GetOSID()
         {
             // This is faster than making a whole web request and searching through XML. This application only supports 8 possible IDs, so they are hardcoded.
-            int value = 0;
-            string OS = Environment.OSVersion.Version.Major.ToString() + "." + Environment.OSVersion.Version.Minor.ToString();
+            int value;
 
-            // Here the 32bit values are used. Later, if the OS is 64bit, we'll add 1, since that is how Nvidia does their IDs.
-            switch (OS) //TODO until Win10 EOL: Differentiate between Win10 and Win11
+            if (Environment.OSVersion.Version.Build < 22000)
             {
-                case "10.0": //Win10 or Win11
+                // This means we are running Windows 10.
+                if (Environment.Is64BitOperatingSystem)
                     value = 56;
-                    break;
-                case "6.1": //Win7
-                    value = 18;
-                    break;
-                case "6.2": //Win8
-                    value = 27;
-                    break;
-                case "6.3": //Win8.1
-                    value = 40;
-                    break;
-                default:
-                    break;
+                else
+                    value = 57;
             }
-
-            //Simply increment the ID by 1 if OS is 64bit.
-            if (Environment.Is64BitOperatingSystem)
-                value++;
+            else
+            {
+                // This must be Windows 11 (for now, until Windows 12 comes along)
+                value = 135; // No need to check for 64bit, Win11 can not be 32bit.
+            }
 
             return value;
         }

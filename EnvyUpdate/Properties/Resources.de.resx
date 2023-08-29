@@ -225,6 +225,9 @@
   <data name="uninstall_legacy_message" xml:space="preserve">
     <value>Aufgrund eines Programmfehlers musste EnvyUpdate deinstalliert werden. Bitte laden Sie die neuste Version erneut manuell herunter.</value>
   </data>
+  <data name="unsupported_os" xml:space="preserve">
+    <value>Diese Betriebssystemversion wird von EnvyUpdate nicht unterstützt. Windows 10 oder neuer wird vorausgesetzt.</value>
+  </data>
   <data name="update_popup_message" xml:space="preserve">
     <value>Eine neue Treiberversion ist verfügbar.</value>
   </data>
