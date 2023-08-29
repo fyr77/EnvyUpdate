@@ -1,4 +1,5 @@
 ﻿using Microsoft.Toolkit.Uwp.Notifications;
+using Microsoft.Win32;
 using System;
 using System.IO;
 using System.Linq;
@@ -53,6 +54,10 @@ namespace EnvyUpdate
                 MessageBox.Show(Properties.Resources.instance_already_running);
                 Environment.Exit(1);
             }
+
+            // Check dark theme
+            AdjustTheme();
+            SystemEvents.UserPreferenceChanged += AdjustTheme;
 
             // Delete installed legacy versions, required for people upgrading from very old versions.
             if (Directory.Exists(GlobalVars.appdata))
@@ -113,6 +118,14 @@ namespace EnvyUpdate
             {
                 RootNavigation.Navigate(0);
             }
+        }
+
+        private void AdjustTheme(object sender = null, UserPreferenceChangedEventArgs e = null)
+        {
+            if (Util.IsDarkTheme())
+                Wpf.Ui.Appearance.Theme.Apply(Wpf.Ui.Appearance.ThemeType.Dark, Wpf.Ui.Appearance.BackgroundType.Mica);
+            else
+                Wpf.Ui.Appearance.Theme.Apply(Wpf.Ui.Appearance.ThemeType.Light, Wpf.Ui.Appearance.BackgroundType.Mica);
         }
     }
 }

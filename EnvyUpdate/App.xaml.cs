@@ -19,17 +19,6 @@ namespace EnvyUpdate
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            // Remove placeholder light theme and apply system app theme
-            Wpf.Ui.Appearance.Accent.ApplySystemAccent();
-            Application.Current.Resources.MergedDictionaries.RemoveAt(0);
-            ThemesDictionary themedict = new ThemesDictionary();
-            if (Util.IsDarkTheme())
-                themedict.Theme = Wpf.Ui.Appearance.ThemeType.Dark;
-            else
-                themedict.Theme = Wpf.Ui.Appearance.ThemeType.Light;
-            Application.Current.Resources.MergedDictionaries.Add(themedict);
-            // TODO: Watch for theme changes and dynamically update
-
             // Listen to notification activation
             ToastNotificationManagerCompat.OnActivated += ToastNotificationManagerCompat_OnActivated;
         }
