@@ -50,7 +50,6 @@ EnvyUpdate is not a replacement for any of these tools. I will still try to impl
 * Fody (dependency of Costura.Fody): [MIT](https://github.com/Fody/Fody/blob/master/License.txt)
 * Costura.Fody (for embedding DLLs into the main executable): [MIT](https://github.com/Fody/Costura/blob/develop/LICENSE)
 * Resource Embedder: [MIT](https://www.nuget.org/packages/Resource.Embedder/)
-* SevenZipExtractor: [MIT](https://github.com/adoconnection/SevenZipExtractor/blob/master/LICENSE)
 * Windows Community Toolkit: [MIT](https://github.com/CommunityToolkit/WindowsCommunityToolkit/blob/main/License.md)
 * wpfui: [MIT](https://github.com/lepoco/wpfui/blob/main/LICENSE)
 * Icon made by Freepik from www.flaticon.com

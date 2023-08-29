@@ -1,5 +1,4 @@
-﻿using EnvyUpdate.Properties;
-using IWshRuntimeLibrary;
+﻿using IWshRuntimeLibrary;
 using Microsoft.Win32;
 using System;
 using System.Diagnostics;
@@ -8,9 +7,7 @@ using System.Linq;
 using System.Management;
 using System.Net;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Xml.Linq;
 
 namespace EnvyUpdate
@@ -575,6 +572,75 @@ namespace EnvyUpdate
             string directUrl = Regex.Match(webcontent, "\\/Windows\\/\\d+\\.\\d+\\/[\\w\\d\\/\\-\\.]*exe").Value;
             directUrl = "https://us.download.nvidia.com" + directUrl;
             return directUrl;
+        }
+
+        public static string GetSevenZip()
+        {
+            // Note: This download happens on the main thread. I believe spinning up a whole thread to 
+            //       download a single 600kb file is less efficient than just doing it on the main thread.
+            //       At 1Mbit/s, this download takes 5 seconds, in most cases internet should be faster than that.
+            string path = Path.Combine(GlobalVars.exedirectory, "7zr.exe");
+            using (WebClient client = new WebClient())
+            {
+                client.Headers["User-Agent"] = GlobalVars.useragent;
+                client.DownloadFile(new Uri("https://www.7-zip.org/a/7zr.exe"), path);
+            }
+
+            return path;
+        }
+
+        public static Process ExtractWithSevenZip(string sevenZipPath, string filePath, string destinationDir)
+        {
+            if (!Directory.Exists(destinationDir))
+                Directory.CreateDirectory(destinationDir);
+
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                WindowStyle = ProcessWindowStyle.Minimized,
+                WorkingDirectory = destinationDir,
+                FileName = sevenZipPath,
+                Arguments = "x -aoa -y " + filePath + " Display.Driver Display.Nview Display.Optimus HDAudio MSVCR NVI2 NVPCF PhysX PPC ShieldWirelessController EULA.txt ListDevices.txt setup.cfg setup.exe"
+            };
+            process.EnableRaisingEvents = true;
+            process.StartInfo = startInfo;
+            return process;
+        }
+
+        public static void CleanInstallConfig(string filePath)
+        {
+            if (!System.IO.File.Exists(filePath))
+            {
+                Debug.LogToFile("FATAL Driver installer config not found, terminating.");
+                MessageBox.Show(Properties.Resources.error_installing);
+                Environment.Exit(17);
+            }
+
+            Debug.LogToFile("INFO Removing GFE content from installer config.");
+
+            string outfile = filePath + ".out";
+
+            StreamReader sr = new StreamReader(filePath);
+            StreamWriter sw = new StreamWriter(outfile);
+            string line;
+
+            while ((line = sr.ReadLine()) != null)
+            {
+                if (new[] { "EulaHtmlFile", "FunctionalConsentFile", "PrivacyPolicyFile" }.Any(c => line.Contains(c)))
+                {
+                    continue;
+                }
+
+                sw.WriteLine(line);
+            }
+
+            sw.Close();
+            sr.Close();
+
+            System.IO.File.Delete(filePath);
+            System.IO.File.Move(outfile, filePath);
+
+            Debug.LogToFile("INFO Finished removing GFE content from installer config.");
         }
     }
 }

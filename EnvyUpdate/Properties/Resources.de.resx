@@ -120,6 +120,9 @@
   <data name="app_description" xml:space="preserve">
     <value>NVIDIA Aktualisierungsanwendung.</value>
   </data>
+  <data name="error_installing" xml:space="preserve">
+    <value>Ein Fehler ist bei der Installation aufgetreten. Bitte aktivieren Sie den Log und melden Sie den Fehler auf GitHub!</value>
+  </data>
   <data name="exit_confirm" xml:space="preserve">
     <value>EnvyUpdate schließen?</value>
   </data>
@@ -134,6 +137,24 @@
   </data>
   <data name="info_download_success_title" xml:space="preserve">
     <value>Herunterladen erfolgreich abgeschlossen</value>
+  </data>
+  <data name="info_extracting" xml:space="preserve">
+    <value>Die Treiberdateien werden nun extrahiert. Dies könnte einige Minuten dauern.</value>
+  </data>
+  <data name="info_extracting_title" xml:space="preserve">
+    <value>Dateien werden extrahiert</value>
+  </data>
+  <data name="info_extract_complete" xml:space="preserve">
+    <value>Die Treiberdateien wurden vollständig extrahiert.</value>
+  </data>
+  <data name="info_extract_complete_title" xml:space="preserve">
+    <value>Extrahierung abgeschlossen</value>
+  </data>
+  <data name="info_install_complete" xml:space="preserve">
+    <value>Die Installation der neuen Treiberversion wurde abgeschlossen.</value>
+  </data>
+  <data name="info_install_complete_title" xml:space="preserve">
+    <value>Update abgeschlossen</value>
   </data>
   <data name="info_reset_caption" xml:space="preserve">
     <value>Einstellung zurückgesetzt.</value>

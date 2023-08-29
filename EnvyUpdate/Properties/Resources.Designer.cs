@@ -70,6 +70,15 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occurred attempting to install the new version. Please enable logging in the settings and report the issue on GitHub!.
+        /// </summary>
+        public static string error_installing {
+            get {
+                return ResourceManager.GetString("error_installing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit EnvyUpdate?.
         /// </summary>
         public static string exit_confirm {
@@ -111,6 +120,60 @@ namespace EnvyUpdate.Properties {
         public static string info_download_success_title {
             get {
                 return ResourceManager.GetString("info_download_success_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The driver files have finished extracting..
+        /// </summary>
+        public static string info_extract_complete {
+            get {
+                return ResourceManager.GetString("info_extract_complete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extraction complete.
+        /// </summary>
+        public static string info_extract_complete_title {
+            get {
+                return ResourceManager.GetString("info_extract_complete_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The driver files are being extracted. This could take a few minutes..
+        /// </summary>
+        public static string info_extracting {
+            get {
+                return ResourceManager.GetString("info_extracting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extracting driver files.
+        /// </summary>
+        public static string info_extracting_title {
+            get {
+                return ResourceManager.GetString("info_extracting_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The installation of the new driver version was completed..
+        /// </summary>
+        public static string info_install_complete {
+            get {
+                return ResourceManager.GetString("info_install_complete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update finished.
+        /// </summary>
+        public static string info_install_complete_title {
+            get {
+                return ResourceManager.GetString("info_install_complete_title", resourceCulture);
             }
         }
         

@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
-using Wpf.Ui.Controls;
 using MessageBox = System.Windows.MessageBox;
 
 namespace EnvyUpdate
@@ -363,11 +362,13 @@ namespace EnvyUpdate
                 File.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
             }
             Thread thread = new Thread(() => {
-                WebClient client = new WebClient();
-                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:115.0) Gecko/20100101 Firefox/115.0";
-                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
-                client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
-                client.DownloadFileAsync(new Uri(Util.GetDirectDownload(gpuURL)), Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
+                using (WebClient client = new WebClient())
+                {
+                    client.Headers["User-Agent"] = GlobalVars.useragent;
+                    client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
+                    client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
+                    client.DownloadFileAsync(new Uri(Util.GetDirectDownload(gpuURL)), Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
+                }
             });
             thread.Start();
             Debug.LogToFile("INFO Started installer download.");
@@ -391,7 +392,7 @@ namespace EnvyUpdate
             if (e.Error == null)
             {
                 Application.Current.Dispatcher.Invoke(new Action(() => {
-                    showSnackbar(Wpf.Ui.Common.ControlAppearance.Success, Wpf.Ui.Common.SymbolRegular.CheckmarkCircle24, Properties.Resources.info_download_success, Properties.Resources.info_download_success_title);
+                    ShowSnackbar(Wpf.Ui.Common.ControlAppearance.Success, Wpf.Ui.Common.SymbolRegular.CheckmarkCircle24, Properties.Resources.info_download_success, Properties.Resources.info_download_success_title);
                     buttonDownload.Visibility = Visibility.Collapsed;
                     buttonInstall.Visibility = Visibility.Visible;
                     Debug.LogToFile("INFO Download successful.");
@@ -404,17 +405,73 @@ namespace EnvyUpdate
             {
                 File.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
                 Application.Current.Dispatcher.Invoke(new Action(() => {
-                    showSnackbar(Wpf.Ui.Common.ControlAppearance.Danger, Wpf.Ui.Common.SymbolRegular.ErrorCircle24, Properties.Resources.info_download_error, Properties.Resources.info_download_error_title);
+                    ShowSnackbar(Wpf.Ui.Common.ControlAppearance.Danger, Wpf.Ui.Common.SymbolRegular.ErrorCircle24, Properties.Resources.info_download_error, Properties.Resources.info_download_error_title);
                     Debug.LogToFile("INFO Download NOT successful. Error: " + e.Error.ToString());
                 }));
             }
         }
         private void buttonInstall_Click(object sender, RoutedEventArgs e)
         {
+            string sevenZipPath = Util.GetSevenZip();
 
+            ShowSnackbar(Wpf.Ui.Common.ControlAppearance.Info, Wpf.Ui.Common.SymbolRegular.FolderZip24, Properties.Resources.info_extracting, Properties.Resources.info_extracting_title);
+
+            string filePath = Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe");
+            string destinationDir = Path.Combine(GlobalVars.exedirectory, onlineDriv + "-extracted");
+
+            if (!Directory.Exists(destinationDir))
+                Directory.CreateDirectory(destinationDir);
+
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                WindowStyle = ProcessWindowStyle.Minimized,
+                WorkingDirectory = destinationDir,
+                FileName = sevenZipPath,
+                Arguments = "x -aoa -y " + filePath + " Display.Driver Display.Nview Display.Optimus HDAudio MSVCR NVI2 NVPCF PhysX PPC ShieldWirelessController EULA.txt ListDevices.txt setup.cfg setup.exe"
+            };
+            process.EnableRaisingEvents = true;
+            process.StartInfo = startInfo;
+            process.Exited += new EventHandler(ExtractionFinished);
+            process.Start();
         }
 
-        private void showSnackbar (Wpf.Ui.Common.ControlAppearance appearance, Wpf.Ui.Common.SymbolRegular icon, string message = "", string title = "")
+        private void ExtractionFinished(object sender, EventArgs e)
+        {
+            string extractedPath = Path.Combine(GlobalVars.exedirectory, onlineDriv + "-extracted");
+            Application.Current.Dispatcher.Invoke(new Action(() => {
+                ShowSnackbar(Wpf.Ui.Common.ControlAppearance.Success, Wpf.Ui.Common.SymbolRegular.FolderZip24, Properties.Resources.info_extract_complete, Properties.Resources.info_extract_complete_title);
+            }));
+            
+            File.Delete(Path.Combine(GlobalVars.exedirectory, "7zr.exe"));
+
+            Util.CleanInstallConfig(Path.Combine(extractedPath, "setup.cfg"));
+
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                WindowStyle = ProcessWindowStyle.Normal,
+                WorkingDirectory = extractedPath,
+                FileName = "setup.exe",
+                Arguments = "-passive -noreboot -noeula"
+            };
+            process.EnableRaisingEvents = true;
+            process.StartInfo = startInfo;
+            process.Exited += new EventHandler(InstallFinished);
+            process.Start();
+        }
+
+        private void InstallFinished(object sender, EventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() => {
+                ShowSnackbar(Wpf.Ui.Common.ControlAppearance.Success, Wpf.Ui.Common.SymbolRegular.FolderZip24, Properties.Resources.info_install_complete, Properties.Resources.info_install_complete_title);
+            }));
+
+            File.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe"));
+            Directory.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-extracted"), true);
+        }
+
+        private void ShowSnackbar(Wpf.Ui.Common.ControlAppearance appearance, Wpf.Ui.Common.SymbolRegular icon, string message = "", string title = "")
         {
             snackbarInfo.Appearance = appearance;
             snackbarInfo.Icon = icon;
