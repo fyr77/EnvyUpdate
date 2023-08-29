@@ -421,12 +421,7 @@ namespace EnvyUpdate
         }
         public static int GetDTCID()
         {
-            int dtcid = 0;
-            if (IsDCH())
-            {
-                dtcid = 1;
-            }
-            return dtcid;
+            return 1; // Force update to DCH drivers
         }
 
         public static int GetDTID()
