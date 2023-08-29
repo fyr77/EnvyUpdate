@@ -299,9 +299,9 @@ namespace EnvyUpdate
             {
                 // This means we are running Windows 10.
                 if (Environment.Is64BitOperatingSystem)
-                    value = 56;
-                else
                     value = 57;
+                else
+                    value = 56;
             }
             else
             {
