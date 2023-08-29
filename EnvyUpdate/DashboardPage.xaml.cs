@@ -422,6 +422,8 @@ namespace EnvyUpdate
             if (!Directory.Exists(destinationDir))
                 Directory.CreateDirectory(destinationDir);
 
+            Debug.LogToFile("INFO Starting extraction of driver files.");
+
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
@@ -442,10 +444,13 @@ namespace EnvyUpdate
             Application.Current.Dispatcher.Invoke(new Action(() => {
                 ShowSnackbar(Wpf.Ui.Common.ControlAppearance.Success, Wpf.Ui.Common.SymbolRegular.FolderZip24, Properties.Resources.info_extract_complete, Properties.Resources.info_extract_complete_title);
             }));
+            Debug.LogToFile("INFO Extraction exited, deleting 7-zip executable.");
             
             File.Delete(Path.Combine(GlobalVars.exedirectory, "7zr.exe"));
 
             Util.CleanInstallConfig(Path.Combine(extractedPath, "setup.cfg"));
+
+            Debug.LogToFile("Starting driver setup.");
 
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo
@@ -464,8 +469,10 @@ namespace EnvyUpdate
         private void InstallFinished(object sender, EventArgs e)
         {
             Application.Current.Dispatcher.Invoke(new Action(() => {
-                ShowSnackbar(Wpf.Ui.Common.ControlAppearance.Success, Wpf.Ui.Common.SymbolRegular.FolderZip24, Properties.Resources.info_install_complete, Properties.Resources.info_install_complete_title);
+                ShowSnackbar(Wpf.Ui.Common.ControlAppearance.Success, Wpf.Ui.Common.SymbolRegular.CheckmarkCircle24, Properties.Resources.info_install_complete, Properties.Resources.info_install_complete_title);
             }));
+
+            Debug.LogToFile("INFO Driver setup complete. Cleaning up setup files.");
 
             File.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe"));
             Directory.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-extracted"), true);

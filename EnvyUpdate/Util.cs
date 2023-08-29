@@ -586,6 +586,8 @@ namespace EnvyUpdate
                 client.DownloadFile(new Uri("https://www.7-zip.org/a/7zr.exe"), path);
             }
 
+            Debug.LogToFile("INFO Downloaded 7-zip.");
+
             return path;
         }
 
