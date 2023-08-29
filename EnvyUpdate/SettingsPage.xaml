@@ -49,14 +49,14 @@
                 <Expander Margin="0,4,0,0" Header="ResourceEmbedder">
                     <TextBox x:Name="textBoxLicResourceembedder" IsReadOnly="True" TextWrapping="Wrap"/>
                 </Expander>
-                <Expander Margin="0,4,0,0" Header="SevenZipExtractor">
-                    <TextBox x:Name="textBoxLic7z" IsReadOnly="True" TextWrapping="Wrap"/>
-                </Expander>
                 <Expander Margin="0,4,0,0" Header="Windows Community Toolkit">
                     <TextBox x:Name="textBoxLicWindowscommunitytoolkit" IsReadOnly="True" TextWrapping="Wrap"/>
                 </Expander>
                 <Expander Margin="0,4,0,0" Header="WPF-UI">
                     <TextBox x:Name="textBoxLicWpfui" IsReadOnly="True" TextWrapping="Wrap"/>
+                </Expander>
+                <Expander Margin="0,4,0,0" Header="WPF-UI">
+                    <TextBox x:Name="textBoxLic7zip" IsReadOnly="True" TextWrapping="Wrap"/>
                 </Expander>
             </StackPanel>
         </ScrollViewer>

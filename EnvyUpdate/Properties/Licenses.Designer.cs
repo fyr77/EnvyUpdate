@@ -61,6 +61,19 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GNU LGPL information
+        ///  --------------------
+        ///This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.
+        ///
+        ///This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string _7zip {
+            get {
+                return ResourceManager.GetString("7zip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The MIT License
         ///
         ///Copyright (c) 2012 Simon Cropp and contributors
@@ -117,21 +130,6 @@ namespace EnvyUpdate.Properties {
         internal static string ResourceEmbedder {
             get {
                 return ResourceManager.GetString("ResourceEmbedder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to MIT License
-        ///
-        ///Copyright (c) 2017 Alexander Selishchev
-        ///
-        ///Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-        ///
-        ///The above copyrigh [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string SevenZipExtractor {
-            get {
-                return ResourceManager.GetString("SevenZipExtractor", resourceCulture);
             }
         }
         

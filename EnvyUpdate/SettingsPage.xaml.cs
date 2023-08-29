@@ -28,9 +28,9 @@ namespace EnvyUpdate
             textBoxLicFody.Text = Properties.Licenses.Fody;
             textBoxLicCostura.Text = Properties.Licenses.CosturaFody;
             textBoxLicResourceembedder.Text = Properties.Licenses.ResourceEmbedder;
-            textBoxLic7z.Text = Properties.Licenses.SevenZipExtractor;
             textBoxLicWindowscommunitytoolkit.Text = Properties.Licenses.WindowsCommunityToolkit;
             textBoxLicWpfui.Text = Properties.Licenses.wpfui;
+            textBoxLic7zip.Text = Properties.Licenses._7zip;
         }
 
         private void CardWeb_Click(object sender, RoutedEventArgs e)

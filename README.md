@@ -21,6 +21,12 @@ The application itself does not update itself. If you notice any bugs or issues,
 
 Enabling Autostart will create a shortcut of EnvyUpdate in the Windows startup folder.
 
+### Virus warnings
+
+Sometimes EnvyUpdate is flagged as a virus by Windows Defender or other antivirus software. This is a **false positive**, caused by EnvyUpdate reading a few values from the Windows registry and looking for files.
+
+For extracting the driver installer 7-Zip is downloaded if it cannot be found on the user's system. This may also trigger antivirus warnings, but is necessary for the automatic driver installation to work.
+
 ## Compatibility
 
 The application should be compatible with all Nvidia GeForce GPUs that have their drivers available on the nvidia.com download page and runs on Windows 10 and up.
@@ -50,7 +56,7 @@ EnvyUpdate is not a replacement for any of these tools. I will still try to impl
 * Fody (dependency of Costura.Fody): [MIT](https://github.com/Fody/Fody/blob/master/License.txt)
 * Costura.Fody (for embedding DLLs into the main executable): [MIT](https://github.com/Fody/Costura/blob/develop/LICENSE)
 * Resource Embedder: [MIT](https://www.nuget.org/packages/Resource.Embedder/)
-* SevenZipExtractor: [MIT](https://github.com/adoconnection/SevenZipExtractor/blob/master/LICENSE)
 * Windows Community Toolkit: [MIT](https://github.com/CommunityToolkit/WindowsCommunityToolkit/blob/main/License.md)
 * wpfui: [MIT](https://github.com/lepoco/wpfui/blob/main/LICENSE)
+* 7-Zip R: [GNU LGPL](https://www.7-zip.org/license.txt)
 * Icon made by Freepik from www.flaticon.com
