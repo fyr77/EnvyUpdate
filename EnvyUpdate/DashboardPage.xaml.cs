@@ -350,11 +350,14 @@ namespace EnvyUpdate
             buttonDownload.IsEnabled = false;
             
             Thread thread = new Thread(() => {
+                if (File.Exists(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading")))
+                    File.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
+
                 WebClient client = new WebClient();
-                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0";
+                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:115.0) Gecko/20100101 Firefox/115.0";
                 client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
                 client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
-                client.DownloadFileAsync(new Uri(Util.GetDirectDownload(gpuURL)), Path.Combine(GlobalVars.exedirectory, "nvidia-installer.exe.downloading"));
+                client.DownloadFileAsync(new Uri(Util.GetDirectDownload(gpuURL)), Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
             });
             thread.Start();
         }
@@ -381,13 +384,13 @@ namespace EnvyUpdate
                     buttonDownload.Visibility = Visibility.Collapsed;
                     buttonInstall.Visibility = Visibility.Visible;
                 }));
-                if (File.Exists(Path.Combine(GlobalVars.exedirectory, "nvidia-installer.exe")))
-                    File.Delete(Path.Combine(GlobalVars.exedirectory, "nvidia-installer.exe"));
-                File.Move(Path.Combine(GlobalVars.exedirectory, "nvidia-installer.exe.downloading"), Path.Combine(GlobalVars.exedirectory, "nvidia-installer.exe"));
+                if (File.Exists(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe")))
+                    File.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe"));
+                File.Move(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading"), Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe"));
             }
             else
             {
-                File.Delete(Path.Combine(GlobalVars.exedirectory, "nvidia-installer.exe.downloading"));
+                File.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
                 Application.Current.Dispatcher.Invoke(new Action(() => {
                     showSnackbar(Wpf.Ui.Common.ControlAppearance.Danger, Wpf.Ui.Common.SymbolRegular.ErrorCircle24, Properties.Resources.info_download_error, Properties.Resources.info_download_error_title);
                 }));
