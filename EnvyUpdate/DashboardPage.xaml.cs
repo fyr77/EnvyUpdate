@@ -168,74 +168,53 @@ namespace EnvyUpdate
                 Debug.LogToFile("INFO Got online driver version: " + onlineDriv);
             }
 
+            string correctLocalDriv;
+            string correctOnlineDriv;
+
             try
             {
-                if (float.Parse(localDriv) < float.Parse(onlineDriv))
-                {
-                    Debug.LogToFile("INFO Local version is older than online. Setting UI...");
-                    SetInfoBar(false);
-                    buttonDownload.Visibility = Visibility.Visible;
-                    if (skippedVer == null)
-                    {
-                        buttonSkipVersion.ToolTip = Properties.Resources.ui_skipversion;
-                        buttonSkipVersion.IsEnabled = true;
-                        buttonSkipVersion.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        buttonSkipVersion.IsEnabled = true;
-                        buttonSkipVersion.ToolTip = Properties.Resources.ui_skipped;
-                    }
-
-                    Debug.LogToFile("INFO UI set.");
-
-                    if (skippedVer != onlineDriv)
-                    {
-                        Debug.LogToFile("INFO Showing update popup notification.");
-                        Notify.ShowDrivUpdatePopup();
-                    }
-                }
-                else
-                {
-                    Debug.LogToFile("INFO Local version is up to date.");
-                    buttonSkipVersion.Visibility = Visibility.Collapsed;
-                    SetInfoBar(true);
-                }
+                float.Parse(onlineDriv);
+                correctLocalDriv = localDriv;
+                correctOnlineDriv = onlineDriv;
             }
             catch (FormatException)
             {
                 Debug.LogToFile("INFO Caught FormatException, assuming locale workaround is necessary.");
                 //Thank you locales. Some languages need , instead of . for proper parsing
-                string cLocalDriv = localDriv.Replace('.', ',');
-                string cOnlineDriv = onlineDriv.Replace('.', ',');
-                if (float.Parse(cLocalDriv) < float.Parse(cOnlineDriv))
+                correctLocalDriv = localDriv.Replace('.', ',');
+                correctOnlineDriv = onlineDriv.Replace('.', ',');
+            }
+
+            if (float.Parse(correctLocalDriv) < float.Parse(correctOnlineDriv))
+            {
+                Debug.LogToFile("INFO Local version is older than online. Setting UI...");
+                SetInfoBar(false);
+                buttonDownload.Visibility = Visibility.Visible;
+                buttonSkipVersion.Visibility = Visibility.Visible;
+                if (skippedVer == null)
                 {
-                    Debug.LogToFile("INFO Local version is older than online. Setting UI...");
-                    SetInfoBar(false);
-                    buttonDownload.Visibility = Visibility.Visible;
-                    if (skippedVer == null)
-                    {
-                        buttonSkipVersion.IsEnabled = true;
-                        buttonSkipVersion.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        buttonSkipVersion.IsEnabled = false;
-                        buttonSkipVersion.ToolTip = Properties.Resources.ui_skipped;
-                    }
-                        
-                    if (skippedVer != onlineDriv)
-                    {
-                        Debug.LogToFile("INFO Showing update popup notification.");
-                        Notify.ShowDrivUpdatePopup();
-                    }
+                    buttonSkipVersion.ToolTip = Properties.Resources.ui_skipversion;
+                    buttonSkipVersion.IsEnabled = true;
                 }
                 else
                 {
-                    Debug.LogToFile("INFO Local version is up to date.");
-                    buttonSkipVersion.Visibility = Visibility.Collapsed;
-                    SetInfoBar(true);
+                    buttonSkipVersion.IsEnabled = false;
+                    buttonSkipVersion.ToolTip = Properties.Resources.ui_skipped;
                 }
+
+                Debug.LogToFile("INFO UI set.");
+
+                if (skippedVer != onlineDriv)
+                {
+                    Debug.LogToFile("INFO Showing update popup notification.");
+                    Notify.ShowDrivUpdatePopup();
+                }
+            }
+            else
+            {
+                Debug.LogToFile("INFO Local version is up to date.");
+                buttonSkipVersion.Visibility = Visibility.Collapsed;
+                SetInfoBar(true);
             }
 
             //Check for different version than skipped version
