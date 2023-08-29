@@ -250,6 +250,14 @@ namespace EnvyUpdate
                 buttonSkipVersion.IsEnabled = true;
                 buttonSkipVersion.Visibility = Visibility.Visible;
             }
+
+            // Check if update file already exists and display install button instead
+            if (File.Exists(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe")))
+            {
+                Debug.LogToFile("INFO Found downloaded driver installer, no need to redownload.");
+                buttonDownload.Visibility = Visibility.Collapsed;
+                buttonInstall.Visibility = Visibility.Visible;
+            }
         }
 
         private void switchStudioDriver_Unchecked(object sender, RoutedEventArgs e)
@@ -348,11 +356,13 @@ namespace EnvyUpdate
         {
             progressbarDownload.Visibility = Visibility.Visible;
             buttonDownload.IsEnabled = false;
-            
-            Thread thread = new Thread(() => {
-                if (File.Exists(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading")))
-                    File.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
 
+            if (File.Exists(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading")))
+            {
+                Debug.LogToFile("WARN Found previous unfinished download, retrying.");
+                File.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
+            }
+            Thread thread = new Thread(() => {
                 WebClient client = new WebClient();
                 client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:115.0) Gecko/20100101 Firefox/115.0";
                 client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
@@ -360,6 +370,7 @@ namespace EnvyUpdate
                 client.DownloadFileAsync(new Uri(Util.GetDirectDownload(gpuURL)), Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
             });
             thread.Start();
+            Debug.LogToFile("INFO Started installer download.");
         }
 
         void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -383,6 +394,7 @@ namespace EnvyUpdate
                     showSnackbar(Wpf.Ui.Common.ControlAppearance.Success, Wpf.Ui.Common.SymbolRegular.CheckmarkCircle24, Properties.Resources.info_download_success, Properties.Resources.info_download_success_title);
                     buttonDownload.Visibility = Visibility.Collapsed;
                     buttonInstall.Visibility = Visibility.Visible;
+                    Debug.LogToFile("INFO Download successful.");
                 }));
                 if (File.Exists(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe")))
                     File.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe"));
@@ -393,6 +405,7 @@ namespace EnvyUpdate
                 File.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
                 Application.Current.Dispatcher.Invoke(new Action(() => {
                     showSnackbar(Wpf.Ui.Common.ControlAppearance.Danger, Wpf.Ui.Common.SymbolRegular.ErrorCircle24, Properties.Resources.info_download_error, Properties.Resources.info_download_error_title);
+                    Debug.LogToFile("INFO Download NOT successful. Error: " + e.Error.ToString());
                 }));
             }
         }
