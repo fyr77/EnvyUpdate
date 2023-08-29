@@ -383,6 +383,7 @@ namespace EnvyUpdate
                 progressbarDownload.Value = int.Parse(Math.Truncate(percentage).ToString());
             }));
         }
+
         void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             Application.Current.Dispatcher.Invoke(new Action(() => {
@@ -412,6 +413,7 @@ namespace EnvyUpdate
         }
         private void buttonInstall_Click(object sender, RoutedEventArgs e)
         {
+            buttonInstall.IsEnabled = false;
             string sevenZipPath = Util.GetSevenZip();
 
             ShowSnackbar(Wpf.Ui.Common.ControlAppearance.Info, Wpf.Ui.Common.SymbolRegular.FolderZip24, Properties.Resources.info_extracting, Properties.Resources.info_extracting_title);
@@ -470,6 +472,9 @@ namespace EnvyUpdate
         {
             Application.Current.Dispatcher.Invoke(new Action(() => {
                 ShowSnackbar(Wpf.Ui.Common.ControlAppearance.Success, Wpf.Ui.Common.SymbolRegular.CheckmarkCircle24, Properties.Resources.info_install_complete, Properties.Resources.info_install_complete_title);
+                buttonInstall.IsEnabled = true;
+                buttonInstall.Visibility = Visibility.Collapsed;
+                buttonDownload.Visibility = Visibility.Visible;
             }));
 
             Debug.LogToFile("INFO Driver setup complete. Cleaning up setup files.");

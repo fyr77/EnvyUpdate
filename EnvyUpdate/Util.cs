@@ -576,17 +576,21 @@ namespace EnvyUpdate
 
         public static string GetSevenZip()
         {
-            // Note: This download happens on the main thread. I believe spinning up a whole thread to 
-            //       download a single 600kb file is less efficient than just doing it on the main thread.
-            //       At 1Mbit/s, this download takes 5 seconds, in most cases internet should be faster than that.
-            string path = Path.Combine(GlobalVars.exedirectory, "7zr.exe");
-            using (WebClient client = new WebClient())
+            string path;
+            if (ExistsOnPath("7zg.exe"))
             {
-                client.Headers["User-Agent"] = GlobalVars.useragent;
-                client.DownloadFile(new Uri("https://www.7-zip.org/a/7zr.exe"), path);
+                path = "7zg.exe";
             }
-
-            Debug.LogToFile("INFO Downloaded 7-zip.");
+            else
+            {
+                path = Path.Combine(GlobalVars.exedirectory, "7zr.exe");
+                using (WebClient client = new WebClient())
+                {
+                    client.Headers["User-Agent"] = GlobalVars.useragent;
+                    client.DownloadFile(new Uri("https://www.7-zip.org/a/7zr.exe"), path);
+                }
+                Debug.LogToFile("INFO Downloaded 7-zip.");
+            }
 
             return path;
         }
@@ -643,6 +647,26 @@ namespace EnvyUpdate
             System.IO.File.Move(outfile, filePath);
 
             Debug.LogToFile("INFO Finished removing GFE content from installer config.");
+        }
+
+        private static bool ExistsOnPath(string fileName)
+        {
+            return GetFullPath(fileName) != null;
+        }
+
+        private static string GetFullPath(string fileName)
+        {
+            if (System.IO.File.Exists(fileName))
+                return Path.GetFullPath(fileName);
+
+            var values = Environment.GetEnvironmentVariable("PATH");
+            foreach (var path in values.Split(Path.PathSeparator))
+            {
+                var fullPath = Path.Combine(path, fileName);
+                if (System.IO.File.Exists(fullPath))
+                    return fullPath;
+            }
+            return null;
         }
     }
 }
