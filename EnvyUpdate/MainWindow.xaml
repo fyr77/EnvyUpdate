@@ -11,7 +11,7 @@
     ExtendsContentIntoTitleBar="True"
     WindowBackdropType="Mica"
     
-    Title="EnvyUpdate" MinHeight="500" Height="500" MinWidth="600" Width="600" Icon="icon.ico" StateChanged="Window_StateChanged" Closing="Window_Closing" ResizeMode="CanMinimize" Activated="UiWindow_Activated" WindowStyle="None">
+    Title="EnvyUpdate" MinHeight="500" Height="500" MinWidth="600" Width="600" Icon="icon.ico" StateChanged="Window_StateChanged" Closing="Window_Closing" ResizeMode="CanMinimize" WindowStyle="None">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

@@ -106,20 +106,6 @@ namespace EnvyUpdate
             Application.Current.Shutdown();
         }
 
-        private void UiWindow_Activated(object sender, EventArgs e)
-        {
-            // This is a workaround for a bug (?) in the UI library, which causes the nav to not load the first item on startup.
-            // Without this, the nav attempts to navigate before the window is shown, which doesn't work.
-            try
-            {
-                var test = RootNavigation.Current.PageType;
-            }
-            catch (NullReferenceException)
-            {
-                RootNavigation.Navigate(0);
-            }
-        }
-
         private void AdjustTheme(object sender = null, UserPreferenceChangedEventArgs e = null)
         {
             if (Util.IsDarkTheme())

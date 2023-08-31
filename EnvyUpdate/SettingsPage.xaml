@@ -55,7 +55,7 @@
                 <Expander Margin="0,4,0,0" Header="WPF-UI">
                     <TextBox x:Name="textBoxLicWpfui" IsReadOnly="True" TextWrapping="Wrap"/>
                 </Expander>
-                <Expander Margin="0,4,0,0" Header="WPF-UI">
+                <Expander Margin="0,4,0,0" Header="7-Zip">
                     <TextBox x:Name="textBoxLic7zip" IsReadOnly="True" TextWrapping="Wrap"/>
                 </Expander>
             </StackPanel>
