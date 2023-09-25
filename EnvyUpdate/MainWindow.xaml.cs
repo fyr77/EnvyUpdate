@@ -113,5 +113,10 @@ namespace EnvyUpdate
             else
                 Wpf.Ui.Appearance.Theme.Apply(Wpf.Ui.Appearance.ThemeType.Light, Wpf.Ui.Appearance.BackgroundType.Mica);
         }
+
+        private void NotifyIcon_LeftClick(Wpf.Ui.Controls.NotifyIcon sender, RoutedEventArgs e)
+        {
+            Util.ShowMain();
+        }
     }
 }

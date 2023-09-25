@@ -122,6 +122,7 @@ namespace EnvyUpdate
         {
             Application.Current.MainWindow.Show();
             Application.Current.MainWindow.WindowState = WindowState.Normal;
+            Application.Current.MainWindow.Activate();
         }
 
         /// <summary>

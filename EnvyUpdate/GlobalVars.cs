@@ -13,6 +13,7 @@ namespace EnvyUpdate
         public static readonly string startup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
         public static bool monitoringInstall = false;
         public static bool startMinimized = false;
+        public static bool isInstalling = false;
         public static readonly string useragent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:115.0) Gecko/20100101 Firefox/115.0";
     }
 }

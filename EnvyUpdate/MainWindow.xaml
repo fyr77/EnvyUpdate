@@ -25,10 +25,11 @@
             Icon="/icon.ico">
             <ui:TitleBar.Tray>
                 <ui:NotifyIcon
-                    FocusOnLeftClick="True"
+                    LeftClick="NotifyIcon_LeftClick"
                     Icon="/icon.ico"
                     MenuOnRightClick="False"
-                    TooltipText="EnvyUpdate"></ui:NotifyIcon>
+                    TooltipText="EnvyUpdate">
+                </ui:NotifyIcon>
             </ui:TitleBar.Tray>
         </ui:TitleBar>
         <Grid Grid.Row="1">

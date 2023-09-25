@@ -21,6 +21,7 @@ namespace EnvyUpdate
         private string onlineDriv = null;
         private string gpuURL = null;
         private string skippedVer = null;
+        private DateTime lastFileChanged = DateTime.MinValue;
 
         public DashboardPage()
         {
@@ -302,13 +303,17 @@ namespace EnvyUpdate
 
         void DriverFileChanged(object sender, FileSystemEventArgs e)
         {
-            Debug.LogToFile("INFO Watched driver file changed! Reloading data.");
-            System.Threading.Thread.Sleep(10000);
-            Application.Current.Dispatcher.Invoke(delegate
+            if (!GlobalVars.isInstalling && (DateTime.UtcNow.Subtract(lastFileChanged).TotalMinutes > 1))
             {
-                UpdateLocalVer();
-                Load();
-            });
+                Debug.LogToFile("INFO Watched driver file changed! Reloading data.");
+                System.Threading.Thread.Sleep(10000);
+                lastFileChanged = DateTime.UtcNow;
+                Application.Current.Dispatcher.Invoke(delegate
+                {
+                    UpdateLocalVer();
+                    Load();
+                });
+            }
         }
 
         private void CardOnline_Click(object sender, RoutedEventArgs e)
@@ -396,6 +401,7 @@ namespace EnvyUpdate
         private void buttonInstall_Click(object sender, RoutedEventArgs e)
         {
             buttonInstall.IsEnabled = false;
+            GlobalVars.isInstalling = true;
             string sevenZipPath = Util.GetSevenZip();
 
             ShowSnackbar(Wpf.Ui.Common.ControlAppearance.Info, Wpf.Ui.Common.SymbolRegular.FolderZip24, Properties.Resources.info_extracting, Properties.Resources.info_extracting_title);
@@ -463,6 +469,12 @@ namespace EnvyUpdate
 
             File.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe"));
             Directory.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-extracted"), true);
+            GlobalVars.isInstalling = false;
+            Application.Current.Dispatcher.Invoke(delegate
+            {
+                UpdateLocalVer();
+                Load();
+            });
         }
 
         private void ShowSnackbar(Wpf.Ui.Common.ControlAppearance appearance, Wpf.Ui.Common.SymbolRegular icon, string message = "", string title = "")
