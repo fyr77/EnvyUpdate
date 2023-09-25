@@ -26,6 +26,9 @@ namespace EnvyUpdate
         {
             InitializeComponent();
 
+            if (GlobalVars.startMinimized)
+                Application.Current.MainWindow.Hide(); // Hide only AFTER initializing dashboard page, otherwise tray icon doesn't work
+
             if (Debug.isFake)
                 localDriv = Debug.LocalDriv();
             else

@@ -84,7 +84,7 @@ namespace EnvyUpdate
             {
                 Debug.LogToFile("INFO Launching minimized.");
                 WindowState = WindowState.Minimized;
-                Hide();
+                GlobalVars.startMinimized = true;
             }
 
             GlobalVars.isMobile = Util.IsMobile();
