@@ -8,23 +8,32 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug - ignoregpu|Any CPU = Debug - ignoregpu|Any CPU
+		Debug - ignoregpu|x64 = Debug - ignoregpu|x64
 		Debug - ignoregpu|x86 = Debug - ignoregpu|x86
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{1BF2468D-9579-462D-9153-4836E9C8721F}.Debug - ignoregpu|Any CPU.ActiveCfg = Debug - ignoregpu|Any CPU
 		{1BF2468D-9579-462D-9153-4836E9C8721F}.Debug - ignoregpu|Any CPU.Build.0 = Debug - ignoregpu|Any CPU
+		{1BF2468D-9579-462D-9153-4836E9C8721F}.Debug - ignoregpu|x64.ActiveCfg = Debug - ignoregpu|x64
+		{1BF2468D-9579-462D-9153-4836E9C8721F}.Debug - ignoregpu|x64.Build.0 = Debug - ignoregpu|x64
 		{1BF2468D-9579-462D-9153-4836E9C8721F}.Debug - ignoregpu|x86.ActiveCfg = Debug - ignoregpu|x86
 		{1BF2468D-9579-462D-9153-4836E9C8721F}.Debug - ignoregpu|x86.Build.0 = Debug - ignoregpu|x86
 		{1BF2468D-9579-462D-9153-4836E9C8721F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1BF2468D-9579-462D-9153-4836E9C8721F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BF2468D-9579-462D-9153-4836E9C8721F}.Debug|x64.ActiveCfg = Debug|x64
+		{1BF2468D-9579-462D-9153-4836E9C8721F}.Debug|x64.Build.0 = Debug|x64
 		{1BF2468D-9579-462D-9153-4836E9C8721F}.Debug|x86.ActiveCfg = Debug|x86
 		{1BF2468D-9579-462D-9153-4836E9C8721F}.Debug|x86.Build.0 = Debug|x86
 		{1BF2468D-9579-462D-9153-4836E9C8721F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BF2468D-9579-462D-9153-4836E9C8721F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BF2468D-9579-462D-9153-4836E9C8721F}.Release|x64.ActiveCfg = Release|x64
+		{1BF2468D-9579-462D-9153-4836E9C8721F}.Release|x64.Build.0 = Release|x64
 		{1BF2468D-9579-462D-9153-4836E9C8721F}.Release|x86.ActiveCfg = Release|x86
 		{1BF2468D-9579-462D-9153-4836E9C8721F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
