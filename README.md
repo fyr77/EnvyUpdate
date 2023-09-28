@@ -11,6 +11,8 @@
 
 Download the [latest release](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.exe) (or as a [.zip](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.zip)) and run it. Windows SmartScreen Messages can be safely ignored. They only happen because this project is not digitally signed.
 
+Legacy 2.x versions (old UI, no automatic driver installation) will continue to be supported and fixed for the time being. Please see [the v2 branch](https://github.com/fyr77/EnvyUpdate/tree/v2) for these.
+
 The application itself does not update itself. If you notice any bugs or issues, be sure to check for a new version on GitHub!
 
 Enabling Autostart will create a shortcut of EnvyUpdate in the Windows startup folder.
