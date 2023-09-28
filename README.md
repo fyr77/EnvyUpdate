@@ -2,9 +2,7 @@
 
 # Important Information
 
-Nvidia has discontinued non-DCH drivers. This means only Windows 10 and Windows 11 can get the most recent driver versions. 
-
-If you are running Standard (non-DCH) drivers right now, EnvyUpdate will **NOT** display newer driver versions until you have manually updated to DCH drivers.
+This is the old "v2" branch of EnvyUpdate. New features will not be added here, but bugs will be fixed. For the newest features and additions, please download the latest release built from the "master" branch.
 
 # EnvyUpdate
  A small portable update checker application for Nvidia GPUs
@@ -15,7 +13,7 @@ If you are running Standard (non-DCH) drivers right now, EnvyUpdate will **NOT**
  
 ## How to use
 
-Download the [latest release](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.exe) (or as a [.zip](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.zip)) and run it. Windows SmartScreen Messages can be safely ignored. They only happen because this project is not digitally signed.
+Download the [latest 2.x release](https://github.com/fyr77/EnvyUpdate/releases/tag/2.21) and run it. Windows SmartScreen Messages can be safely ignored. They only happen because this project is not digitally signed.
 
 The application itself does not update itself. If you notice any bugs or issues, be sure to check for a new version on GitHub!
 
