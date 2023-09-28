@@ -180,6 +180,9 @@
   <data name="ui_autostart" xml:space="preserve">
     <value>Beim Start von Windows ausführen</value>
   </data>
+  <data name="ui_download" xml:space="preserve">
+    <value>Herunterladen</value>
+  </data>
   <data name="ui_enable_logging" xml:space="preserve">
     <value>Programm-Log in Datei schreiben</value>
   </data>

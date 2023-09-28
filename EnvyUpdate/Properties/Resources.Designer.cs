@@ -250,6 +250,15 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        public static string ui_download {
+            get {
+                return ResourceManager.GetString("ui_download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable logging to file.
         /// </summary>
         public static string ui_enable_logging {
