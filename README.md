@@ -23,6 +23,12 @@ Sometimes EnvyUpdate is flagged as a virus by Windows Defender or other antiviru
 
 For extracting the driver installer 7-Zip is downloaded if it cannot be found on the user's system. This may also trigger antivirus warnings, but is necessary for the automatic driver installation to work.
 
+### Using AppData for configuration files
+
+Starting with 3.2, EnvyUpdate supports saving its configuration files to AppData/Roaming instead of saving it next to the main exe file. You can enable it in the settings of the application.
+
+If EnvyUpdate fails to write to the folder containing the exe file, this option will be enabled automatically.
+
 ## Compatibility
 
 The application should be compatible with all Nvidia GeForce GPUs that have their drivers available on the nvidia.com download page and runs on Windows 10 and up.
