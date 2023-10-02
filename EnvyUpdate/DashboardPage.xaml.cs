@@ -462,7 +462,8 @@ namespace EnvyUpdate
                 ShowSnackbar(Wpf.Ui.Common.ControlAppearance.Success, Wpf.Ui.Common.SymbolRegular.CheckmarkCircle24, Properties.Resources.info_install_complete, Properties.Resources.info_install_complete_title);
                 buttonInstall.IsEnabled = true;
                 buttonInstall.Visibility = Visibility.Collapsed;
-                buttonDownload.Visibility = Visibility.Visible;
+                buttonDownload.IsEnabled = true;
+                buttonDownload.Visibility = Visibility.Collapsed;
             }));
 
             Debug.LogToFile("INFO Driver setup complete. Cleaning up setup files.");
