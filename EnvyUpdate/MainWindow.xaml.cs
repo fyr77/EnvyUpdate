@@ -28,8 +28,22 @@ namespace EnvyUpdate
                 // This is necessary, since .NET throws an exception if you check for a non-existant arg.
             }
 
+            if (!Util.HasWritePermissions())
+            {
+                if (!Directory.Exists(GlobalVars.appdata))
+                    Directory.CreateDirectory(GlobalVars.appdata);
+
+                GlobalVars.hasWrite = false;
+            }
+
+            if (Directory.Exists(GlobalVars.appdata))
+            {
+                GlobalVars.useAppdata = true;
+                GlobalVars.saveDirectory = GlobalVars.appdata;
+            }
+
             // Check if Debug file exists
-            if (File.Exists(Path.Combine(GlobalVars.exedirectory, "envyupdate.log")))
+            if (File.Exists(Path.Combine(GlobalVars.saveDirectory, "envyupdate.log")))
             {
                 Debug.isVerbose = true;
                 Debug.LogToFile("------");
@@ -37,6 +51,7 @@ namespace EnvyUpdate
             }
 
             Debug.LogToFile("INFO Starting EnvyUpdate, version " + System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion);
+            Debug.LogToFile("INFO Save directory: " + GlobalVars.saveDirectory);
 
             // Check if running on supported Windows version.
             if (Environment.OSVersion.Version.Major < 10)
@@ -60,9 +75,9 @@ namespace EnvyUpdate
             SystemEvents.UserPreferenceChanged += AdjustTheme;
 
             // Delete installed legacy versions, required for people upgrading from very old versions.
-            if (Directory.Exists(GlobalVars.appdata))
+            if (Directory.Exists(GlobalVars.legacyAppdata))
             {
-                Debug.LogToFile("INFO Found old appdata installation, uninstalling.");
+                Debug.LogToFile("INFO Found legacy appdata installation, uninstalling.");
                 Util.UninstallAll();
             }
 

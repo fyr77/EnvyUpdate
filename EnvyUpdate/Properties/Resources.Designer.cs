@@ -259,6 +259,15 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save files to AppData.
+        /// </summary>
+        public static string ui_enable_appdata {
+            get {
+                return ResourceManager.GetString("ui_enable_appdata", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable logging to file.
         /// </summary>
         public static string ui_enable_logging {

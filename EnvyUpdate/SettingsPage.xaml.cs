@@ -21,8 +21,14 @@ namespace EnvyUpdate
             if (GlobalVars.monitoringInstall)
                 textBlockVer.FontStyle = FontStyles.Italic;
 
-            if (File.Exists(Path.Combine(GlobalVars.exedirectory, "envyupdate.log")))
+            if (File.Exists(Path.Combine(GlobalVars.saveDirectory, "envyupdate.log")) || File.Exists(Path.Combine(GlobalVars.appdata, "envyupdate.log")))
                 chkLog.IsChecked = true;
+
+            if (GlobalVars.useAppdata)
+                chkAppdata.IsChecked = true;
+
+            if (!GlobalVars.hasWrite)
+                chkAppdata.IsEnabled = false;
 
             textBoxLicEnvyupdate.Text = Properties.Licenses.EnvyUpdate;
             textBoxLicFody.Text = Properties.Licenses.Fody;
@@ -54,10 +60,36 @@ namespace EnvyUpdate
             if (Debug.isVerbose)
             {
                 Debug.LogToFile("INFO Disabled logging to file.");
-                if (File.Exists(Path.Combine(GlobalVars.exedirectory, "envyupdate.log")))
-                    File.Move(Path.Combine(GlobalVars.exedirectory, "envyupdate.log"), Path.Combine(GlobalVars.exedirectory, "envyupdate." + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".log"));
+                if (File.Exists(Path.Combine(GlobalVars.saveDirectory, "envyupdate.log")))
+                    File.Move(Path.Combine(GlobalVars.saveDirectory, "envyupdate.log"), Path.Combine(GlobalVars.saveDirectory, "envyupdate." + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".log"));
                 Debug.isVerbose = false;
             }
+        }
+
+        private void chkAppdata_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!Directory.Exists(GlobalVars.appdata))
+                Directory.CreateDirectory(GlobalVars.appdata);
+
+            GlobalVars.useAppdata = true;
+            GlobalVars.saveDirectory = GlobalVars.appdata;
+            Util.MoveFilesToAppdata();
+
+            Debug.LogToFile("INFO Switched to AppData directory.");
+        }
+
+        private void chkAppdata_Unchecked(object sender, RoutedEventArgs e)
+        {
+            GlobalVars.useAppdata = false;
+            GlobalVars.saveDirectory = GlobalVars.directoryOfExe;
+
+            if (Directory.Exists(GlobalVars.appdata))
+            {
+                Util.MoveFilesToExe();
+                Directory.Delete(GlobalVars.appdata, true);
+            }
+
+            Debug.LogToFile("INFO Switched to EXE directory.");
         }
     }
 }

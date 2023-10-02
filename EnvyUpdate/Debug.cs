@@ -15,9 +15,6 @@ namespace EnvyUpdate
         public static bool isVerbose = false;
 #endif
 
-
-        public static string debugFile = Path.Combine(GlobalVars.exedirectory, "envyupdate.log");
-
         public static int LoadFakeIDs(string idType)
         {
             /* 
@@ -52,7 +49,12 @@ namespace EnvyUpdate
         public static void LogToFile(string content)
         {
             if (isVerbose)
-                System.IO.File.AppendAllText(Debug.debugFile, content + "\n");
+            {
+                if (GlobalVars.useAppdata)
+                    File.AppendAllText(Path.Combine(GlobalVars.appdata, "envyupdate.log"), content + "\n");
+                else
+                    File.AppendAllText(Path.Combine(GlobalVars.directoryOfExe, "envyupdate.log"), content + "\n");
+            }    
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using IWshRuntimeLibrary;
+using Microsoft.Build.Framework.XamlTypes;
 using Microsoft.Win32;
 using System;
 using System.Diagnostics;
@@ -130,13 +131,11 @@ namespace EnvyUpdate
         /// </summary>
         public static void SelfDelete()
         {
-            string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\envyupdate\\";
-
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
                 WindowStyle = ProcessWindowStyle.Hidden,
-                WorkingDirectory = appdata,
+                WorkingDirectory = GlobalVars.legacyAppdata,
                 FileName = "cmd.exe",
                 Arguments = "/C timeout 5 && del EnvyUpdate.exe"
             };
@@ -433,7 +432,7 @@ namespace EnvyUpdate
              */
             //TODO: find way to differentiate between driver types
 
-            if (System.IO.File.Exists(GlobalVars.exedirectory + "sd.envy"))
+            if (System.IO.File.Exists(Path.Combine(GlobalVars.saveDirectory, "sd.envy")))
                 return 18;
             else
                 return 1;
@@ -510,27 +509,27 @@ namespace EnvyUpdate
 
         public static void UninstallAll()
         {
-            if (System.IO.File.Exists(GlobalVars.startup + "\\EnvyUpdate.lnk"))
+            if (System.IO.File.Exists(Path.Combine(GlobalVars.startup, "\\EnvyUpdate.lnk")))
             {
                 Debug.LogToFile("INFO Deleted startup entry.");
-                System.IO.File.Delete(GlobalVars.startup + "\\EnvyUpdate.lnk");
+                System.IO.File.Delete(Path.Combine(GlobalVars.startup, "\\EnvyUpdate.lnk"));
             }
 
-            if (System.IO.File.Exists(GlobalVars.startmenu + "\\EnvyUpdate.lnk"))
+            if (System.IO.File.Exists(Path.Combine(GlobalVars.startmenu, "\\EnvyUpdate.lnk")))
             {
                 Debug.LogToFile("INFO Deleted start menu entry.");
-                System.IO.File.Delete(GlobalVars.startmenu + "\\EnvyUpdate.lnk");
+                System.IO.File.Delete(Path.Combine(GlobalVars.startmenu, "\\EnvyUpdate.lnk"));
             }
-            if ((GlobalVars.exedirectory == GlobalVars.appdata) && System.IO.File.Exists(GlobalVars.appdata + "EnvyUpdate.exe"))
+            if ((GlobalVars.saveDirectory == GlobalVars.legacyAppdata) && System.IO.File.Exists(Path.Combine(GlobalVars.legacyAppdata, "EnvyUpdate.exe")))
             {
                 Debug.LogToFile("INFO Deleting EnvyUpdate appdata and self.");
                 MessageBox.Show(Properties.Resources.uninstall_legacy_message);
                 Util.SelfDelete();
             }
-            else if (Directory.Exists(GlobalVars.appdata))
+            else if (Directory.Exists(GlobalVars.legacyAppdata))
             {
                 Debug.LogToFile("INFO Deleting EnvyUpdate appdata folder");
-                Directory.Delete(GlobalVars.appdata, true);
+                Directory.Delete(GlobalVars.legacyAppdata, true);
             }
         }
 
@@ -579,7 +578,7 @@ namespace EnvyUpdate
             }
             else
             {
-                path = Path.Combine(GlobalVars.exedirectory, "7zr.exe");
+                path = Path.Combine(GlobalVars.saveDirectory, "7zr.exe");
                 using (WebClient client = new WebClient())
                 {
                     client.Headers["User-Agent"] = GlobalVars.useragent;
@@ -663,6 +662,38 @@ namespace EnvyUpdate
                     return fullPath;
             }
             return null;
+        }
+
+        public static bool HasWritePermissions()
+        {
+            try
+            {
+                System.IO.File.Create(Path.Combine(GlobalVars.saveDirectory, "writeable.envy")).Close();
+                System.IO.File.Delete(Path.Combine(GlobalVars.saveDirectory, "writeable.envy"));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public static void MoveFilesToAppdata()
+        {
+            string[] envyFiles = Directory.GetFiles(GlobalVars.directoryOfExe, "*.envy");
+            foreach (var item in envyFiles)
+                System.IO.File.Move(item, Path.Combine(GlobalVars.appdata, Path.GetFileName(item)));
+            if (System.IO.File.Exists(Path.Combine(GlobalVars.directoryOfExe, "envyupdate.log")))
+                System.IO.File.Move(Path.Combine(GlobalVars.directoryOfExe, "envyupdate.log"), Path.Combine(GlobalVars.appdata, "envyupdate.log"));
+        }
+
+        public static void MoveFilesToExe()
+        {
+            string[] envyFiles = Directory.GetFiles(GlobalVars.appdata, "*.envy");
+            foreach (var item in envyFiles)
+                System.IO.File.Move(item, Path.Combine(GlobalVars.directoryOfExe, Path.GetFileName(item)));
+            if (System.IO.File.Exists(Path.Combine(GlobalVars.appdata, "envyupdate.log")))
+                System.IO.File.Move(Path.Combine(GlobalVars.appdata, "envyupdate.log"), Path.Combine(GlobalVars.directoryOfExe, "envyupdate.log"));
         }
     }
 }

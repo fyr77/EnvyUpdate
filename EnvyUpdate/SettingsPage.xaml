@@ -15,7 +15,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -34,8 +35,12 @@
             <ui:ToggleSwitch x:Name="chkLog" Checked="chkLog_Checked" Unchecked="chkLog_Unchecked"/>
         </ui:CardControl>
 
-        <Label Grid.Row="3" Content="{x:Static p:Resources.ui_licenses}" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
-        <ScrollViewer Grid.Row="4" MaxHeight="700" HorizontalAlignment="Stretch">
+        <ui:CardControl Grid.Row="3" Margin="0,12,0,0" Icon="Folder24" Header="{x:Static p:Resources.ui_enable_appdata}" >
+            <ui:ToggleSwitch x:Name="chkAppdata" Checked="chkAppdata_Checked" Unchecked="chkAppdata_Unchecked"/>
+        </ui:CardControl>
+
+        <Label Grid.Row="4" Content="{x:Static p:Resources.ui_licenses}" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+        <ScrollViewer Grid.Row="5" MaxHeight="700" HorizontalAlignment="Stretch">
             <StackPanel>
                 <Expander Header="EnvyUpdate">
                     <TextBox x:Name="textBoxLicEnvyupdate" IsReadOnly="True" TextWrapping="Wrap"/>

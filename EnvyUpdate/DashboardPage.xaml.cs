@@ -112,10 +112,10 @@ namespace EnvyUpdate
                 switchStudioDriver.IsChecked = false;
             }
 
-            if (File.Exists(GlobalVars.exedirectory + "skip.envy"))
+            if (File.Exists(Path.Combine(GlobalVars.saveDirectory,"skip.envy")))
             {
                 Debug.LogToFile("INFO Found version skip config.");
-                skippedVer = File.ReadLines(GlobalVars.exedirectory + "skip.envy").First();
+                skippedVer = File.ReadLines(Path.Combine(GlobalVars.saveDirectory, "skip.envy")).First();
             }
 
             // This little bool check is necessary for debug fake mode. 
@@ -137,9 +137,9 @@ namespace EnvyUpdate
                 try
                 {
                     // disable SD and try with GRD
-                    if (File.Exists(GlobalVars.exedirectory + "sd.envy"))
+                    if (File.Exists(Path.Combine(GlobalVars.saveDirectory, "sd.envy")))
                     {
-                        File.Delete(GlobalVars.exedirectory + "sd.envy");
+                        File.Delete(Path.Combine(GlobalVars.saveDirectory, "sd.envy"));
                     }
 
                     gpuURL = Util.GetGpuUrl(); //try again with GRD
@@ -226,15 +226,15 @@ namespace EnvyUpdate
             {
                 Debug.LogToFile("INFO Skipped version is surpassed, deleting setting.");
                 skippedVer = null;
-                if (File.Exists(GlobalVars.exedirectory + "skip.envy"))
-                    File.Delete(GlobalVars.exedirectory + "skip.envy");
+                if (File.Exists(Path.Combine(GlobalVars.saveDirectory, "skip.envy")))
+                    File.Delete(Path.Combine(GlobalVars.saveDirectory, "skip.envy"));
                 buttonSkipVersion.ToolTip = Properties.Resources.ui_skipversion;
                 buttonSkipVersion.IsEnabled = true;
                 buttonSkipVersion.Visibility = Visibility.Visible;
             }
 
             // Check if update file already exists and display install button instead
-            if (File.Exists(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe")))
+            if (File.Exists(Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-nvidia-installer.exe")))
             {
                 Debug.LogToFile("INFO Found downloaded driver installer, no need to redownload.");
                 buttonDownload.Visibility = Visibility.Collapsed;
@@ -244,20 +244,20 @@ namespace EnvyUpdate
 
         private void switchStudioDriver_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (File.Exists(GlobalVars.exedirectory + "sd.envy"))
+            if (File.Exists(Path.Combine(GlobalVars.saveDirectory, "sd.envy")))
             {
                 Debug.LogToFile("INFO Switching to game ready driver.");
-                File.Delete(GlobalVars.exedirectory + "sd.envy");
+                File.Delete(Path.Combine(GlobalVars.saveDirectory, "sd.envy"));
                 Load();
             }
         }
 
         private void switchStudioDriver_Checked(object sender, RoutedEventArgs e)
         {
-            if (!File.Exists(GlobalVars.exedirectory + "sd.envy"))
+            if (!File.Exists(Path.Combine(GlobalVars.saveDirectory, "sd.envy")))
             {
                 Debug.LogToFile("INFO Switching to studio driver.");
-                File.Create(GlobalVars.exedirectory + "sd.envy").Close();
+                File.Create(Path.Combine(GlobalVars.saveDirectory, "sd.envy")).Close();
                 Load();
             }
         }
@@ -272,7 +272,7 @@ namespace EnvyUpdate
             if (switchAutostart.IsChecked == true)
             {
                 Debug.LogToFile("INFO Creating autostart entry.");
-                Util.CreateShortcut("EnvyUpdate", Environment.GetFolderPath(Environment.SpecialFolder.Startup), GlobalVars.exeloc, "NVidia Update Checker", "/minimize");
+                Util.CreateShortcut("EnvyUpdate", Environment.GetFolderPath(Environment.SpecialFolder.Startup), GlobalVars.pathToAppExe, "NVidia Update Checker", "/minimize");
             }
         }
 
@@ -280,7 +280,7 @@ namespace EnvyUpdate
         {
             Debug.LogToFile("INFO Skipping version.");
             skippedVer = onlineDriv;
-            File.WriteAllText(GlobalVars.exedirectory + "skip.envy", onlineDriv);
+            File.WriteAllText(Path.Combine(GlobalVars.saveDirectory, "skip.envy"), onlineDriv);
             buttonSkipVersion.IsEnabled = false;
             buttonSkipVersion.ToolTip = Properties.Resources.ui_skipped;
             MessageBox.Show(Properties.Resources.skip_confirm);
@@ -343,10 +343,10 @@ namespace EnvyUpdate
             progressbarDownload.Visibility = Visibility.Visible;
             buttonDownload.IsEnabled = false;
 
-            if (File.Exists(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading")))
+            if (File.Exists(Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-nvidia-installer.exe.downloading")))
             {
                 Debug.LogToFile("WARN Found previous unfinished download, retrying.");
-                File.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
+                File.Delete(Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
             }
             Thread thread = new Thread(() => {
                 using (WebClient client = new WebClient())
@@ -354,7 +354,7 @@ namespace EnvyUpdate
                     client.Headers["User-Agent"] = GlobalVars.useragent;
                     client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
                     client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
-                    client.DownloadFileAsync(new Uri(Util.GetDirectDownload(gpuURL)), Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
+                    client.DownloadFileAsync(new Uri(Util.GetDirectDownload(gpuURL)), Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
                 }
             });
             thread.Start();
@@ -385,13 +385,13 @@ namespace EnvyUpdate
                     buttonInstall.Visibility = Visibility.Visible;
                     Debug.LogToFile("INFO Download successful.");
                 }));
-                if (File.Exists(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe")))
-                    File.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe"));
-                File.Move(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading"), Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe"));
+                if (File.Exists(Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-nvidia-installer.exe")))
+                    File.Delete(Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-nvidia-installer.exe"));
+                File.Move(Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-nvidia-installer.exe.downloading"), Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-nvidia-installer.exe"));
             }
             else
             {
-                File.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
+                File.Delete(Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
                 Application.Current.Dispatcher.Invoke(new Action(() => {
                     ShowSnackbar(Wpf.Ui.Common.ControlAppearance.Danger, Wpf.Ui.Common.SymbolRegular.ErrorCircle24, Properties.Resources.info_download_error, Properties.Resources.info_download_error_title);
                     Debug.LogToFile("INFO Download NOT successful. Error: " + e.Error.ToString());
@@ -406,8 +406,8 @@ namespace EnvyUpdate
 
             ShowSnackbar(Wpf.Ui.Common.ControlAppearance.Info, Wpf.Ui.Common.SymbolRegular.FolderZip24, Properties.Resources.info_extracting, Properties.Resources.info_extracting_title);
 
-            string filePath = Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe");
-            string destinationDir = Path.Combine(GlobalVars.exedirectory, onlineDriv + "-extracted");
+            string filePath = Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-nvidia-installer.exe");
+            string destinationDir = Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-extracted");
 
             if (!Directory.Exists(destinationDir))
                 Directory.CreateDirectory(destinationDir);
@@ -430,13 +430,13 @@ namespace EnvyUpdate
 
         private void ExtractionFinished(object sender, EventArgs e)
         {
-            string extractedPath = Path.Combine(GlobalVars.exedirectory, onlineDriv + "-extracted");
+            string extractedPath = Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-extracted");
             Application.Current.Dispatcher.Invoke(new Action(() => {
                 ShowSnackbar(Wpf.Ui.Common.ControlAppearance.Success, Wpf.Ui.Common.SymbolRegular.FolderZip24, Properties.Resources.info_extract_complete, Properties.Resources.info_extract_complete_title);
             }));
             Debug.LogToFile("INFO Extraction exited, deleting 7-zip executable.");
             
-            File.Delete(Path.Combine(GlobalVars.exedirectory, "7zr.exe"));
+            File.Delete(Path.Combine(GlobalVars.saveDirectory, "7zr.exe"));
 
             Util.CleanInstallConfig(Path.Combine(extractedPath, "setup.cfg"));
 
@@ -468,8 +468,8 @@ namespace EnvyUpdate
 
             Debug.LogToFile("INFO Driver setup complete. Cleaning up setup files.");
 
-            File.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-nvidia-installer.exe"));
-            Directory.Delete(Path.Combine(GlobalVars.exedirectory, onlineDriv + "-extracted"), true);
+            File.Delete(Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-nvidia-installer.exe"));
+            Directory.Delete(Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-extracted"), true);
             GlobalVars.isInstalling = false;
             Application.Current.Dispatcher.Invoke(delegate
             {

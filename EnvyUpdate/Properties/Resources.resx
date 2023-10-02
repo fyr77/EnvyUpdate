@@ -183,6 +183,9 @@
   <data name="ui_download" xml:space="preserve">
     <value>Download</value>
   </data>
+  <data name="ui_enable_appdata" xml:space="preserve">
+    <value>Save files to AppData</value>
+  </data>
   <data name="ui_enable_logging" xml:space="preserve">
     <value>Enable logging to file</value>
   </data>

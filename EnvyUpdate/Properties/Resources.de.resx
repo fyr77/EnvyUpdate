@@ -183,6 +183,9 @@
   <data name="ui_download" xml:space="preserve">
     <value>Herunterladen</value>
   </data>
+  <data name="ui_enable_appdata" xml:space="preserve">
+    <value>Programmdaten in AppData speichern</value>
+  </data>
   <data name="ui_enable_logging" xml:space="preserve">
     <value>Programm-Log in Datei schreiben</value>
   </data>
