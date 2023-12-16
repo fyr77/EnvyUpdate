@@ -420,7 +420,7 @@ namespace EnvyUpdate
                 WindowStyle = ProcessWindowStyle.Minimized,
                 WorkingDirectory = destinationDir,
                 FileName = sevenZipPath,
-                Arguments = "x -aoa -y " + filePath + " Display.Driver Display.Nview Display.Optimus HDAudio MSVCR NVI2 NVPCF PhysX PPC ShieldWirelessController EULA.txt ListDevices.txt setup.cfg setup.exe"
+                Arguments = "x -aoa -y \"" + filePath + "\" Display.Driver Display.Nview Display.Optimus HDAudio MSVCR NVI2 NVPCF PhysX PPC ShieldWirelessController EULA.txt ListDevices.txt setup.cfg setup.exe"
             };
             process.EnableRaisingEvents = true;
             process.StartInfo = startInfo;
