@@ -335,7 +335,7 @@ namespace EnvyUpdate
                     {
                         GPUName = obj["VideoProcessor"].ToString().ToLower();
                         // Remove any 3GB, 6GB or similar from name. We don't need to know the VRAM to get results.
-                        GPUName = Regex.Match(GPUName, "(geforce )((.tx )|(mx))?\\w*\\d*( ti)?").Value;
+                        GPUName = Regex.Match(GPUName, "(geforce )((.t.? )|(mx ))?\\w*\\d*( ti)?").Value;
                     }
                     else
                         GPUName = obj["VideoProcessor"].ToString();
