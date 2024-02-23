@@ -19,5 +19,6 @@ namespace EnvyUpdate
         public static readonly string useragent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:115.0) Gecko/20100101 Firefox/115.0";
         public static bool useAppdata = false;
         public static bool hasWrite = true;
+        public static bool autoDownload = false;
     }
 }

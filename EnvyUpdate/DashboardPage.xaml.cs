@@ -210,6 +210,12 @@ namespace EnvyUpdate
 
                 if (skippedVer != onlineDriv)
                 {
+                    if (GlobalVars.autoDownload)
+                    {
+                        Debug.LogToFile("INFO Auto-Downloading driver.");
+                        buttonDownload_Click(null, null);
+                    }
+
                     Debug.LogToFile("INFO Showing update popup notification.");
                     Notify.ShowDrivUpdatePopup();
                 }

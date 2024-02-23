@@ -268,6 +268,15 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download updates automatically.
+        /// </summary>
+        public static string ui_enable_autodownload {
+            get {
+                return ResourceManager.GetString("ui_enable_autodownload", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Enable logging to file.
         /// </summary>
         public static string ui_enable_logging {

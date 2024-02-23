@@ -91,5 +91,15 @@ namespace EnvyUpdate
 
             Debug.LogToFile("INFO Switched to EXE directory.");
         }
+
+        private void chkAutodl_Checked(object sender, RoutedEventArgs e)
+        {
+            GlobalVars.autoDownload = true;
+        }
+
+        private void chkAutodl_Unchecked(object sender, RoutedEventArgs e)
+        {
+            GlobalVars.autoDownload = false;
+        }
     }
 }

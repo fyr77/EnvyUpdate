@@ -186,6 +186,9 @@
   <data name="ui_enable_appdata" xml:space="preserve">
     <value>Save files to AppData</value>
   </data>
+  <data name="ui_enable_autodownload" xml:space="preserve">
+    <value>Download updates automatically</value>
+  </data>
   <data name="ui_enable_logging" xml:space="preserve">
     <value>Enable logging to file</value>
   </data>

@@ -186,6 +186,9 @@
   <data name="ui_enable_appdata" xml:space="preserve">
     <value>Programmdaten in AppData speichern</value>
   </data>
+  <data name="ui_enable_autodownload" xml:space="preserve">
+    <value>Updates automatisch herunterladen</value>
+  </data>
   <data name="ui_enable_logging" xml:space="preserve">
     <value>Programm-Log in Datei schreiben</value>
   </data>
