@@ -102,6 +102,17 @@ namespace EnvyUpdate
                 GlobalVars.startMinimized = true;
             }
 
+            //Check for old unfinished downloads
+            string[] leftovers = Directory.GetFiles(GlobalVars.directoryOfExe, "*-nvidia-installer.exe.downloading");
+            if (leftovers.Length > 0)
+            {
+                foreach (string leftover in leftovers)
+                {
+                    Debug.LogToFile("INFO Deleting leftover download " + leftover);
+                    File.Delete(leftover);
+                }
+            }
+
             GlobalVars.isMobile = Util.IsMobile();
             Debug.LogToFile("INFO Mobile: " + GlobalVars.isMobile);
         }
