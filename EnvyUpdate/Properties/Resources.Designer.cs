@@ -115,6 +115,15 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download running.
+        /// </summary>
+        public static string info_download_running_title {
+            get {
+                return ResourceManager.GetString("info_download_running_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Driver installer successfully downloaded..
         /// </summary>
         public static string info_download_success {

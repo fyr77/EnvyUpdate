@@ -22,7 +22,6 @@ namespace EnvyUpdate
         private string gpuURL = null;
         private string skippedVer = null;
         private DateTime lastFileChanged = DateTime.MinValue;
-        private bool isDownloading = false;
 
         public DashboardPage()
         {
@@ -213,8 +212,11 @@ namespace EnvyUpdate
                 {
                     if (GlobalVars.autoDownload)
                     {
-                        Debug.LogToFile("INFO Auto-Downloading driver.");
-                        buttonDownload_Click(null, null);
+                        if (buttonDownload.IsVisible)
+                        {
+                            Debug.LogToFile("INFO Auto-Downloading driver.");
+                            buttonDownload_Click(null, null);
+                        }
                     }
 
                     Debug.LogToFile("INFO Showing update popup notification.");
@@ -347,16 +349,16 @@ namespace EnvyUpdate
 
         private void buttonDownload_Click(object sender, RoutedEventArgs e)
         {
-            if (isDownloading)
+            if (GlobalVars.isDownloading)
             {
                 Debug.LogToFile("WARN A download is already running.");
-                ShowSnackbar(Wpf.Ui.Common.ControlAppearance.Danger, Wpf.Ui.Common.SymbolRegular.ErrorCircle24, Properties.Resources.info_install_complete, Properties.Resources.info_install_complete_title);
+                ShowSnackbar(Wpf.Ui.Common.ControlAppearance.Danger, Wpf.Ui.Common.SymbolRegular.ErrorCircle24, Properties.Resources.info_download_running, Properties.Resources.info_download_running_title);
             }
             else
             {
                 progressbarDownload.Visibility = Visibility.Visible;
                 buttonDownload.IsEnabled = false;
-                isDownloading = true;
+                GlobalVars.isDownloading = true;
 
                 if (File.Exists(Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-nvidia-installer.exe.downloading")))
                 {
@@ -392,7 +394,7 @@ namespace EnvyUpdate
             Application.Current.Dispatcher.Invoke(new Action(() => {
                 buttonDownload.IsEnabled = true;
                 progressbarDownload.Visibility = Visibility.Collapsed;
-                isDownloading = false;
+                GlobalVars.isDownloading = false;
             }));
             if (e.Error == null)
             {

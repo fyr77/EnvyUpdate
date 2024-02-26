@@ -20,5 +20,6 @@ namespace EnvyUpdate
         public static bool useAppdata = false;
         public static bool hasWrite = true;
         public static bool autoDownload = false;
+        public static bool isDownloading = false;
     }
 }
