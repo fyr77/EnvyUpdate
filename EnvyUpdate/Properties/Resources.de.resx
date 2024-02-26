@@ -132,6 +132,9 @@
   <data name="info_download_error_title" xml:space="preserve">
     <value>Fehler beim Herunterladen</value>
   </data>
+  <data name="info_download_running" xml:space="preserve">
+    <value>Ein Downloadvorgang läuft bereits!</value>
+  </data>
   <data name="info_download_success" xml:space="preserve">
     <value>Treiber-Installationsdatei erfolgreich heruntergeladen.</value>
   </data>

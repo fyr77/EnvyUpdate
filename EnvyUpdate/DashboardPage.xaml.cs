@@ -22,6 +22,7 @@ namespace EnvyUpdate
         private string gpuURL = null;
         private string skippedVer = null;
         private DateTime lastFileChanged = DateTime.MinValue;
+        private bool isDownloading = false;
 
         public DashboardPage()
         {
@@ -346,25 +347,34 @@ namespace EnvyUpdate
 
         private void buttonDownload_Click(object sender, RoutedEventArgs e)
         {
-            progressbarDownload.Visibility = Visibility.Visible;
-            buttonDownload.IsEnabled = false;
-
-            if (File.Exists(Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-nvidia-installer.exe.downloading")))
+            if (isDownloading)
             {
-                Debug.LogToFile("WARN Found previous unfinished download, retrying.");
-                File.Delete(Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
+                Debug.LogToFile("WARN A download is already running.");
+                ShowSnackbar(Wpf.Ui.Common.ControlAppearance.Danger, Wpf.Ui.Common.SymbolRegular.ErrorCircle24, Properties.Resources.info_install_complete, Properties.Resources.info_install_complete_title);
             }
-            Thread thread = new Thread(() => {
-                using (WebClient client = new WebClient())
+            else
+            {
+                progressbarDownload.Visibility = Visibility.Visible;
+                buttonDownload.IsEnabled = false;
+                isDownloading = true;
+
+                if (File.Exists(Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-nvidia-installer.exe.downloading")))
                 {
-                    client.Headers["User-Agent"] = GlobalVars.useragent;
-                    client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
-                    client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
-                    client.DownloadFileAsync(new Uri(Util.GetDirectDownload(gpuURL)), Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
+                    Debug.LogToFile("WARN Found previous unfinished download, retrying.");
+                    File.Delete(Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
                 }
-            });
-            thread.Start();
-            Debug.LogToFile("INFO Started installer download.");
+                Thread thread = new Thread(() => {
+                    using (WebClient client = new WebClient())
+                    {
+                        client.Headers["User-Agent"] = GlobalVars.useragent;
+                        client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
+                        client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
+                        client.DownloadFileAsync(new Uri(Util.GetDirectDownload(gpuURL)), Path.Combine(GlobalVars.saveDirectory, onlineDriv + "-nvidia-installer.exe.downloading"));
+                    }
+                });
+                thread.Start();
+                Debug.LogToFile("INFO Started installer download.");
+            }
         }
 
         void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -382,6 +392,7 @@ namespace EnvyUpdate
             Application.Current.Dispatcher.Invoke(new Action(() => {
                 buttonDownload.IsEnabled = true;
                 progressbarDownload.Visibility = Visibility.Collapsed;
+                isDownloading = false;
             }));
             if (e.Error == null)
             {

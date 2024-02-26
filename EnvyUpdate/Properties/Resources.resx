@@ -132,6 +132,9 @@
   <data name="info_download_error_title" xml:space="preserve">
     <value>Error while downloading</value>
   </data>
+  <data name="info_download_running" xml:space="preserve">
+    <value>A download process is already running!</value>
+  </data>
   <data name="info_download_success" xml:space="preserve">
     <value>Driver installer successfully downloaded.</value>
   </data>
