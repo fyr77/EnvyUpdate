@@ -115,6 +115,12 @@ namespace EnvyUpdate
 
             GlobalVars.isMobile = Util.IsMobile();
             Debug.LogToFile("INFO Mobile: " + GlobalVars.isMobile);
+
+            if (File.Exists(Path.Combine(GlobalVars.saveDirectory, "autodl.envy")))
+            {
+                Debug.LogToFile("INFO Auto-download is enabled.");
+                GlobalVars.autoDownload = true;
+            }
         }
         private void Window_StateChanged(object sender, EventArgs e)
         {

@@ -95,11 +95,19 @@ namespace EnvyUpdate
         private void chkAutodl_Checked(object sender, RoutedEventArgs e)
         {
             GlobalVars.autoDownload = true;
+            if (!File.Exists(Path.Combine(GlobalVars.saveDirectory, "autodl.envy")))
+            {
+                File.Create(Path.Combine(GlobalVars.saveDirectory, "autodl.envy"));
+            }
         }
 
         private void chkAutodl_Unchecked(object sender, RoutedEventArgs e)
         {
             GlobalVars.autoDownload = false;
+            if (File.Exists(Path.Combine(GlobalVars.saveDirectory, "autodl.envy")))
+            {
+                File.Delete(Path.Combine(GlobalVars.saveDirectory, "autodl.envy"));
+            }
         }
     }
 }
