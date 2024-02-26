@@ -35,9 +35,19 @@
             <ui:ToggleSwitch x:Name="chkLog" Checked="chkLog_Checked" Unchecked="chkLog_Unchecked"/>
         </ui:CardControl>
 
-        <ui:CardControl Grid.Row="3" Margin="0,12,0,0" Icon="Folder24" Header="{x:Static p:Resources.ui_enable_appdata}" >
-            <ui:ToggleSwitch x:Name="chkAppdata" Checked="chkAppdata_Checked" Unchecked="chkAppdata_Unchecked"/>
-        </ui:CardControl>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <ui:CardControl Grid.Column="0" Margin="0,12,0,0" Icon="Folder24" Header="{x:Static p:Resources.ui_enable_appdata}" VerticalAlignment="Top" >
+                <ui:ToggleSwitch x:Name="chkAppdata" Checked="chkAppdata_Checked" Unchecked="chkAppdata_Unchecked"/>
+            </ui:CardControl>
+            <ui:CardControl Grid.Column="2" Margin="0,12,0,0" Icon="ArrowDownload24" Header="{x:Static p:Resources.ui_enable_autodownload}" VerticalAlignment="Top">
+                <ui:ToggleSwitch x:Name="chkAutodl" Checked="chkAutodl_Checked" Unchecked="chkAutodl_Unchecked"/>
+            </ui:CardControl>
+        </Grid>
 
         <Label Grid.Row="4" Content="{x:Static p:Resources.ui_licenses}" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
         <ScrollViewer Grid.Row="5" MaxHeight="700" HorizontalAlignment="Stretch">

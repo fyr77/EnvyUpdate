@@ -30,6 +30,16 @@ namespace EnvyUpdate
             if (!GlobalVars.hasWrite)
                 chkAppdata.IsEnabled = false;
 
+            if (GlobalVars.autoDownload)
+                chkAutodl.IsChecked = true;
+
+            if (GlobalVars.isDownloading)
+            {
+                chkAppdata.IsEnabled = false;
+            }
+            else
+                chkAppdata.IsEnabled = true;
+
             textBoxLicEnvyupdate.Text = Properties.Licenses.EnvyUpdate;
             textBoxLicFody.Text = Properties.Licenses.Fody;
             textBoxLicCostura.Text = Properties.Licenses.CosturaFody;
@@ -90,6 +100,24 @@ namespace EnvyUpdate
             }
 
             Debug.LogToFile("INFO Switched to EXE directory.");
+        }
+
+        private void chkAutodl_Checked(object sender, RoutedEventArgs e)
+        {
+            GlobalVars.autoDownload = true;
+            if (!File.Exists(Path.Combine(GlobalVars.saveDirectory, "autodl.envy")))
+            {
+                File.Create(Path.Combine(GlobalVars.saveDirectory, "autodl.envy"));
+            }
+        }
+
+        private void chkAutodl_Unchecked(object sender, RoutedEventArgs e)
+        {
+            GlobalVars.autoDownload = false;
+            if (File.Exists(Path.Combine(GlobalVars.saveDirectory, "autodl.envy")))
+            {
+                File.Delete(Path.Combine(GlobalVars.saveDirectory, "autodl.envy"));
+            }
         }
     }
 }

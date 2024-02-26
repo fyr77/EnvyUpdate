@@ -132,6 +132,12 @@
   <data name="info_download_error_title" xml:space="preserve">
     <value>Error while downloading</value>
   </data>
+  <data name="info_download_running" xml:space="preserve">
+    <value>A download process is already running!</value>
+  </data>
+  <data name="info_download_running_title" xml:space="preserve">
+    <value>Download running</value>
+  </data>
   <data name="info_download_success" xml:space="preserve">
     <value>Driver installer successfully downloaded.</value>
   </data>
@@ -185,6 +191,9 @@
   </data>
   <data name="ui_enable_appdata" xml:space="preserve">
     <value>Save files to AppData</value>
+  </data>
+  <data name="ui_enable_autodownload" xml:space="preserve">
+    <value>Download updates automatically</value>
   </data>
   <data name="ui_enable_logging" xml:space="preserve">
     <value>Enable logging to file</value>

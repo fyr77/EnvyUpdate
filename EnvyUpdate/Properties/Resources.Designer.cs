@@ -106,6 +106,24 @@ namespace EnvyUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A download process is already running!.
+        /// </summary>
+        public static string info_download_running {
+            get {
+                return ResourceManager.GetString("info_download_running", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download running.
+        /// </summary>
+        public static string info_download_running_title {
+            get {
+                return ResourceManager.GetString("info_download_running_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Driver installer successfully downloaded..
         /// </summary>
         public static string info_download_success {
@@ -264,6 +282,15 @@ namespace EnvyUpdate.Properties {
         public static string ui_enable_appdata {
             get {
                 return ResourceManager.GetString("ui_enable_appdata", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download updates automatically.
+        /// </summary>
+        public static string ui_enable_autodownload {
+            get {
+                return ResourceManager.GetString("ui_enable_autodownload", resourceCulture);
             }
         }
         
