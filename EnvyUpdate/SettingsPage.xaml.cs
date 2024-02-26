@@ -30,6 +30,9 @@ namespace EnvyUpdate
             if (!GlobalVars.hasWrite)
                 chkAppdata.IsEnabled = false;
 
+            if (GlobalVars.autoDownload)
+                chkAutodl.IsChecked = true;
+
             textBoxLicEnvyupdate.Text = Properties.Licenses.EnvyUpdate;
             textBoxLicFody.Text = Properties.Licenses.Fody;
             textBoxLicCostura.Text = Properties.Licenses.CosturaFody;
