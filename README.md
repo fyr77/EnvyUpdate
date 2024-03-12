@@ -36,7 +36,7 @@ If EnvyUpdate fails to write to the folder containing the exe file, this option 
 
 The application should be compatible with all Nvidia GeForce GPUs that have their drivers available on the nvidia.com download page and runs on Windows 10 and up.
 
-It is tested with GeForce Series GPUs. Generally others might work, but they are (currently) untested.
+It is tested with GeForce Series GPUs. Other series (e.g. Quadro) are unlikely to work and are not supported - if you have a Quadro card and are willing to implement support for them, feel free to reach out or create a PR.
 
 ## Development
 
