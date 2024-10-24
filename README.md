@@ -1,5 +1,5 @@
 # Important Information
-NVIDIA is planning to release their new "[NVIDIA App](https://www.nvidia.com/en-us/software/nvidia-app/)", which will **replace** GeForce Experience and the Control Center. I do not yet know how the new driver package will look like, therefore I cannot guarantee that the update to that new driver that includes the new app will work properly when it releases. I will attempt to test it as soon as it is available.
+I am no longer working on this project and I am looking for a new maintainer. Please see [the corresponding issue](https://github.com/fyr77/EnvyUpdate/issues/53) for more details.
 
 ![Logo](https://github.com/fyr77/envyupdate/blob/master/res/banner_bg.png?raw=true)
 
