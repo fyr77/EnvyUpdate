@@ -1,5 +1,5 @@
 # Important Information
-I am no longer working on this project and I am looking for a new maintainer. Please see [the corresponding issue](https://github.com/fyr77/EnvyUpdate/issues/53) for more details.
+## I am no longer working on this project and I am looking for a new maintainer. Please see [the corresponding issue](https://github.com/fyr77/EnvyUpdate/issues/53) for more details.
 
 ![Logo](https://github.com/fyr77/envyupdate/blob/master/res/banner_bg.png?raw=true)
 
@@ -14,11 +14,9 @@ I am no longer working on this project and I am looking for a new maintainer. Pl
 
 Download the [latest release](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.exe) (or as a [.zip](https://github.com/fyr77/EnvyUpdate/releases/latest/download/EnvyUpdate.zip)) and run it. Windows SmartScreen Messages can be safely ignored. They only happen because this project is not digitally signed.
 
-Legacy 2.x versions (old UI, no automatic driver installation) will continue to be supported and fixed for the time being. Please see [the v2 branch](https://github.com/fyr77/EnvyUpdate/tree/v2) for these.
-
 The application itself does not update itself. If you notice any bugs or issues, be sure to check for a new version on GitHub!
 
-Enabling Autostart will create a shortcut of EnvyUpdate in the Windows startup folder.
+Enabling Autostart will create a shortcut of EnvyUpdate in the Windows startup folder (shell:startup).
 
 ### Virus warnings
 
@@ -40,7 +38,7 @@ It is tested with GeForce Series GPUs. Other series (e.g. Quadro) are unlikely t
 
 ## Development
 
-This application is currently maintained and developed by me (fyr77) alone in my free time. 
+This application is currently unmaintained and developed by me (fyr77) alone in my free time. 
 
 I always try to implement critical fixes as fast as I can, but other features and minor bug fixes may take a few days or weeks to implement. 
 
